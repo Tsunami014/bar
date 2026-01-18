@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import "./modules/"
 
 PanelWindow {
     id: bar
@@ -47,7 +48,7 @@ PanelWindow {
                 rightMargin: 25
             }
             spacing: 10
-            Loader { active: true; sourceComponent: Power {} }
+            Loader { active: true; sourceComponent: Battery {} }
             Loader { active: true; sourceComponent: Time {} }
         }
     }
