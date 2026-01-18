@@ -3,7 +3,6 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Wayland
 import Niri 0.1
-import "."
 
 ShellRoot{
     id: root
@@ -18,5 +17,8 @@ ShellRoot{
         }
     }
 
-    LazyLoader{ active: true; component: Bar{} }
+    TopBar{}
+    LeftBar{}
+    RightBar{}
+    BotBar{}
 }

@@ -10,19 +10,19 @@ PanelWindow {
         left: true
         right: true
     }
-    implicitHeight: 30
-    color: "transparent"
+
+    implicitHeight: Theme.barSze
+    color: Theme.colTransparent
 
     Rectangle {
         anchors.fill: parent
-        color: "#222222"
-        bottomLeftRadius: 20
-        bottomRightRadius: 20
+        color: Theme.colBg
+
         // left
         RowLayout {
             anchors {
                 left: parent.left
-                leftMargin: 25
+                leftMargin: Theme.barSze
             }
             Loader { active: true; sourceComponent: Workspaces {} }
         }
@@ -35,9 +35,9 @@ PanelWindow {
 
             Text {
                 text: niri.focusedWindow?.title ?? ""
-                font.family: "Barlow Medium"
-                font.pixelSize: 16
-                color: "#999999"
+                font.family: Theme.fontFamily
+                font.pixelSize: Theme.fontSize
+                color: Theme.colFg
             }
         }
         // right
@@ -45,7 +45,7 @@ PanelWindow {
             anchors {
                 verticalCenter: parent.verticalCenter
                 right: parent.right
-                rightMargin: 25
+                rightMargin: Theme.barSze
             }
             spacing: 10
             Loader { active: true; sourceComponent: Battery {} }

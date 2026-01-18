@@ -1,14 +1,23 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import ".."
 
 Rectangle {
+    id: wrect
+    property int padding: 2
+    property int amnt: 10
+    property int mainHei: Theme.barSze - 7
+    property int dotSze: mainHei - padding*2
+    property int dotRound: dotSze/9*4
+    property int mainRound: dotSze/3*2
+
     anchors.left: parent.left
-    color: "#666666"
-    height: 25
-    width: 215
-    bottomLeftRadius: 10
-    bottomRightRadius: 10
+    color: Theme.colMuted2
+    height: mainHei
+    width: mainRound*2 + (dotSze + padding*2) * amnt
+    bottomLeftRadius: mainRound
+    bottomRightRadius: mainRound
 
     Rectangle {
         id: workspaceLayout
@@ -16,25 +25,25 @@ Rectangle {
             verticalCenter: parent.verticalCenter
             left: parent.left
             right: parent.right
-            leftMargin: 10
-            rightMargin: 10
+            leftMargin: mainRound
+            rightMargin: mainRound
         }
 
         RowLayout {
             anchors {
                 verticalCenter: parent.verticalCenter
             }
-            spacing: 5
+            spacing: padding
 
             Repeater {
                 model: niri.workspaces
 
                 Rectangle {
-                    visible: index < 11
-                    width: 15
-                    height: 15
-                    radius: 10
-                    color: model.isActive ? "#000000" : "#333333"
+                    visible: index < amnt+1
+                    width: dotSze
+                    height: dotSze
+                    radius: dotRound
+                    color: model.isActive ? Theme.colFg : Theme.colMuted1
                     MouseArea {
                         anchors.fill: parent
                         cursorShape: Qt.PointingHandCursor

@@ -4,6 +4,7 @@ import QtQuick.Controls
 import Quickshell
 import Quickshell.Services.UPower
 import Quickshell.Io
+import ".."
 
 Text {
     id: batteryWidget
@@ -39,15 +40,19 @@ Text {
           "󰁹 ")
 
     text: batteryIcon + batteryLevel + "%"
-    color: batteryLevel <= 15 ? "#f53c3c" : "#32CD32"
+    color: batteryCharging ? (
+        batteryLevel <= 15 ? Theme.colOrange : Theme.colGreen
+    ) : (
+        batteryLevel <= 15 ? Theme.colRed : Theme.colGreen
+    )
 
     MouseArea {
         anchors.fill: parent
         onClicked: batteryWidget.clicked = !batteryWidget.clicked
     }
 
-    font.family: "Barlow Medium"
-    font.pixelSize: 16
+    font.family: Theme.fontFamily
+    font.pixelSize: Theme.fontSize
     font.bold: true
     Component.onCompleted: {
         parent.width = batteryWidget.contentWidth
