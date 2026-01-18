@@ -22,7 +22,7 @@ Item {
         }
         color: Theme.colTransparent
         border.color: Theme.colBg
-        border.width:Theme.barRound 
+        border.width: Theme.barRound 
         radius: Theme.barRound*2
     }
 }

@@ -62,7 +62,7 @@ PanelWindow {
 
         exclusiveZone: 0
         implicitHeight: bar.expanded!=0 ? Theme.barSze*bar.barSze : 0
-        Behavior on implicitHeight { NumberAnimation { duration: 20 } }
+        //Behavior on implicitHeight { NumberAnimation { duration: 20 } }
         color: "transparent"
 
         MouseArea {
@@ -81,13 +81,34 @@ PanelWindow {
             }
         }
 
+        Corner {
+            anchors {
+                bottom: parent.bottom
+                left: parent.left
+            }
+            rx: 1
+            ry: 1
+            anchors.bottomMargin: Theme.barRound
+        }
+        Corner {
+            anchors {
+                bottom: parent.bottom
+                right: parent.right
+            }
+            ry: 1
+            anchors.bottomMargin: Theme.barRound
+        }
+
         Rectangle {
             anchors.fill: parent
+
+            anchors.leftMargin: Theme.barRound
+            anchors.rightMargin: Theme.barRound
 
             topLeftRadius: 20
             topRightRadius: 20
             opacity: bar.expanded != 0 ? 1:0
-            Behavior on opacity { NumberAnimation { duration: 40 } }
+            //Behavior on opacity { NumberAnimation { duration: 40 } }
             color: Theme.colBg
 
             // Fill Me!

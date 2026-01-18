@@ -18,7 +18,7 @@ ShellRoot{
     }
 
     TopBar{}
+    BotBar{}
     LeftBar{}
     RightBar{}
-    BotBar{}
 }

@@ -40,7 +40,7 @@ PanelWindow {
     Rectangle {
         id: rect
         opacity: bar.expanded ? 1 : 0
-        Behavior on opacity { NumberAnimation { duration: 40 } }
+        //Behavior on opacity { NumberAnimation { duration: 40 } }
 
         anchors {
             top: parent.top
@@ -48,7 +48,7 @@ PanelWindow {
             left: parent.left
         }
         width: bar.implicitWidth - Theme.barRound
-        Behavior on width { NumberAnimation { duration: 30 } }
+        //Behavior on width { NumberAnimation { duration: 30 } }
 
         color: Theme.colBg
 
