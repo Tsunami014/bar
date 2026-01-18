@@ -4,66 +4,94 @@ import Quickshell
 import "./modules/"
 
 PanelWindow {
-    id: bbar
+    id: bar
     anchors {
-        left: true
         bottom: true
+        left: true
         right: true
     }
 
-    property double scale: 1/5
+    property double scale: 1/6
+    property int barSze: 8
 
     exclusiveZone: Theme.barBaseSze
-    implicitHeight: Theme.barSze3
+    implicitHeight: Theme.barBaseSze
+    property bool expanded: (mouseAreaBar.containsMouse || mouseAreaRect.containsMouse) && wantExpand
+    property bool wantExpand: false
+    color: Theme.colBg
 
-    color: Theme.colTransparent
-
-    Rectangle {
-        id: outer
-        anchors {
-            left: parent.left
-            bottom: parent.bottom
-            right: parent.right
+    Timer {
+        id: collapseTimer;
+        interval: 150;
+        repeat: false;
+        onTriggered: {
+            if (!mouseAreaBar.containsMouse && !mouseAreaRect.containsMouse) {
+                wantExpand = false
+            }
         }
-        height: Theme.barBaseSze
-        color: Theme.colBg
     }
-    Rectangle {
+
+    MouseArea {
+        id: mouseAreaBar
+        anchors.fill: parent
+        hoverEnabled: true
+        
+        onClicked: {
+            bar.wantExpand = true
+        }
+        
+        onExited: {
+            if (!mouseAreaRect.containsMouse) {
+                collapseTimer.start()
+            }
+        }
+    }
+
+    PanelWindow {
         id: rect
         anchors {
-            left: parent.left
-            bottom: parent.bottom
-            right: parent.right
+            bottom: true
+            left: true
+            right: true
         }
-        anchors.leftMargin: bbar.width*bbar.scale
-        anchors.rightMargin: bbar.width*bbar.scale
+        margins {
+            left: bar.width*bar.scale
+            right: bar.width*bar.scale
+            bottom: -Theme.barBaseSze
+        }
 
-        opacity: 0
-        Behavior on opacity { NumberAnimation { duration: 40 } }
-        height: Theme.barBaseSze
-        Behavior on height { NumberAnimation { duration: 30 } }
-        color: Theme.colBg
+        exclusiveZone: 0
+        implicitHeight: bar.expanded!=0 ? Theme.barSze*bar.barSze : 0
+        Behavior on implicitHeight { NumberAnimation { duration: 20 } }
+        color: "transparent"
 
-        topLeftRadius: 30
-        topRightRadius: 30
-
-        // Expand on hover
         MouseArea {
+            id: mouseAreaRect
             anchors.fill: parent
             hoverEnabled: true
             
-            onEntered: {
-                rect.height = Theme.barSze3
-                rect.opacity = 1
+            onClicked: {
+                bar.wantExpand = true
             }
             
             onExited: {
-                rect.height = Theme.barBaseSze
-                rect.opacity = 0
+                if (!mouseAreaBar.containsMouse) {
+                    collapseTimer.start()
+                }
             }
         }
 
-        // Fill Me!
+        Rectangle {
+            anchors.fill: parent
+
+            topLeftRadius: 20
+            topRightRadius: 20
+            opacity: bar.expanded != 0 ? 1:0
+            Behavior on opacity { NumberAnimation { duration: 40 } }
+            color: Theme.colBg
+
+            // Fill Me!
+        }
     }
 }
 

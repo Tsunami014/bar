@@ -4,15 +4,18 @@ import Quickshell
 import "./modules/"
 
 PanelWindow {
-    id: lbar
+    id: bar
     anchors {
         top: true
         bottom: true
         left: true
     }
 
+    property int barSze: 3
+
+    property bool expanded: false
     exclusiveZone: Theme.barBaseSze
-    implicitWidth: Theme.barSze2
+    implicitWidth: (expanded ? Theme.barSze*barSze : Theme.barBaseSze)+Theme.barRound
 
     color: Theme.colTransparent
 
@@ -26,19 +29,17 @@ PanelWindow {
             hoverEnabled: true
             
             onEntered: {
-                rect.width = Theme.barSze2
-                rect.opacity = 1
+                bar.expanded = true
             }
             
             onExited: {
-                rect.width = Theme.barBaseSze
-                rect.opacity = 0
+                bar.expanded = false
             }
         }
     }
     Rectangle {
         id: rect
-        opacity: 0
+        opacity: bar.expanded ? 1 : 0
         Behavior on opacity { NumberAnimation { duration: 40 } }
 
         anchors {
@@ -46,12 +47,25 @@ PanelWindow {
             bottom: parent.bottom
             left: parent.left
         }
-        width: Theme.barBaseSze
+        width: bar.implicitWidth - Theme.barRound
         Behavior on width { NumberAnimation { duration: 30 } }
 
         color: Theme.colBg
 
         // Fill Me!
+    }
+    Corner {
+        anchors {
+            top: rect.top
+            left: rect.right
+        }
+    }
+    Corner {
+        anchors {
+            bottom: rect.bottom
+            left: rect.right
+        }
+        ry: 1
     }
 }
 

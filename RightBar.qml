@@ -4,54 +4,93 @@ import Quickshell
 import "./modules/"
 
 PanelWindow {
-    id: rbar
+    id: bar
     anchors {
         top: true
         bottom: true
         right: true
     }
 
+    property double scale: 1/2
+    property int barSze: 10
+
     exclusiveZone: Theme.barBaseSze
-    implicitWidth: Theme.barSze2
+    implicitWidth: Theme.barBaseSze
+    property bool expanded: (mouseAreaBar.containsMouse || mouseAreaRect.containsMouse) && wantExpand
+    property bool wantExpand: false
+    color: Theme.colBg
 
-    color: Theme.colTransparent
-
-    Rectangle {
-        anchors.fill: rect
-        color: Theme.colBg
-
-        // Expand on hover
-        MouseArea {
-            anchors.fill: parent
-            hoverEnabled: true
-            
-            onEntered: {
-                rect.width = Theme.barSze2
-                rect.opacity = 1
-            }
-            
-            onExited: {
-                rect.width = Theme.barBaseSze
-                rect.opacity = 0
+    Timer {
+        id: collapseTimer;
+        interval: 150;
+        repeat: false;
+        onTriggered: {
+            if (!mouseAreaBar.containsMouse && !mouseAreaRect.containsMouse) {
+                wantExpand = false
             }
         }
     }
-    Rectangle {
-        id: rect
-        opacity: 0
-        Behavior on opacity { NumberAnimation { duration: 40 } }
 
-        anchors {
-            top: parent.top
-            bottom: parent.bottom
-            right: parent.right
+    // Expand on hover
+    MouseArea {
+        id: mouseAreaBar
+        anchors.fill: parent
+        hoverEnabled: true
+        
+        onClicked: {
+            bar.wantExpand = true
         }
-        width: Theme.barBaseSze
-        Behavior on width { NumberAnimation { duration: 30 } }
+        
+        onExited: {
+            if (!mouseAreaRect.containsMouse) {
+                collapseTimer.start()
+            }
+        }
+    }
 
-        color: Theme.colBg
+    PanelWindow {
+        id: rect
+        anchors {
+            top: true
+            bottom: true
+            right: true
+        }
+        margins {
+            bottom: bar.height*bar.scale
+            right: -Theme.barBaseSze
+        }
 
-        // Fill Me!
+        exclusiveZone: 0
+        implicitWidth: bar.expanded != 0 ? Theme.barSze*bar.barSze : 0
+        Behavior on implicitWidth { NumberAnimation { duration: 20 } }
+        color: "transparent"
+
+        MouseArea {
+            id: mouseAreaRect
+            anchors.fill: parent
+            hoverEnabled: true
+            
+            onClicked: {
+                bar.wantExpand = true
+            }
+            
+            onExited: {
+                if (!mouseAreaBar.containsMouse) {
+                    collapseTimer.start()
+                }
+            }
+        }
+
+        Rectangle {
+            anchors.fill: parent
+
+            opacity: bar.expanded != 0 ? 1:0
+            Behavior on opacity { NumberAnimation { duration: 40 } }
+            bottomLeftRadius: 10
+            color: Theme.colBg
+
+            // Fill Me!
+        }
     }
 }
 
