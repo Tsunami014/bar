@@ -1,7 +1,6 @@
 import QtQuick
-import QtQuick.Layouts
 import Quickshell
-import "./modules/"
+import "./sides/"
 
 PanelWindow {
     id: bar
@@ -108,7 +107,7 @@ PanelWindow {
             rx: 1
         }
 
-        Rectangle {
+        Right {
             anchors.fill: parent
             anchors.leftMargin: Theme.barRound
             anchors.bottomMargin: Theme.barRound
@@ -116,9 +115,6 @@ PanelWindow {
             opacity: bar.expanded != 0 ? 1:0
             //Behavior on opacity { NumberAnimation { duration: 40 } }
             bottomLeftRadius: 10
-            color: Theme.colBg
-
-            // Fill Me!
         }
     }
     Corner {

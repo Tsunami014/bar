@@ -1,7 +1,6 @@
 import QtQuick
-import QtQuick.Layouts
 import Quickshell
-import "./modules/"
+import "./sides/"
 
 PanelWindow {
     id: bar
@@ -52,7 +51,7 @@ PanelWindow {
 
         color: Theme.colBg
 
-        // Fill Me!
+        Left{}
     }
     Corner {
         anchors {
