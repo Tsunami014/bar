@@ -48,7 +48,7 @@ PanelWindow {
         anchors.fill: parent
         hoverEnabled: true
         
-        onClicked: {
+        onPressed: {
             bar.wantExpand = true
         }
         
@@ -81,7 +81,7 @@ PanelWindow {
             anchors.fill: parent
             hoverEnabled: true
             
-            onClicked: {
+            onPressed: {
                 bar.wantExpand = true
             }
             
