@@ -26,41 +26,50 @@ Bubble {
         Theme.colGreen
     )
 
-    Text {
-        id: batteryWidget
+    Column {
         anchors.centerIn: parent
-        horizontalAlignment: Text.AlignHCenter
+        Text {
+            anchors { left: parent.left; right: parent.right }
+            horizontalAlignment: Text.AlignHCenter
 
-        property string batteryIcon: b.batteryCharging ? (
-              b.batteryLevel <= 10 ? "󰢟 " :
-              b.batteryLevel <= 20 ? "󰢜 " :
-              b.batteryLevel <= 30 ? "󰂆 " :
-              b.batteryLevel <= 40 ? "󰂇 " :
-              b.batteryLevel <= 50 ? "󰂈 " :
-              b.batteryLevel <= 60 ? "󰢝 " :
-              b.batteryLevel <= 70 ? "󰂉 " :
-              b.batteryLevel <= 80 ? "󰢞 " :
-              b.batteryLevel <= 90 ? "󰂊 " :
-              b.batteryLevel < 100 ? "󰂋 " :
-              "󰂅 ") : (
-              b.batteryLevel <= 10 ? "󰂎 " :
-              b.batteryLevel <= 20 ? "󰁺 " :
-              b.batteryLevel <= 30 ? "󰁻 " :
-              b.batteryLevel <= 40 ? "󰁼 " :
-              b.batteryLevel <= 50 ? "󰁽 " :
-              b.batteryLevel <= 60 ? "󰁾 " :
-              b.batteryLevel <= 70 ? "󰁿 " :
-              b.batteryLevel <= 80 ? "󰂀 " :
-              b.batteryLevel <= 90 ? "󰂁 " :
-              b.batteryLevel < 100 ? "󰂂 " :
-              "󰁹 ")
+            text: b.batteryCharging ? (
+                  b.batteryLevel <= 10 ? "󰢟" :
+                  b.batteryLevel <= 20 ? "󰢜" :
+                  b.batteryLevel <= 30 ? "󰂆" :
+                  b.batteryLevel <= 40 ? "󰂇" :
+                  b.batteryLevel <= 50 ? "󰂈" :
+                  b.batteryLevel <= 60 ? "󰢝" :
+                  b.batteryLevel <= 70 ? "󰂉" :
+                  b.batteryLevel <= 80 ? "󰢞" :
+                  b.batteryLevel <= 90 ? "󰂊" :
+                  b.batteryLevel < 100 ? "󰂋" :
+                  "󰂅") : (
+                  b.batteryLevel <= 10 ? "󰂎" :
+                  b.batteryLevel <= 20 ? "󰁺" :
+                  b.batteryLevel <= 30 ? "󰁻" :
+                  b.batteryLevel <= 40 ? "󰁼" :
+                  b.batteryLevel <= 50 ? "󰁽" :
+                  b.batteryLevel <= 60 ? "󰁾" :
+                  b.batteryLevel <= 70 ? "󰁿" :
+                  b.batteryLevel <= 80 ? "󰂀" :
+                  b.batteryLevel <= 90 ? "󰂁" :
+                  b.batteryLevel < 100 ? "󰂂" :
+                  "󰁹")
 
-        text: batteryIcon + "\n" + b.batteryLevel + "%"
-        color: b.col
+            color: b.col
+            font.family: Theme.fontFamily
+            font.pixelSize: Theme.fontSize*1.8
+        }
+        Text {
+            horizontalAlignment: Text.AlignHCenter
 
-        font.family: Theme.fontFamily
-        font.pixelSize: Theme.fontSize
-        font.bold: true
+            text: b.batteryLevel + "%"
+
+            color: b.col
+            font.family: Theme.fontFamily
+            font.pixelSize: Theme.fontSize
+            font.bold: true
+        }
     }
 
     // Battery level
