@@ -5,6 +5,7 @@ import ".."
 import "base/"
 
 Bubble {
+    id: b
     Layout.fillWidth: true
     Layout.alignment: Qt.AlignHCenter
 
@@ -15,16 +16,12 @@ Bubble {
         precision: SystemClock.Minutes
     }
     Text {
-        id: timeBlock
         anchors.centerIn: parent
         horizontalAlignment: Text.AlignHCenter
 
         text: Qt.formatDateTime(clock.date, " \nhh\nmm")
-        color: Theme.colBlue
+        color: b.col
         font.family: Theme.fontFamily
         font.pixelSize: Theme.fontSize*1.5
-        Component.onCompleted: {
-            parent.width = timeBlock.contentWidth
-        }
     }
 }

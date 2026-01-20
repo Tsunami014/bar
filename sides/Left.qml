@@ -15,7 +15,18 @@ Rectangle {
         Battery {}
         Clock {}
     }
+    // Middle
     Workspaces {
         anchors.centerIn: parent
+    }
+    // Bottom
+    ColumnLayout {
+        anchors {
+            left: parent.left; right: parent.right
+            bottom: parent.bottom
+        }
+        spacing: Theme.barSpacing
+
+        Wifi {}
     }
 }

@@ -14,14 +14,15 @@ Bubble {
 
     col: b.batteryCharging ? (
         b.batteryLevel <= 10 ? Theme.colRed :
-        b.batteryLevel <= 30 ? Theme.colOrange :
+        b.batteryLevel <= 20 ? Theme.colOrange :
+        b.batteryLevel <= 35 ? Theme.colYellow :
         b.batteryLevel <= 50 ? Theme.colBlue :
         b.batteryLevel <= 65 ? Theme.colIndigo :
         b.batteryLevel <= 80 ? Theme.colPurple :
         Theme.colGreen
     ) : (
         b.batteryLevel <= 15 ? Theme.colRed :
-        b.batteryLevel <= 30 ? Theme.colOrange :
+        b.batteryLevel <= 40 ? Theme.colOrange :
         b.batteryLevel <= 60 ? Theme.colYellow :
         Theme.colGreen
     )
@@ -75,6 +76,7 @@ Bubble {
     // Battery level
     Process {
         id: batteryProc
+        running: true
         command: ["sh", "-c", "cat /sys/class/power_supply/BAT*/capacity | awk '{sum+=$1; count++} END {print sum/count}'"]
         stdout: SplitParser {
             onRead: data => {
@@ -82,12 +84,12 @@ Bubble {
                 b.batteryLevel = parseInt(data.trim()) || 0
             }
         }
-        Component.onCompleted: running = true
     }
 
     // Battery charging status
     Process {
         id: batteryStatusProc
+        running: true
         command: ["sh", "-c", "cat /sys/class/power_supply/BAT*/status | awk '{s[$1]++} END {if (s[\"Charging\"]) print \"Charging\"; else if (s[\"Discharging\"]) print \"Discharging\"; else print \"Full\"}'"]
         stdout: SplitParser {
             onRead: data => {
@@ -95,7 +97,6 @@ Bubble {
                 b.batteryCharging = (data.trim() === "Charging" || data.trim() === "Full")
             }
         }
-        Component.onCompleted: running = true
     }
 
     Timer {
