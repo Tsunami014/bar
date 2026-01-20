@@ -4,8 +4,8 @@ import ".."
 import "../modules/"
 
 Rectangle {
-    // Top
     ColumnLayout {
+        id: top
         anchors {
             left: parent.left; right: parent.right
             top: parent.top
@@ -15,15 +15,24 @@ Rectangle {
         Battery {}
         Clock {}
     }
-    // Middle
-    Workspaces {
-        anchors.centerIn: parent
-    }
-    // Bottom
     ColumnLayout {
+        id: bottom
         anchors {
             left: parent.left; right: parent.right
             bottom: parent.bottom
+        }
+        spacing: Theme.barSpacing
+
+        Workspaces {}
+        Wifi {}
+    }
+    ColumnLayout {
+        id: middle
+        anchors {
+            left: parent.left; right: parent.right
+            top: top.bottom; bottom: bottom.top
+            topMargin: Theme.barSpacing
+            bottomMargin: Theme.barSpacing
         }
         spacing: Theme.barSpacing
 

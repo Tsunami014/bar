@@ -5,16 +5,17 @@ import ".."
 
 Rectangle {
     id: wrect
-    property int padding: 5
+    Layout.alignment: Qt.AlignHCenter
+    property int padding: 4
     property int margin: 8 + Theme.borderWidth
-    property int dotSze: Theme.fontSize*1.4
-    property double activeScale: 1.5
+    property int dotSze: Theme.fontSize*1.2
+    property double activeScale: 1.3
     property double round: 4/9
 
     color: Theme.colMuted2
     border.color: Qt.lighter(color, 1.5)
     border.width: Theme.borderWidth
-    height: (
+    implicitHeight: (
         (dotSze + padding) * (niri.workspaces.count - 1) +
         dotSze * activeScale +
         margin * 2

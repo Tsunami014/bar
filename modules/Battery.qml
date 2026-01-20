@@ -60,7 +60,7 @@ Bubble {
 
             color: b.col
             font.family: Theme.fontFamily
-            font.pixelSize: Theme.fontSize*1.8
+            font.pixelSize: Theme.fontSize*1.5
         }
         Text {
             horizontalAlignment: Text.AlignHCenter

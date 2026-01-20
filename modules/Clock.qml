@@ -25,6 +25,7 @@ Bubble {
         text: Qt.formatDateTime(clock.date, " \nhh\nmm")
         color: b.col
         font.family: Theme.fontFamily
-        font.pixelSize: Theme.fontSize*1.5
+        font.pixelSize: Theme.fontSize*1.3
+        font.bold: true
     }
 }
