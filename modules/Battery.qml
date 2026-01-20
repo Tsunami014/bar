@@ -16,9 +16,8 @@ Bubble {
         b.batteryLevel <= 10 ? Theme.colRed :
         b.batteryLevel <= 20 ? Theme.colOrange :
         b.batteryLevel <= 35 ? Theme.colYellow :
-        b.batteryLevel <= 50 ? Theme.colBlue :
-        b.batteryLevel <= 65 ? Theme.colIndigo :
-        b.batteryLevel <= 80 ? Theme.colPurple :
+        b.batteryLevel <= 50 ? Theme.colIndigo :
+        b.batteryLevel <= 60 ? Theme.colPurple :
         Theme.colGreen
     ) : (
         b.batteryLevel <= 15 ? Theme.colRed :
@@ -27,7 +26,7 @@ Bubble {
         Theme.colGreen
     )
 
-    Column {
+    item: Column {
         anchors.centerIn: parent
         Text {
             anchors { left: parent.left; right: parent.right }

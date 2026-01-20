@@ -1,6 +1,7 @@
 import QtQuick
 import "../.."
 Rectangle {
+    id: root
     property color col: "#FFF"
     property int padding: 5
     property int spacing: 3
@@ -17,10 +18,16 @@ Rectangle {
     implicitWidth: content.childrenRect.width + border.width + padding*2
     implicitHeight: content.childrenRect.height + border.width + padding*2
 
+    property Item item
     Item {
         id: content
         anchors.fill: parent
         anchors.margins: padding
+
+        Component.onCompleted: {
+            if (root.item) {
+                root.item.parent = content
+            }
+        }
     }
-    default property alias contentData: content.data
 }

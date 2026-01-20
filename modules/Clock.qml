@@ -15,7 +15,8 @@ Bubble {
         id: clock
         precision: SystemClock.Minutes
     }
-    Text {
+
+    item: Text {
         anchors.centerIn: parent
         horizontalAlignment: Text.AlignHCenter
 

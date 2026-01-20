@@ -14,7 +14,8 @@ Bubble {
 
     property int wStrength: 0
 
-    Column {
+    item: Column {
+        id: main
         anchors.centerIn: parent
         Text {
             anchors { left: parent.left; right: parent.right }
