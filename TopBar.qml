@@ -49,9 +49,13 @@ PanelWindow {
 
         color: Theme.colBg
 
-        Top{
+        Loader {
             anchors.fill: parent
-            color: Theme.colBg
+            active: bar.expanded
+            sourceComponent: Top {
+                anchors.fill: parent
+                color: Theme.colBg
+            }
         }
     }
     Corner {

@@ -10,7 +10,6 @@ Rectangle {
             left: parent.left
             leftMargin: Theme.barSze
         }
-        Loader { active: true; sourceComponent: Workspaces {} }
     }
     // center
     RowLayout {

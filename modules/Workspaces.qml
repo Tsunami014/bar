@@ -5,50 +5,39 @@ import ".."
 
 Rectangle {
     id: wrect
-    property int padding: 2
-    property int amnt: 10
-    property int mainHei: Theme.barSze - 7
-    property int dotSze: mainHei - padding*2
-    property int dotRound: dotSze/9*4
-    property int mainRound: dotSze/3*2
+    property int padding: 4
+    property int margin: 6
+    property int dotSze: Theme.fontSize*1.5
+    property double activeScale: 1.5
+    property double round: 4/9
 
-    anchors.left: parent.left
     color: Theme.colMuted2
-    height: mainHei
-    width: mainRound*2 + (dotSze + padding*2) * amnt
-    bottomLeftRadius: mainRound
-    bottomRightRadius: mainRound
+    height: (
+        (dotSze + padding) * (niri.workspaces.count - 1) +
+        dotSze * activeScale +
+        margin * 2
+    )
+    width: dotSze+margin*2
+    radius: width*round
 
-    Rectangle {
-        id: workspaceLayout
-        anchors {
-            verticalCenter: parent.verticalCenter
-            left: parent.left
-            right: parent.right
-            leftMargin: mainRound
-            rightMargin: mainRound
-        }
+    ColumnLayout {
+        anchors.fill: parent
+        anchors.margins: wrect.margin
+        spacing: padding
 
-        RowLayout {
-            anchors {
-                verticalCenter: parent.verticalCenter
-            }
-            spacing: padding
+        Repeater {
+            model: niri.workspaces
 
-            Repeater {
-                model: niri.workspaces
-
-                Rectangle {
-                    visible: index < amnt+1
-                    width: dotSze
-                    height: dotSze
-                    radius: dotRound
-                    color: model.isActive ? Theme.colFg : Theme.colMuted1
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: niri.focusWorkspaceById(model.id)
-                    }
+            Rectangle {
+                width: wrect.dotSze
+                height: model.isActive ? width*wrect.activeScale : width
+                Layout.preferredHeight: height
+                radius: wrect.dotSze*wrect.round
+                color: model.isActive ? Theme.colFg : Theme.colMuted1
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: niri.focusWorkspaceById(model.id)
                 }
             }
         }

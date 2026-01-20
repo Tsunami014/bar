@@ -15,4 +15,7 @@ Rectangle {
         Battery {}
         Clock {}
     }
+    Workspaces {
+        anchors.centerIn: parent
+    }
 }
