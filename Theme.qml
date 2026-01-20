@@ -28,4 +28,8 @@ QtObject {
     readonly property int barBaseSze: 10
     readonly property int barSpacing: 10
     readonly property int barRound: 10
+
+    // Border stuff
+    readonly property int borderRadius: 15
+    readonly property double borderWidth: 2.5
 }

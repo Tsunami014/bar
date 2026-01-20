@@ -1,12 +1,13 @@
 import QtQuick
+import "../.."
 Rectangle {
     property color col: "#FFF"
     property int padding: 5
     property int spacing: 3
 
     border.color: Qt.lighter(col, 1.4)
-    border.width: 2.5
-    radius: 15
+    border.width: Theme.borderWidth
+    radius: Theme.borderRadius
     color: Qt.rgba(
         border.color.r+0.2,
         border.color.g+0.2,

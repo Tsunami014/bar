@@ -13,9 +13,17 @@ Bubble {
     property bool batteryCharging: false
 
     col: b.batteryCharging ? (
-        b.batteryLevel <= 15 ? Theme.colOrange : Theme.colGreen
+        b.batteryLevel <= 10 ? Theme.colRed :
+        b.batteryLevel <= 30 ? Theme.colOrange :
+        b.batteryLevel <= 50 ? Theme.colBlue :
+        b.batteryLevel <= 65 ? Theme.colIndigo :
+        b.batteryLevel <= 80 ? Theme.colPurple :
+        Theme.colGreen
     ) : (
-        b.batteryLevel <= 15 ? Theme.colRed : Theme.colGreen
+        b.batteryLevel <= 15 ? Theme.colRed :
+        b.batteryLevel <= 30 ? Theme.colOrange :
+        b.batteryLevel <= 60 ? Theme.colYellow :
+        Theme.colGreen
     )
 
     Text {
