@@ -11,11 +11,19 @@ Bubble {
 
     col: Theme.colBlue
 
-    Popup{}
-
     SystemClock {
         id: clock
-        precision: SystemClock.Minutes
+        precision: SystemClock.Seconds
+    }
+
+    Popup {
+        Text {
+            text: Qt.formatDateTime(clock.date, "h:mm:ss AP\nd MMM yyyy\ndd/MM/yy")
+            color: b.col
+            font.family: Theme.fontFamily
+            font.pixelSize: Theme.fontSize
+            font.bold: true
+        }
     }
 
     item: Text {
