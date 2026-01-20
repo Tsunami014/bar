@@ -1,6 +1,11 @@
 # Bar
 A status bar made in quickshell for niri.
 
+## Extra stuff
+These are extra things you can download for more features
+- `acpi` for battery time estimates
+
+## How to use
 To use, clone it into `~/.config/quickshell`:
 ```bash
 cd ~/.config/quickshell

@@ -44,6 +44,8 @@ Bubble {
         }
     }
 
+    Popup{}
+
     // Wifi Strength
     Process {
         id: wifiStrengthProc

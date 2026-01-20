@@ -11,6 +11,8 @@ Bubble {
 
     col: Theme.colBlue
 
+    Popup{}
+
     SystemClock {
         id: clock
         precision: SystemClock.Minutes

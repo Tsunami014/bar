@@ -10,6 +10,8 @@ Bubble {
     Layout.alignment: Qt.AlignHCenter
 
     property int batteryLevel: 0
+    property string batChargeStatus: "?"
+    property string batteryExtra: ""
     property bool batteryCharging: false
 
     col: b.batteryCharging ? (
@@ -72,6 +74,15 @@ Bubble {
         }
     }
 
+    Popup {
+        Text {
+            text: b.batChargeStatus + "\n" + b.batteryLevel + "%\n" + b.batteryExtra
+            color: b.col
+            font.family: Theme.fontFamily
+            font.pixelSize: Theme.fontSize
+            font.bold: true
+        }
+    }
     // Battery level
     Process {
         id: batteryProc
@@ -93,7 +104,21 @@ Bubble {
         stdout: SplitParser {
             onRead: data => {
                 if (!data) return
-                b.batteryCharging = (data.trim() === "Charging" || data.trim() === "Full")
+                b.batChargeStatus = data.trim()
+                b.batteryCharging = (b.batChargeStatus === "Charging" || b.batChargeStatus === "Full")
+            }
+        }
+    }
+
+    // Time left
+    Process {
+        id: batteryTLProc
+        running: true
+        command: ["sh", "-c", "acpi -b | grep 'charg' -m 1 | grep -P -o '(?<=%, ).+'"]
+        stdout: SplitParser {
+            onRead: data => {
+                if (!data) return
+                b.batteryExtra = data.trim()
             }
         }
     }
@@ -105,6 +130,7 @@ Bubble {
         onTriggered: {
             batteryProc.running = true
             batteryStatusProc.running = true
+            batteryTLProc.running = true
         }
     }
 }

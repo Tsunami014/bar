@@ -24,11 +24,10 @@ PanelWindow {
         MouseArea {
             anchors.fill: parent
             hoverEnabled: true
-            
+
             onEntered: {
                 bar.expanded = true
             }
-            
             onExited: {
                 bar.expanded = false
             }
