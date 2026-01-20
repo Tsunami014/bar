@@ -1,3 +1,4 @@
+//@ pragma UseQApplication
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
@@ -17,8 +18,8 @@ ShellRoot{
         }
     }
 
-    TopBar{}
-    BotBar{}
     LeftBar{}
     RightBar{}
+    TopBar{}
+    BotBar{}
 }

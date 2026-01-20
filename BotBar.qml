@@ -99,10 +99,14 @@ PanelWindow {
         }
 
         Bottom {
-            anchors.fill: parent
-
-            anchors.leftMargin: Theme.barRound
-            anchors.rightMargin: Theme.barRound
+            color: Theme.colBg
+            anchors {
+                fill: parent
+                leftMargin: Theme.barRound
+                rightMargin: Theme.barRound
+                topMargin: Theme.barPadding
+                bottomMargin: Theme.barPadding
+            }
 
             topLeftRadius: 20
             topRightRadius: 20

@@ -4,6 +4,15 @@ import ".."
 import "../modules/"
 
 Rectangle {
-    anchors.fill: parent
-    color: Theme.colBg
+    // Top
+    ColumnLayout {
+        anchors {
+            left: parent.left; right: parent.right
+            top: parent.top
+        }
+        spacing: 10
+
+        Battery {}
+        //Time {}
+    }
 }

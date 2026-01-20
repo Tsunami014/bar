@@ -10,61 +10,16 @@ PanelWindow {
         left: true
     }
 
-    property int barSze: 3
+    exclusiveZone: Theme.barSze
+    implicitWidth: Theme.barSze
 
-    property bool expanded: false
-    exclusiveZone: Theme.barBaseSze
-    implicitWidth: (expanded ? Theme.barSze*barSze : Theme.barBaseSze)+Theme.barRound
-
-    color: Theme.colTransparent
-
-    Rectangle {
-        anchors.fill: rect
+    color: Theme.colBg
+    Left{
+        anchors.fill: parent
+        anchors.leftMargin:  Theme.barPadding
+        anchors.rightMargin: Theme.barPadding
+        anchors.topMargin:    Theme.barBaseSze*2
+        anchors.bottomMargin: Theme.barBaseSze*2
         color: Theme.colBg
-
-        // Expand on hover
-        MouseArea {
-            anchors.fill: parent
-            hoverEnabled: true
-            
-            onEntered: {
-                bar.expanded = true
-            }
-            
-            onExited: {
-                bar.expanded = false
-            }
-        }
-    }
-    Rectangle {
-        id: rect
-        opacity: bar.expanded ? 1 : 0
-        //Behavior on opacity { NumberAnimation { duration: 40 } }
-
-        anchors {
-            top: parent.top
-            bottom: parent.bottom
-            left: parent.left
-        }
-        width: bar.implicitWidth - Theme.barRound
-        //Behavior on width { NumberAnimation { duration: 30 } }
-
-        color: Theme.colBg
-
-        Left{}
-    }
-    Corner {
-        anchors {
-            top: rect.top
-            left: rect.right
-        }
-    }
-    Corner {
-        anchors {
-            bottom: rect.bottom
-            left: rect.right
-        }
-        ry: 1
     }
 }
-

@@ -1,61 +1,58 @@
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls
-import Quickshell
-import Quickshell.Services.UPower
 import Quickshell.Io
 import ".."
+import "base/"
 
-Text {
-    id: batteryWidget
-    anchors {
-        verticalCenter: parent.verticalCenter
-    }
+Bubble {
+    id: b
+    Layout.fillWidth: true
+    Layout.alignment: Qt.AlignHCenter
+
     property int batteryLevel: 0
     property bool batteryCharging: false
-    property bool clicked: false
 
-    property string batteryIcon: batteryCharging ? (
-          batteryLevel <= 10 ? "󰢟 " :
-          batteryLevel <= 20 ? "󰢜 " :
-          batteryLevel <= 30 ? "󰂆 " :
-          batteryLevel <= 40 ? "󰂇 " :
-          batteryLevel <= 50 ? "󰂈 " :
-          batteryLevel <= 60 ? "󰢝 " :
-          batteryLevel <= 70 ? "󰂉 " :
-          batteryLevel <= 80 ? "󰢞 " :
-          batteryLevel <= 90 ? "󰂊 " :
-          batteryLevel < 100 ? "󰂋 " :
-          "󰂅 ") : (
-          batteryLevel <= 10 ? "󰂎 " :
-          batteryLevel <= 20 ? "󰁺 " :
-          batteryLevel <= 30 ? "󰁻 " :
-          batteryLevel <= 40 ? "󰁼 " :
-          batteryLevel <= 50 ? "󰁽 " :
-          batteryLevel <= 60 ? "󰁾 " :
-          batteryLevel <= 70 ? "󰁿 " :
-          batteryLevel <= 80 ? "󰂀 " :
-          batteryLevel <= 90 ? "󰂁 " :
-          batteryLevel < 100 ? "󰂂 " :
-          "󰁹 ")
-
-    text: batteryIcon + batteryLevel + "%"
-    color: batteryCharging ? (
-        batteryLevel <= 15 ? Theme.colOrange : Theme.colGreen
+    col: b.batteryCharging ? (
+        b.batteryLevel <= 15 ? Theme.colOrange : Theme.colGreen
     ) : (
-        batteryLevel <= 15 ? Theme.colRed : Theme.colGreen
+        b.batteryLevel <= 15 ? Theme.colRed : Theme.colGreen
     )
 
-    MouseArea {
-        anchors.fill: parent
-        onClicked: batteryWidget.clicked = !batteryWidget.clicked
-    }
+    Text {
+        id: batteryWidget
+        anchors.centerIn: parent
 
-    font.family: Theme.fontFamily
-    font.pixelSize: Theme.fontSize
-    font.bold: true
-    Component.onCompleted: {
-        parent.width = batteryWidget.contentWidth
+        property string batteryIcon: b.batteryCharging ? (
+              b.batteryLevel <= 10 ? "󰢟 " :
+              b.batteryLevel <= 20 ? "󰢜 " :
+              b.batteryLevel <= 30 ? "󰂆 " :
+              b.batteryLevel <= 40 ? "󰂇 " :
+              b.batteryLevel <= 50 ? "󰂈 " :
+              b.batteryLevel <= 60 ? "󰢝 " :
+              b.batteryLevel <= 70 ? "󰂉 " :
+              b.batteryLevel <= 80 ? "󰢞 " :
+              b.batteryLevel <= 90 ? "󰂊 " :
+              b.batteryLevel < 100 ? "󰂋 " :
+              "󰂅 ") : (
+              b.batteryLevel <= 10 ? "󰂎 " :
+              b.batteryLevel <= 20 ? "󰁺 " :
+              b.batteryLevel <= 30 ? "󰁻 " :
+              b.batteryLevel <= 40 ? "󰁼 " :
+              b.batteryLevel <= 50 ? "󰁽 " :
+              b.batteryLevel <= 60 ? "󰁾 " :
+              b.batteryLevel <= 70 ? "󰁿 " :
+              b.batteryLevel <= 80 ? "󰂀 " :
+              b.batteryLevel <= 90 ? "󰂁 " :
+              b.batteryLevel < 100 ? "󰂂 " :
+              "󰁹 ")
+
+        text: batteryIcon + "\n" + b.batteryLevel + "%"
+        horizontalAlignment: Text.AlignHCenter
+        color: b.col
+
+        font.family: Theme.fontFamily
+        font.pixelSize: Theme.fontSize
+        font.bold: true
     }
 
     // Battery level
@@ -65,7 +62,7 @@ Text {
         stdout: SplitParser {
             onRead: data => {
                 if (!data) return
-                batteryWidget.batteryLevel = parseInt(data.trim()) || 0
+                b.batteryLevel = parseInt(data.trim()) || 0
             }
         }
         Component.onCompleted: running = true
@@ -78,7 +75,7 @@ Text {
         stdout: SplitParser {
             onRead: data => {
                 if (!data) return
-                batteryWidget.batteryCharging = (data.trim() === "Charging" || data.trim() === "Full")
+                b.batteryCharging = (data.trim() === "Charging" || data.trim() === "Full")
             }
         }
         Component.onCompleted: running = true

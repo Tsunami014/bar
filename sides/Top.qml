@@ -4,9 +4,6 @@ import ".."
 import "../modules/"
 
 Rectangle {
-    anchors.fill: parent
-    color: Theme.colBg
-
     // left
     RowLayout {
         anchors {
@@ -28,16 +25,5 @@ Rectangle {
             font.pixelSize: Theme.fontSize
             color: Theme.colFg
         }
-    }
-    // right
-    RowLayout {
-        anchors {
-            verticalCenter: parent.verticalCenter
-            right: parent.right
-            rightMargin: Theme.barSze
-        }
-        spacing: 10
-        Loader { active: true; sourceComponent: Battery {} }
-        Loader { active: true; sourceComponent: Time {} }
     }
 }

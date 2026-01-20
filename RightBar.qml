@@ -111,6 +111,7 @@ PanelWindow {
             anchors.fill: parent
             anchors.leftMargin: Theme.barRound
             anchors.bottomMargin: Theme.barRound
+            color: Theme.colBg
 
             opacity: bar.expanded != 0 ? 1:0
             //Behavior on opacity { NumberAnimation { duration: 40 } }
