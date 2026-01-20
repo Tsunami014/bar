@@ -21,6 +21,7 @@ Bubble {
     Text {
         id: batteryWidget
         anchors.centerIn: parent
+        horizontalAlignment: Text.AlignHCenter
 
         property string batteryIcon: b.batteryCharging ? (
               b.batteryLevel <= 10 ? "󰢟 " :
@@ -47,7 +48,6 @@ Bubble {
               "󰁹 ")
 
         text: batteryIcon + "\n" + b.batteryLevel + "%"
-        horizontalAlignment: Text.AlignHCenter
         color: b.col
 
         font.family: Theme.fontFamily

@@ -5,7 +5,7 @@ Rectangle {
     property int spacing: 3
 
     border.color: Qt.lighter(col, 1.4)
-    border.width: 2
+    border.width: 2.5
     radius: 15
     color: Qt.rgba(
         border.color.r+0.2,
@@ -13,8 +13,8 @@ Rectangle {
         border.color.b+0.2,
         0.25
     )
-    implicitWidth: content.childrenRect.width + 2 + padding*2
-    implicitHeight: content.childrenRect.height + 2 + padding*2
+    implicitWidth: content.childrenRect.width + border.width + padding*2
+    implicitHeight: content.childrenRect.height + border.width + padding*2
 
     Item {
         id: content

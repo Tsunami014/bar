@@ -10,8 +10,8 @@ PanelWindow {
         left: true
     }
 
-    exclusiveZone: Theme.barSze
-    implicitWidth: Theme.barSze
+    exclusiveZone: Theme.barSze*1.5
+    implicitWidth: exclusiveZone
 
     color: Theme.colBg
     Left{

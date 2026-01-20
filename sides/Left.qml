@@ -10,9 +10,9 @@ Rectangle {
             left: parent.left; right: parent.right
             top: parent.top
         }
-        spacing: 10
+        spacing: Theme.barSpacing
 
         Battery {}
-        //Time {}
+        Clock {}
     }
 }
