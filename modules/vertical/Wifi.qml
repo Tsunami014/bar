@@ -2,8 +2,8 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell.Networking
 import Quickshell.Io
-import ".."
-import "base/"
+import "../.."
+import "../base/"
 
 Bubble {
     id: b
