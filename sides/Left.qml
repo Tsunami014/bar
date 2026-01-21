@@ -12,8 +12,8 @@ Rectangle {
         }
         spacing: Theme.barSpacing
 
-        Battery {}
         Clock {}
+        Workspaces {}
     }
     ColumnLayout {
         id: bottom
@@ -23,8 +23,8 @@ Rectangle {
         }
         spacing: Theme.barSpacing
 
-        Workspaces {}
         Wifi {}
+        Battery {}
     }
     ColumnLayout {
         id: middle
