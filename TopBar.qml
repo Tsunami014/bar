@@ -44,7 +44,6 @@ PanelWindow {
             right: parent.right
         }
         height: bar.implicitHeight - Theme.barRound
-        //Behavior on height { NumberAnimation { duration: 30 } }
 
         color: Theme.colBg
 
@@ -71,4 +70,3 @@ PanelWindow {
         rx: 1
     }
 }
-

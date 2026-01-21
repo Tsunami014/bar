@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell
 import "./sides/"
+import "./modules/base/"
 
 PanelWindow {
     id: bar
@@ -15,8 +16,6 @@ PanelWindow {
 
     exclusiveZone: Theme.barBaseSze
     implicitWidth: Theme.barBaseSze+Theme.barRound
-    property bool expanded: (mouseAreaBar.containsMouse || mouseAreaRect.containsMouse) && wantExpand
-    property bool wantExpand: false
     color: Theme.colTransparent
 
     Rectangle {
@@ -30,108 +29,69 @@ PanelWindow {
         color: Theme.colBg
     }
 
-    Timer {
-        id: collapseTimer;
-        interval: 150;
-        repeat: false;
-        onTriggered: {
-            if (!mouseAreaBar.containsMouse && !mouseAreaRect.containsMouse) {
-                wantExpand = false
+    Loader {
+        anchors.fill: fillr
+        active: marea.doexpand
+        sourceComponent: Item { anchors.fill: parent; PanelWindow {
+            id: rect
+            anchors {
+                top: true
+                bottom: true
+                right: true
             }
-        }
-    }
-
-    // Expand on hover
-    MouseArea {
-        id: mouseAreaBar
-        anchors.fill: parent
-        hoverEnabled: true
-        
-        onPressed: {
-            bar.wantExpand = true
-        }
-        
-        onExited: {
-            if (!mouseAreaRect.containsMouse) {
-                collapseTimer.start()
+            margins {
+                bottom: bar.height*bar.scale - Theme.barRound
+                right: -Theme.barBaseSze
             }
-        }
-    }
 
-    PanelWindow {
-        id: rect
-        anchors {
-            top: true
-            bottom: true
-            right: true
-        }
-        margins {
-            bottom: bar.height*bar.scale - Theme.barRound
-            right: -Theme.barBaseSze
-        }
+            exclusiveZone: 0
+            implicitWidth: Theme.barSze*bar.barSze + Theme.barRound
+            color: "transparent"
 
-        exclusiveZone: 0
-        implicitWidth: bar.expanded != 0 ? Theme.barSze*bar.barSze + Theme.barRound : 0
-        //Behavior on implicitWidth { NumberAnimation { duration: 20 } }
-        color: "transparent"
+            MouseOverlay { area: marea }
 
-        MouseArea {
-            id: mouseAreaRect
-            anchors.fill: parent
-            hoverEnabled: true
-            
-            onPressed: {
-                bar.wantExpand = true
-            }
-            
-            onExited: {
-                if (!mouseAreaBar.containsMouse) {
-                    collapseTimer.start()
+            Corner {
+                anchors {
+                    top: parent.top
+                    left: parent.left
                 }
+                rx: 1
+            }
+            Corner {
+                anchors {
+                    bottom: parent.bottom
+                    right: parent.right
+                }
+                anchors.rightMargin: Theme.barRound
+                rx: 1
+            }
+
+            Right {
+                anchors.fill: parent
+                anchors.leftMargin: Theme.barRound
+                anchors.bottomMargin: Theme.barRound
+                color: Theme.colBg
+
+                opacity: marea.doexpand != 0 ? 1:0
+                //Behavior on opacity { NumberAnimation { duration: 40 } }
+                bottomLeftRadius: 10
             }
         }
-
         Corner {
             anchors {
                 top: parent.top
-                left: parent.left
+                right: parent.left
             }
             rx: 1
         }
         Corner {
             anchors {
                 bottom: parent.bottom
-                right: parent.right
+                right: parent.left
             }
-            anchors.rightMargin: Theme.barRound
             rx: 1
+            ry: 1
         }
-
-        Right {
-            anchors.fill: parent
-            anchors.leftMargin: Theme.barRound
-            anchors.bottomMargin: Theme.barRound
-            color: Theme.colBg
-
-            opacity: bar.expanded != 0 ? 1:0
-            //Behavior on opacity { NumberAnimation { duration: 40 } }
-            bottomLeftRadius: 10
-        }
-    }
-    Corner {
-        anchors {
-            top: fillr.top
-            right: fillr.left
-        }
-        rx: 1
-    }
-    Corner {
-        anchors {
-            bottom: fillr.bottom
-            right: fillr.left
-        }
-        rx: 1
-        ry: 1
-    }
+    }}
+    MOBase { id: marea }
 }
-

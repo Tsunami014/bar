@@ -36,6 +36,6 @@ Rectangle {
         }
         spacing: Theme.barSpacing
 
-        Wifi {}
+        Tray {}
     }
 }

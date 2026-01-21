@@ -2,24 +2,8 @@ import QtQuick
 import Quickshell
 import "../.."
 
-MouseArea {
-    id: area
-    hoverEnabled: true
-    anchors.fill: parent
-
-    property int expandCounts: 0
-    property bool doexpand: false
-
-    Timer {
-        id: collapseTimer;
-        interval: 50;
-        repeat: false;
-        onTriggered: {
-            if (expandCounts <= 0) {
-                doexpand = false
-            }
-        }
-    }
+MOBase {
+    id: marea
 
     Item {
         id: outerItems
@@ -37,16 +21,16 @@ MouseArea {
     Loader {
         id: loader
         anchors.fill: parent
-        active: area.doexpand
+        active: marea.doexpand
         sourceComponent: PopupWindow {
             id: pop
             anchor {
-                item: area
+                item: marea
                 gravity: Edges.Right
                 adjustment: PopupAdjustment.Slide
                 rect {
-                    x: area.width
-                    y: area.height/2
+                    x: marea.width
+                    y: marea.height/2
                 }
             }
             implicitWidth: (innerItems.childrenRect.width || 1) + outerItems.margin*2 + Theme.barPadding
@@ -60,7 +44,7 @@ MouseArea {
                     gravity: Edges.Right
                     adjustment: PopupAdjustment.None
                     rect {
-                        y: popRect.height/2
+                        y: popRect.height/2 - 1
                     }
                 }
                 color: Theme.colTransparent
@@ -80,6 +64,7 @@ MouseArea {
                         left: parent.left
                     }
                 }
+                MouseOverlay { area: marea }
             }
             Rectangle {
                 id: popRect
@@ -93,29 +78,7 @@ MouseArea {
                     outerItems.visible = true
                 }
             }
-            MouseArea {
-                anchors.fill: parent
-                hoverEnabled: true
-                onEntered: {
-                    area.expandCounts += 1
-                }
-                onExited: {
-                    area.expandCounts -= 1
-                    if (area.expandCounts <= 0) {
-                        collapseTimer.start()
-                    }
-                }
-            }
-        }
-    }
-    onEntered: {
-        area.expandCounts += 1
-        area.doexpand = true
-    }
-    onExited: {
-        area.expandCounts -= 1
-        if (area.expandCounts <= 0) {
-            collapseTimer.start()
+            MouseOverlay { area: marea }
         }
     }
     default property alias contentIts: innerItems.data

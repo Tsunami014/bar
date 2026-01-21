@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell
 import "./sides/"
+import "./modules/base/"
 
 PanelWindow {
     id: bar
@@ -15,104 +16,64 @@ PanelWindow {
 
     exclusiveZone: Theme.barBaseSze
     implicitHeight: Theme.barBaseSze
-    property bool expanded: (mouseAreaBar.containsMouse || mouseAreaRect.containsMouse) && wantExpand
-    property bool wantExpand: false
     color: Theme.colBg
 
-    Timer {
-        id: collapseTimer;
-        interval: 150;
-        repeat: false;
-        onTriggered: {
-            if (!mouseAreaBar.containsMouse && !mouseAreaRect.containsMouse) {
-                wantExpand = false
-            }
-        }
-    }
-
-    MouseArea {
-        id: mouseAreaBar
+    Loader {
         anchors.fill: parent
-        hoverEnabled: true
-        
-        onPressed: {
-            bar.wantExpand = true
-        }
-        
-        onExited: {
-            if (!mouseAreaRect.containsMouse) {
-                collapseTimer.start()
+        active: marea.doexpand
+        sourceComponent: PanelWindow {
+            id: rect
+            anchors {
+                bottom: true
+                left: true
+                right: true
             }
-        }
-    }
-
-    PanelWindow {
-        id: rect
-        anchors {
-            bottom: true
-            left: true
-            right: true
-        }
-        margins {
-            left: bar.width*bar.scale
-            right: bar.width*bar.scale
-            bottom: -Theme.barBaseSze
-        }
-
-        exclusiveZone: 0
-        implicitHeight: bar.expanded!=0 ? Theme.barSze*bar.barSze : 0
-        //Behavior on implicitHeight { NumberAnimation { duration: 20 } }
-        color: "transparent"
-
-        MouseArea {
-            id: mouseAreaRect
-            anchors.fill: parent
-            hoverEnabled: true
-            
-            onPressed: {
-                bar.wantExpand = true
+            margins {
+                left: bar.width*bar.scale
+                right: bar.width*bar.scale
+                bottom: -Theme.barBaseSze
             }
-            
-            onExited: {
-                if (!mouseAreaBar.containsMouse) {
-                    collapseTimer.start()
+
+            exclusiveZone: 0
+            implicitHeight: Theme.barSze*bar.barSze
+            color: "transparent"
+
+            MouseOverlay { area: marea }
+
+            Corner {
+                anchors {
+                    bottom: parent.bottom
+                    left: parent.left
                 }
+                rx: 1
+                ry: 1
+                anchors.bottomMargin: Theme.barRound
             }
-        }
-
-        Corner {
-            anchors {
-                bottom: parent.bottom
-                left: parent.left
-            }
-            rx: 1
-            ry: 1
-            anchors.bottomMargin: Theme.barRound
-        }
-        Corner {
-            anchors {
-                bottom: parent.bottom
-                right: parent.right
-            }
-            ry: 1
-            anchors.bottomMargin: Theme.barRound
-        }
-
-        Bottom {
-            color: Theme.colBg
-            anchors {
-                fill: parent
-                leftMargin: Theme.barRound
-                rightMargin: Theme.barRound
-                topMargin: Theme.barPadding
-                bottomMargin: Theme.barPadding
+            Corner {
+                anchors {
+                    bottom: parent.bottom
+                    right: parent.right
+                }
+                ry: 1
+                anchors.bottomMargin: Theme.barRound
             }
 
-            topLeftRadius: 20
-            topRightRadius: 20
-            opacity: bar.expanded != 0 ? 1:0
-            //Behavior on opacity { NumberAnimation { duration: 40 } }
+            Bottom {
+                color: Theme.colBg
+                anchors {
+                    fill: parent
+                    leftMargin: Theme.barRound
+                    rightMargin: Theme.barRound
+                    topMargin: Theme.barPadding
+                    bottomMargin: Theme.barPadding
+                }
+
+                topLeftRadius: 20
+                topRightRadius: 20
+                opacity: marea.doexpand != 0 ? 1:0
+                //Behavior on opacity { NumberAnimation { duration: 40 } }
+            }
         }
     }
+    MOBase { id: marea }
 }
-
