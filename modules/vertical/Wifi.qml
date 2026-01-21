@@ -55,6 +55,16 @@ Bubble {
         }
     }
 
+    MouseArea {
+        anchors.fill: parent
+        cursorShape: Qt.PointingHandCursor
+        Process {
+            id: click
+            command: ["sh", "-c", "$($TermSpawn nmtui)"]
+        }
+        onClicked: click.running = true
+    }
+
     // Wifi Strength
     Process {
         id: wifiStrengthProc

@@ -2,8 +2,11 @@
 A status bar made in quickshell for niri.
 
 ## Extra stuff
-These are extra things you can download for more features
+These are extra things you can get for more features
 - `acpi` for battery time estimates
+- Set the environment var `TermSpawn` to get stuff to open on click of some elements
+    - TermSpawn must be set to the command to spawn a new terminal running code (e.g. with alacritty it's `alacritty -e`)
+    - It just needs to be avaliable when running the quickshell instance, so set it wherever.
 
 ## How to use
 To use, clone it into `~/.config/quickshell`:
