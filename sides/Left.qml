@@ -12,8 +12,13 @@ Rectangle {
         }
         spacing: Theme.barSpacing
 
+        Execute {
+            col1: Theme.colIndigo
+            col2: Theme.colPurple
+            cmd: ["sh", "-c", "$EXECUTE"]
+        }
         Clock {}
-        Workspaces {}
+        Wifi {}
     }
     ColumnLayout {
         id: bottom
@@ -23,7 +28,7 @@ Rectangle {
         }
         spacing: Theme.barSpacing
 
-        Wifi {}
+        Workspaces {}
         Battery {}
     }
     ColumnLayout {

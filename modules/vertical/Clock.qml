@@ -9,7 +9,7 @@ Bubble {
     Layout.fillWidth: true
     Layout.alignment: Qt.AlignHCenter
 
-    col: Theme.colBlue
+    col: Theme.colOrange
 
     SystemClock {
         id: clock
