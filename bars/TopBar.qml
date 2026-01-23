@@ -1,6 +1,8 @@
 import QtQuick
 import Quickshell
-import "./sides/"
+import ".."
+import "../sides/"
+import "../modules/base/"
 
 PanelWindow {
     id: bar
