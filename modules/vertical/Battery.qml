@@ -31,7 +31,7 @@ Bubble {
     item: Column {
         anchors.centerIn: parent
         Text {
-            anchors { left: parent.left; right: parent.right }
+            anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
 
             text: b.batteryCharging ? (
@@ -63,6 +63,7 @@ Bubble {
             font.pixelSize: Theme.fontSize*1.5
         }
         Text {
+            anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
 
             text: b.batteryLevel + "%"
