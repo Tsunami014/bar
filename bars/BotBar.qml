@@ -26,7 +26,7 @@ PanelWindow {
 
         Loader {
             anchors.fill: parent
-            active: marea.doexpand
+            active: marea.expand
             sourceComponent: PanelWindow {
                 id: rect
                 anchors {
@@ -76,7 +76,7 @@ PanelWindow {
 
                     topLeftRadius: 20
                     topRightRadius: 20
-                    opacity: marea.doexpand != 0 ? 1:0
+                    opacity: marea.expand != 0 ? 1:0
                     //Behavior on opacity { NumberAnimation { duration: 40 } }
                 }
             }

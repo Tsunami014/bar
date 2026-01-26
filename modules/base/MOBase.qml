@@ -7,27 +7,43 @@ MouseArea {
     cursorShape: undefined
 
     property int expandCounts: 0
+    property bool expand: doexpand || forcexpand
     property bool doexpand: false
+    property bool forcexpand: false
 
     property Timer collapseTimer: Timer {
         id: collapseTimer
         interval: 50
         repeat: false
         onTriggered: {
-            if (marea.expandCounts <= 0 && !marea.containsMouse) {
+            if (marea.expandCounts <= 0) {
                 marea.doexpand = false
             }
         }
     }
-    onEntered: {
+    function forceShut() {
+        expandCounts = marea.containsMouse ? 1 : 0
+        forcexpand = false
+        marea.doexpand = false
+        if (collapseTimer.running) collapseTimer.stop()
+    }
+
+    function enter() {
         expandCounts += 1
         doexpand = true
         if (collapseTimer.running) collapseTimer.stop()
     }
-    onExited: {
+    onEntered: enter()
+    function exit() {
         expandCounts -= 1
         if (expandCounts <= 0) {
             collapseTimer.start()
         }
     }
+    onExited: exit()
+    function press() {
+        forcexpand = !forcexpand
+        if (!forcexpand) forceShut()
+    }
+    onPressed: press()
 }

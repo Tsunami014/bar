@@ -31,7 +31,7 @@ PanelWindow {
 
     Loader {
         anchors.fill: fillr
-        active: marea.doexpand
+        active: marea.expand
         sourceComponent: Item { anchors.fill: parent; PanelWindow {
             id: rect
             anchors {
@@ -49,7 +49,7 @@ PanelWindow {
                 anchors.fill: parent
                 color: Theme.colTransparent
 
-                opacity: marea.doexpand != 0 ? 1:0
+                opacity: marea.expand != 0 ? 1:0
                 //Behavior on opacity { NumberAnimation { duration: 40 } }
             }
             Repeater {
