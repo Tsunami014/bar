@@ -1,6 +1,7 @@
 import "../.."
 
 RightSlider {
-    col: Theme.colIndigo
-    fillcol: Theme.colBlue
+    slider.col: Theme.colIndigo
+    slider.fillcol: Theme.colBlue
+    slider.handlecol: Theme.colBlue
 }

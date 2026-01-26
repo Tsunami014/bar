@@ -5,9 +5,6 @@ import "../.."
 import "../base/"
 
 Rectangle {
-    property color col: "#FFF"
-    property color fillcol: "#FFF"
-    property color handlecol: fillcol
     Layout.fillWidth: true
     Layout.alignment: Qt.AlignHCenter
     implicitHeight: Theme.barSliderLen + Theme.barPadding*2
@@ -24,6 +21,7 @@ Rectangle {
             margins: Theme.barPadding
         }
     }
+    property alias slider: fslider
     Component.onCompleted: {
         fslider.orientation = Qt.Vertical
     }
