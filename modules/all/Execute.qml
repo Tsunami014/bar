@@ -15,6 +15,7 @@ Rectangle {
         }
         onClicked: click.running = true
     }
+    property Process proc: click
 
     property color col1: Theme.colRed
     property color col2: Theme.colYellow

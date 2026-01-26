@@ -1,0 +1,21 @@
+import QtQuick
+import QtQuick.Layouts
+import "../all"
+import "../.."
+
+Execute {
+    id: exe
+    Layout.fillHeight: true
+    Layout.preferredWidth: parent.height
+    property color textColour: "#FFF"
+    property string text: ""
+    Text {
+        anchors.centerIn: parent
+        horizontalAlignment: Text.AlignHCenter
+        text: exe.text
+        color: exe.textColour
+        font.family: Theme.fontFamily
+        font.pixelSize: Theme.fontSize*1.5
+        font.bold: true
+    }
+}

@@ -49,7 +49,7 @@ PanelWindow {
                 anchors.fill: parent
                 color: Theme.colTransparent
 
-                opacity: marea.expand != 0 ? 1:0
+                opacity: marea.opaque ? 1:0
                 //Behavior on opacity { NumberAnimation { duration: 40 } }
             }
             Repeater {

@@ -34,10 +34,8 @@ PanelWindow {
                 }
 
                 exclusiveZone: 0
-                implicitHeight: Theme.barSze*1.5
+                implicitHeight: Theme.barSze*1.5 + Theme.barPadding*2
                 color: "transparent"
-
-                MouseOverlay { area: marea }
 
                 Corner {
                     anchors {
@@ -64,11 +62,11 @@ PanelWindow {
                         horizontalCenter: parent.horizontalCenter
                         top: parent.top; bottom: parent.bottom
                     }
-                    width: bot.childrenRect.width + Theme.barPadding*2
+                    width: bot.width + Theme.barPadding*4
 
                     topLeftRadius: 20
                     topRightRadius: 20
-                    opacity: marea.expand != 0 ? 1:0
+                    opacity: marea.opaque ? 1:0
                     //Behavior on opacity { NumberAnimation { duration: 40 } }
 
                     Bottom {
@@ -76,9 +74,23 @@ PanelWindow {
                         anchors {
                             horizontalCenter: parent.horizontalCenter
                             top: parent.top; bottom: parent.bottom
-                            margins: Theme.barPadding
+                            margins: Theme.barPadding*2
+                        }
+                        Component.onCompleted: {
+                            children.forEach(child => {
+                                if (child.proc) {
+                                    child.proc.started.connect(function() {
+                                        marea.opaqueCounts += 1
+                                    })
+                                    child.proc.exited.connect(function() {
+                                        marea.opaqueCounts -= 1
+                                    })
+                                }
+                            })
                         }
                     }
+
+                    MouseOverlay { area: marea }
                 }
             }
         }

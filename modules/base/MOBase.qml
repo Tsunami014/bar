@@ -7,7 +7,9 @@ MouseArea {
     cursorShape: undefined
 
     property int expandCounts: 0
-    property bool expand: doexpand || forcexpand
+    property int opaqueCounts: 0
+    property bool opaque: doexpand || forcexpand
+    property bool expand: opaque || opaqueCounts > 0
     property bool doexpand: false
     property bool forcexpand: false
 
