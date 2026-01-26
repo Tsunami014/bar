@@ -1,22 +1,31 @@
 import QtQuick
+import QtQuick.Controls
 import QtQuick.Layouts
 import "../.."
 import "../base/"
 
 Rectangle {
     property color col: "#FFF"
+    property color fillcol: "#FFF"
+    property color handlecol: fillcol
     Layout.fillWidth: true
     Layout.alignment: Qt.AlignHCenter
     implicitHeight: Theme.barSliderLen + Theme.barPadding*2
     color: Theme.colBg
     topLeftRadius: Theme.barRound*2.5
     bottomLeftRadius: Theme.barRound*2.5
-    Slider {
+    FancySlider {
+        id: fslider
         col: parent.col
+        fillcol: parent.fillcol
+        handlecol: parent.handlecol
         anchors {
             fill: parent
             margins: Theme.barPadding
         }
+    }
+    Component.onCompleted: {
+        fslider.orientation = Qt.Vertical
     }
     Corner {
         anchors {

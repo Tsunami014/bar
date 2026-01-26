@@ -12,7 +12,7 @@ Rectangle {
         }
         spacing: Theme.barSpacing + Theme.barRound*2
 
-        Volume{}
+        Brightness{}
         Volume{}
     }
 }

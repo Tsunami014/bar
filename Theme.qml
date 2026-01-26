@@ -8,16 +8,16 @@ QtObject {
     readonly property color colTransparent: "transparent"  // Fully transparent background
     readonly property color colFg: "#c0caf5"
     readonly property color colMuted1: "#9aa5ce"
-    readonly property color colMuted2: "#565f89"
-    readonly property color colBg: "#1a1b26"
+    readonly property color colMuted2: "#545c7e"
+    readonly property color colBg: "#222436"
 
-    readonly property color colRed: "#f7768e"
-    readonly property color colOrange: "#ff9e64"
-    readonly property color colYellow: "#e0af68"
-    readonly property color colGreen: "#9ece6a"
-    readonly property color colBlue: "#2ac3de"
-    readonly property color colIndigo: "#7aa2f7"
-    readonly property color colPurple: "#bb9af7"
+    readonly property color colRed: "#ff757f"
+    readonly property color colOrange: "#ff966c"
+    readonly property color colYellow: "#ffc777"
+    readonly property color colGreen: "#b8db87"
+    readonly property color colBlue: "#89ddff"
+    readonly property color colIndigo: "#7ca1f2"
+    readonly property color colPurple: "#c099ff"
 
     // Font
     readonly property string fontFamily: "JetBrainsMono Nerd Font"

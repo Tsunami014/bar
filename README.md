@@ -1,6 +1,8 @@
 # Bar
 A status bar made in quickshell for niri.
 
+## Requirements
+- `brightnessctl` for brightness stuff
 ## Extra stuff
 These are extra things you can get for more features
 - `acpi` for battery time estimates
