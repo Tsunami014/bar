@@ -12,9 +12,6 @@ PanelWindow {
         right: true
     }
 
-    property double scale: 1/2
-    property int barSze: 10
-
     exclusiveZone: Theme.barBaseSze
     implicitWidth: Theme.barBaseSze+Theme.barRound
     color: Theme.colTransparent
@@ -28,6 +25,8 @@ PanelWindow {
         }
         width: Theme.barBaseSze
         color: Theme.colBg
+
+        MOBase { id: marea }
     }
 
     Loader {
@@ -40,59 +39,32 @@ PanelWindow {
                 bottom: true
                 right: true
             }
-            margins {
-                bottom: bar.height*bar.scale - Theme.barRound
-                right: -Theme.barBaseSze
-            }
 
             exclusiveZone: 0
-            implicitWidth: Theme.barSze*bar.barSze + Theme.barRound
-            color: "transparent"
-
-            MouseOverlay { area: marea }
-
-            Corner {
-                anchors {
-                    top: parent.top
-                    left: parent.left
-                }
-                rx: 1
-            }
-            Corner {
-                anchors {
-                    bottom: parent.bottom
-                    right: parent.right
-                }
-                anchors.rightMargin: Theme.barRound
-                rx: 1
-            }
+            implicitWidth: Theme.barSze*1.5
+            color: Theme.colTransparent
 
             Right {
+                id: rite
                 anchors.fill: parent
-                anchors.leftMargin: Theme.barRound
-                anchors.bottomMargin: Theme.barRound
-                color: Theme.colBg
+                color: Theme.colTransparent
 
                 opacity: marea.doexpand != 0 ? 1:0
                 //Behavior on opacity { NumberAnimation { duration: 40 } }
-                bottomLeftRadius: 10
             }
-        }
-        Corner {
-            anchors {
-                top: parent.top
-                right: parent.left
+            Repeater {
+                model: rite.children
+
+                MouseOverlay {
+                    area: marea
+                    anchors.fill: null
+
+                    width: rect.width
+                    height: modelData.implicitHeight
+                    x: modelData.x
+                    y: modelData.y
+                }
             }
-            rx: 1
-        }
-        Corner {
-            anchors {
-                bottom: parent.bottom
-                right: parent.left
-            }
-            rx: 1
-            ry: 1
         }
     }}
-    MOBase { id: marea }
 }

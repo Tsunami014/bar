@@ -1,5 +1,6 @@
 pragma Singleton
 import QtQuick
+import QtQuick.Window
 
 QtObject {
     // Theme colors - Chroma Glow style (matching waybar)
@@ -28,6 +29,7 @@ QtObject {
     readonly property int barBaseSze: 10
     readonly property int barSpacing: 10
     readonly property int barRound: 10
+    readonly property int barSliderLen: Screen.desktopAvailableHeight * (3/9)
 
     // Border stuff
     readonly property int borderRadius: 15

@@ -13,7 +13,7 @@ PanelWindow {
     }
 
     property double scale: 1/6
-    property int barSze: 8
+    property int barSze: 3
 
     exclusiveZone: Theme.barBaseSze
     implicitHeight: Theme.barBaseSze + Theme.barRound
