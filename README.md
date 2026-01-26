@@ -1,8 +1,16 @@
 # Bar
 A status bar made in quickshell for niri.
 
+- `bars/` contains the code that makes the actual bars work
+- `sides/` contains the different modules that are positioned along each bar
+- `modules/` contains each module that is used in the bars
+
+
 ## Requirements
 - `brightnessctl` for brightness stuff
+- To be running `niri`
+    - If you are not don't worry, just almost none of the bottom bar's stuff will work.
+    - Feel free to make your own copy of this repo to change the buttons as you need.
 ## Extra stuff
 These are extra things you can get for more features
 - `acpi` for battery time estimates
