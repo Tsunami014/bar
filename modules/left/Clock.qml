@@ -1,13 +1,10 @@
 import QtQuick
-import QtQuick.Layouts
 import Quickshell
 import "../.."
 import "../base/"
 
-Bubble {
+LeftBubble {
     id: b
-    Layout.fillWidth: true
-    Layout.alignment: Qt.AlignHCenter
 
     col: Theme.colOrange
 

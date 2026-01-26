@@ -13,11 +13,10 @@ ColumnLayout {
     Repeater {
         model: SystemTray.items
 
-        Bubble {
+        LeftBubble {
             id: b
             col: modelData.status == Status.NeedsAttention ? Theme.colRed :
                 modelData.status == Status.Active ? Theme.colFg : Theme.colMuted2
-            Layout.fillWidth: true
             item: Image {
                 anchors { left: parent.left; right: parent.right }
                 source: modelData.icon

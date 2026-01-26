@@ -1,14 +1,10 @@
 import QtQuick
-import QtQuick.Layouts
 import Quickshell.Io
 import "../.."
 import "../base/"
 
-Bubble {
+LeftBubble {
     id: b
-    Layout.fillWidth: true
-    Layout.alignment: Qt.AlignHCenter
-
     property int batteryLevel: 0
     property string batChargeStatus: "?"
     property string batteryExtra: ""

@@ -1,12 +1,9 @@
 import QtQuick
-import QtQuick.Layouts
 import Quickshell.Io
 import "../.."
 
 Rectangle {
     id: b
-    Layout.fillWidth: true
-    implicitHeight: parent.width
 
     property list<string> cmd: []
     MouseArea {

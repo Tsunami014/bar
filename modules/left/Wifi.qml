@@ -1,17 +1,13 @@
 import QtQuick
-import QtQuick.Layouts
 import Quickshell.Networking
 import Quickshell.Io
 import "../.."
 import "../base/"
 
-Bubble {
+LeftBubble {
     id: b
-    Layout.fillWidth: true
-    Layout.alignment: Qt.AlignHCenter
 
     col: Theme.colPurple
-
     property int wStrength: 0
 
     item: Column {

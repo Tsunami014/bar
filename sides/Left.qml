@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import ".."
+import "../modules/all/"
 import "../modules/left/"
 
 Rectangle {
@@ -13,6 +14,8 @@ Rectangle {
         spacing: Theme.barSpacing
 
         Execute {
+            Layout.fillWidth: true
+            implicitHeight: parent.width
             col1: Theme.colIndigo
             col2: Theme.colPurple
             cmd: ["sh", "-c", "$EXECUTE"]

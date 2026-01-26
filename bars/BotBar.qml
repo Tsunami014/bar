@@ -13,7 +13,6 @@ PanelWindow {
     }
 
     property double scale: 1/6
-    property int barSze: 3
 
     exclusiveZone: Theme.barBaseSze
     implicitHeight: Theme.barBaseSze + Theme.barRound
@@ -25,7 +24,6 @@ PanelWindow {
         color: Theme.colBg
 
         Loader {
-            anchors.fill: parent
             active: marea.expand
             sourceComponent: PanelWindow {
                 id: rect
@@ -34,14 +32,9 @@ PanelWindow {
                     left: true
                     right: true
                 }
-                margins {
-                    left: bar.width*bar.scale
-                    right: bar.width*bar.scale
-                    bottom: -Theme.barBaseSze
-                }
 
                 exclusiveZone: 0
-                implicitHeight: Theme.barSze*bar.barSze
+                implicitHeight: Theme.barSze*1.5
                 color: "transparent"
 
                 MouseOverlay { area: marea }
@@ -49,35 +42,43 @@ PanelWindow {
                 Corner {
                     anchors {
                         bottom: parent.bottom
-                        left: parent.left
+                        left: mainR.right
+                        leftMargin: -1
                     }
-                    rx: 1
                     ry: 1
-                    anchors.bottomMargin: Theme.barRound
                 }
                 Corner {
                     anchors {
                         bottom: parent.bottom
-                        right: parent.right
+                        right: mainR.left
+                        rightMargin: -1
                     }
+                    rx: 1
                     ry: 1
-                    anchors.bottomMargin: Theme.barRound
                 }
 
-                Bottom {
+                Rectangle {
+                    id: mainR
                     color: Theme.colBg
                     anchors {
-                        fill: parent
-                        leftMargin: Theme.barRound
-                        rightMargin: Theme.barRound
-                        topMargin: Theme.barPadding
-                        bottomMargin: Theme.barPadding
+                        horizontalCenter: parent.horizontalCenter
+                        top: parent.top; bottom: parent.bottom
                     }
+                    width: bot.childrenRect.width + Theme.barPadding*2
 
                     topLeftRadius: 20
                     topRightRadius: 20
                     opacity: marea.expand != 0 ? 1:0
                     //Behavior on opacity { NumberAnimation { duration: 40 } }
+
+                    Bottom {
+                        id: bot
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            top: parent.top; bottom: parent.bottom
+                            margins: Theme.barPadding
+                        }
+                    }
                 }
             }
         }
