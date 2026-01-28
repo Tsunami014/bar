@@ -38,6 +38,7 @@ ColumnLayout {
                         Repeater {
                             model: menuItems.children
                             Bubble {
+                                id: b2
                                 radius: Theme.borderRadius/2
                                 col: modelData.isSeparator ? "transparent" :
                                     modelData.enabled ? Theme.colFg : Theme.colMuted1
@@ -49,7 +50,7 @@ ColumnLayout {
                                     }
                                     Text {
                                         text: modelData.isSeparator ? "───" : modelData.text
-                                        color: b.col
+                                        color: b2.col
                                         font.family: Theme.fontFamily
                                         font.pixelSize: Theme.fontSize*0.9
                                     }
