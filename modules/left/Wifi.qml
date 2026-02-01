@@ -18,12 +18,14 @@ LeftBubble {
             horizontalAlignment: Text.AlignHCenter
 
             text: Networking.wifiEnabled ? (
-                b.wStrength <= 20 ? "󰤯" :
-                b.wStrength <= 40 ? "󰤟" :
-                b.wStrength <= 60 ? "󰤢" :
-                b.wStrength <= 80 ? "󰤥" :
-                "󰤨"
-            ): "󰤮"
+                b.wifiText != "..." ? (
+                    b.wStrength <= 20 ? "󰤯" :
+                    b.wStrength <= 40 ? "󰤟" :
+                    b.wStrength <= 60 ? "󰤢" :
+                    b.wStrength <= 80 ? "󰤥" :
+                    "󰤨"
+                ) : "󰤫"
+            ) : "󰤮"
             color: b.col
             font.family: Theme.fontFamily
             font.pixelSize: Theme.fontSize*1.5
@@ -32,7 +34,9 @@ LeftBubble {
             anchors.horizontalCenter: parent.horizontalCenter
             horizontalAlignment: Text.AlignHCenter
 
-            text: Networking.wifiEnabled ? b.wStrength + "%" : "n/a"
+            text: Networking.wifiEnabled ? (
+                b.wifiText != "..." ? b.wStrength + "%" : "..."
+            ) : "-"
 
             color: b.col
             font.family: Theme.fontFamily
