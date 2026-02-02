@@ -15,28 +15,43 @@ Rectangle {
     color: Theme.colMuted2
     border.color: Qt.lighter(color, 1.5)
     border.width: Theme.borderWidth
-    implicitHeight: (
-        (dotSze + padding) * (niri.workspaces.count - 1) +
-        dotSze * activeScale +
-        margin * 2
-    )
+    implicitHeight: childrenRect.height + margin*2
     width: dotSze+margin*2
     radius: Theme.borderRadius
 
+    property var palette: [
+        Theme.colRed, Theme.colOrange, Theme.colYellow,
+        Theme.colGreen, Theme.colBlue, Theme.colIndigo,
+        Theme.colPurple,
+        Theme.colFg, Theme.colMuted1
+    ]
+    Component.onCompleted: {
+        palette.sort(function() { return Math.random() - 0.5 })
+    }
+
+    function colourForId(id, lighten) {
+        return Qt.lighter(palette[id % palette.length], lighten)
+    }
+
     ColumnLayout {
-        anchors.fill: parent
-        anchors.margins: wrect.margin
+        anchors {
+            left: parent.left
+            right: parent.right
+            top: parent.top
+            margins: wrect.margin
+        }
         spacing: padding
 
         Repeater {
             model: niri.workspaces
 
             Rectangle {
+                visible: (niri.workspaces.count == 1) || (model.index > 1 && model.index < niri.workspaces.count)
                 width: wrect.dotSze
                 height: model.isActive ? width*wrect.activeScale : width
                 Layout.preferredHeight: height
                 radius: wrect.dotSze*wrect.round
-                color: model.isActive ? Theme.colFg : Theme.colMuted1
+                color: colourForId(model.id, model.isActive ? 1.4 : 1.3)
                 MouseArea {
                     anchors.fill: parent
                     cursorShape: Qt.PointingHandCursor
