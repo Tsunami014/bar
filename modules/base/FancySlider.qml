@@ -13,6 +13,12 @@ Slider {
     property Process change: null
 
     property string text: ""
+    property int _rawval: Math.round(slider.value)
+    property int val: (
+        _rawval >= 99 ? 100 : (
+            _rawval <= 1 ? 0 : _rawval
+        )
+    )
 
     from: 0
     to: 100

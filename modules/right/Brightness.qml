@@ -18,7 +18,7 @@ RightSlider {
     }
 
     slider.change: Process {
-        command: ["brightnessctl", "set", Math.round(slider.value)+"%"]
+        command: ["brightnessctl", "set", slider.val+"%"]
     }
 
     property string ico:
@@ -35,5 +35,5 @@ RightSlider {
         slider.value <= 90 ? "" :
         slider.value <= 95 ? "" :
         ""
-    slider.text: ico + "\n" + Math.round(slider.value)+"%"
+    slider.text: ico + "\n" + slider.val+"%"
 }

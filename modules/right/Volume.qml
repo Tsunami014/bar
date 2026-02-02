@@ -22,12 +22,12 @@ RightSlider {
     }
 
     slider.change: Process {
-        command: ["wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", Math.round(slider.value)+"%"]
+        command: ["wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", slider.val+"%"]
     }
 
     property string ico: muted ? "" :
         slider.value <= 30 ? "" :
         slider.value <= 60 ? "" :
         ""
-    slider.text: ico + "\n" + Math.round(slider.value)+"%"
+    slider.text: ico + "\n" + slider.val+"%"
 }
