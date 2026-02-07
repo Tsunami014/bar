@@ -12,9 +12,8 @@ PanelWindow {
         right: true
     }
 
-    property bool expanded: false
     exclusiveZone: Theme.barBaseSze
-    implicitHeight: (expanded ? Theme.barSze-Theme.barBaseSze : Theme.barBaseSze)+Theme.barRound
+    implicitHeight: (marea.expand ? Theme.barSze*0.8 : Theme.barBaseSze)+Theme.barRound
 
     color: Theme.colTransparent
 
@@ -22,22 +21,11 @@ PanelWindow {
         anchors.fill: rect
         color: Theme.colBg
 
-        // Expand on hover
-        MouseArea {
-            anchors.fill: parent
-            hoverEnabled: true
-
-            onEntered: {
-                bar.expanded = true
-            }
-            onExited: {
-                bar.expanded = false
-            }
-        }
+        MOBase { id: marea }
     }
     Rectangle {
         id: rect
-        opacity: bar.expanded ? 1 : 0
+        opacity: marea.expand ? 1 : 0
         //Behavior on opacity { NumberAnimation { duration: 40 } }
 
         anchors {
@@ -51,9 +39,11 @@ PanelWindow {
 
         Loader {
             anchors.fill: parent
-            active: bar.expanded
+            active: marea.expand
             sourceComponent: Top {
                 anchors.fill: parent
+                anchors.topMargin: Theme.barPadding/2
+                anchors.bottomMargin: Theme.barPadding/2
                 color: Theme.colBg
             }
         }
