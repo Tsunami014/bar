@@ -19,6 +19,12 @@ Rectangle {
             col2: Theme.colBlue
             cmd: ["sh", "-c", "pgrep wvkbd-mobintl >/dev/null || wvkbd-mobintl"]
         }
+        TopExec {
+            text: ""
+            col1: proc.running ? Theme.colOrange : Theme.colBlue
+            col2: Theme.colGreen
+            cmd: ["sh", "-c", 'pid=$(pidof swayidle); kill -STOP -$pid; trap "kill -CONT -$pid" EXIT; sleep infinity']
+        }
     }
     // center
     RowLayout {

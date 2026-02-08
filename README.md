@@ -16,6 +16,7 @@ Feel free to make your own copy of this repo to change the buttons as you need.
 These are extra things you can get for more features
 - `acpi` for battery time estimates
 - `wvkbd` for a virtual keyboard
+- To be running one instance of `swayidle` so the idle blocker can work
 - Set the environment var `TermSpawn` to get stuff to open on click of some elements
     - TermSpawn must be set to the command to spawn a new terminal running code (e.g. with alacritty it's `alacritty -e`)
     - It just needs to be avaliable when running the quickshell instance, so set it wherever.
