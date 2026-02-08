@@ -16,7 +16,7 @@ Rectangle {
         TopExec {
             text: "󰌌"
             col1: Theme.colIndigo
-            col2: Theme.colBlue
+            col2: proc.running ? Theme.colPurple : Theme.colBlue
             cmd: ["sh", "-c", "pgrep wvkbd-mobintl >/dev/null || wvkbd-mobintl"]
         }
         TopExec {
