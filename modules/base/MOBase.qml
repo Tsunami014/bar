@@ -12,6 +12,7 @@ MouseArea {
     property bool expand: opaque || opaqueCounts > 0
     property bool doexpand: false
     property bool forcexpand: false
+    property bool allowhover: true
 
     property Timer collapseTimer: Timer {
         id: collapseTimer
@@ -24,19 +25,25 @@ MouseArea {
         }
     }
     function forceShut() {
-        expandCounts = marea.containsMouse ? 1 : 0
+        if (allowhover) {
+            expandCounts = marea.containsMouse ? 1 : 0
+        } else {
+            expandCounts = 0
+        }
         forcexpand = false
         marea.doexpand = false
         if (collapseTimer.running) collapseTimer.stop()
     }
 
     function enter() {
+        if (!allowhover) return;
         expandCounts += 1
         doexpand = true
         if (collapseTimer.running) collapseTimer.stop()
     }
     onEntered: enter()
     function exit() {
+        if (!allowhover) return;
         expandCounts -= 1
         if (expandCounts <= 0) {
             collapseTimer.start()

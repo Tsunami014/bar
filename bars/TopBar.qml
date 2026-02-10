@@ -12,8 +12,8 @@ PanelWindow {
         right: true
     }
 
-    exclusiveZone: Theme.barBaseSze
-    implicitHeight: (marea.expand ? Theme.barSze*0.8 : Theme.barBaseSze)+Theme.barRound
+    exclusiveZone: marea.expand ? Theme.barSze*0.8 : Theme.barBaseSze
+    implicitHeight: exclusiveZone+Theme.barRound
 
     color: Theme.colTransparent
 
@@ -21,7 +21,10 @@ PanelWindow {
         anchors.fill: rect
         color: Theme.colBg
 
-        MOBase { id: marea }
+        MOBase {
+            id: marea
+            allowhover: false
+        }
     }
     Rectangle {
         id: rect
