@@ -15,7 +15,7 @@ LeftBubble {
 
     Popup {
         Text {
-            text: Qt.formatDateTime(clock.date, "h:mm:ss AP\nd MMM yyyy\ndd/MM/yy")
+            text: Qt.formatDateTime(clock.date, "h:mm:ss AP\nddd d MMM yyyy\ndd/MM/yy\nt")
             color: b.col
             font.family: Theme.fontFamily
             font.pixelSize: Theme.fontSize
