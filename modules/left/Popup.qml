@@ -1,5 +1,6 @@
 import QtQuick
 import Quickshell
+import "../base"
 import "../.."
 
 MOBase {
@@ -21,7 +22,7 @@ MOBase {
     Loader {
         id: loader
         anchors.fill: parent
-        active: marea.doexpand
+        active: marea.expand
         sourceComponent: PopupWindow {
             id: pop
             anchor {

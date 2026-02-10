@@ -27,6 +27,7 @@ ColumnLayout {
                 active: modelData.hasMenu
                 sourceComponent: Popup {
                     id: pop
+                    allowhover: false
                     ColumnLayout {
                         Text {
                             text: modelData.title || modelData.tooltipTitle
@@ -65,7 +66,7 @@ ColumnLayout {
                                         onClicked: {
                                             modelData.triggered()
                                             pop.expandCounts = 0
-                                            pop.doexpand = false
+                                            pop.forceShut()
                                         }
                                     }
                                 }
@@ -78,10 +79,11 @@ ColumnLayout {
                     }
                 }
             }
-            MouseArea {
+            MouseOverlay {
                 anchors.fill: parent
+                acceptedButtons: Qt.RightButton
                 cursorShape: Qt.PointingHandCursor
-                onClicked: modelData.activate()
+                onPressed: modelData.activate()
                 onWheel: wheel => modelData.scroll(wheel.angleDelta.y, false)
             }
         }
