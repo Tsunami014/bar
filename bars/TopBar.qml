@@ -13,7 +13,7 @@ PanelWindow {
     }
 
     exclusiveZone: marea.expand ? Theme.barSze*0.8 : Theme.barBaseSze
-    implicitHeight: exclusiveZone+Theme.barRound
+    implicitHeight: exclusiveZone
 
     color: Theme.colTransparent
 
@@ -36,7 +36,7 @@ PanelWindow {
             left: parent.left
             right: parent.right
         }
-        height: bar.implicitHeight - Theme.barRound
+        height: bar.implicitHeight
 
         color: Theme.colBg
 
@@ -50,18 +50,5 @@ PanelWindow {
                 color: Theme.colBg
             }
         }
-    }
-    Corner {
-        anchors {
-            top: rect.bottom
-            left: rect.left
-        }
-    }
-    Corner {
-        anchors {
-            top: rect.bottom
-            right: rect.right
-        }
-        rx: 1
     }
 }

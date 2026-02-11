@@ -15,12 +15,11 @@ PanelWindow {
     property double scale: 1/6
 
     exclusiveZone: Theme.barBaseSze
-    implicitHeight: Theme.barBaseSze + Theme.barRound
+    implicitHeight: Theme.barBaseSze
     color: Theme.colTransparent
     Rectangle {
         id: rect
         anchors.fill: parent
-        anchors.topMargin: Theme.barRound
         color: Theme.colBg
 
         Loader {
@@ -95,20 +94,5 @@ PanelWindow {
             }
         }
         MOBase { id: marea }
-    }
-    Corner {
-        anchors {
-            bottom: rect.top
-            left: rect.left
-        }
-        ry: 1
-    }
-    Corner {
-        anchors {
-            bottom: rect.top
-            right: rect.right
-        }
-        rx: 1
-        ry: 1
     }
 }

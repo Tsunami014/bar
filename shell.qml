@@ -23,4 +23,33 @@ ShellRoot{
     RightBar{}
     TopBar{}
     BotBar{}
+
+    CornerBar {
+        anchors {
+            top: true
+            left: true
+        }
+    }
+    CornerBar {
+        anchors {
+            top: true
+            right: true
+        }
+        rx: 1
+    }
+    CornerBar {
+        anchors {
+            bottom: true
+            left: true
+        }
+        ry: 1
+    }
+    CornerBar {
+        anchors {
+            bottom: true
+            right: true
+        }
+        rx: 1
+        ry: 1
+    }
 }
