@@ -1,5 +1,6 @@
 import QtQuick
 import Quickshell
+import Quickshell.Io
 import ".."
 import "../sides/"
 import "../modules/base/"
@@ -26,6 +27,12 @@ PanelWindow {
             allowhover: false
         }
     }
+    Process {
+        id: outerproc
+        running: false
+        property string cmd: ""
+        command: ['sh', '-c', cmd]
+    }
     Rectangle {
         id: rect
         opacity: marea.expand ? 1 : 0
@@ -48,6 +55,10 @@ PanelWindow {
                 anchors.topMargin: Theme.barPadding/2
                 anchors.bottomMargin: Theme.barPadding/2
                 color: Theme.colBg
+                Component.onDestruction: {
+                    outerproc.cmd = exitproc;
+                    outerproc.running = true;
+                }
             }
         }
     }

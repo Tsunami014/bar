@@ -4,6 +4,7 @@ import ".."
 import "../modules/top/"
 
 Rectangle {
+    property string exitproc: "kill -CONT -$(pidof swayidle)"
     // left
     RowLayout {
         anchors {
@@ -19,11 +20,12 @@ Rectangle {
             col2: proc.running ? Theme.colPurple : Theme.colBlue
             cmd: ["sh", "-c", "pgrep wvkbd-mobintl >/dev/null || wvkbd-mobintl"]
         }
-        TopExec {
+        TopExecTog {
             text: ""
-            col1: proc.running ? Theme.colOrange : Theme.colBlue
+            col1: proc.run ? Theme.colOrange : Theme.colBlue
             col2: Theme.colGreen
-            cmd: ["sh", "-c", 'pid=$(pidof swayidle); kill -STOP -$pid; trap "kill -CONT -$pid" EXIT; sleep infinity']
+            cmd: ["sh", "-c", "kill -STOP -$(pidof swayidle)"]
+            stopcmd: ["sh", "-c", "kill -CONT -$(pidof swayidle)"]
         }
     }
     // center
