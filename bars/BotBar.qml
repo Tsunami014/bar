@@ -93,6 +93,9 @@ PanelWindow {
                 }
             }
         }
-        MOBase { id: marea }
+        MOBase {
+            id: marea
+            allowhover: false
+        }
     }
 }
