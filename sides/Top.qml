@@ -4,7 +4,7 @@ import ".."
 import "../modules/top/"
 
 Rectangle {
-    property string exitproc: "kill -CONT -$(pidof swayidle)"
+    property string exitproc: "kill -CONT $(pidof swayidle)"
     // left
     RowLayout {
         anchors {
@@ -24,8 +24,8 @@ Rectangle {
             text: ""
             col1: proc.run ? Theme.colOrange : Theme.colBlue
             col2: Theme.colGreen
-            cmd: ["sh", "-c", "kill -STOP -$(pidof swayidle)"]
-            stopcmd: ["sh", "-c", "kill -CONT -$(pidof swayidle)"]
+            cmd: ["sh", "-c", "kill -STOP $(pidof swayidle)"]
+            stopcmd: ["sh", "-c", "kill -CONT $(pidof swayidle)"]
         }
     }
     // center
