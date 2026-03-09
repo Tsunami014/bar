@@ -26,6 +26,7 @@ QtObject {
     // Bar sizing
     readonly property int barPadding: 7
     readonly property int barSze: fontSize*2 + barPadding*2
+    readonly property int barBottomBubbleSze: barSze*1.3
     readonly property int barBaseSze: 10
     readonly property int barSpacing: 10
     readonly property int barRound: 10

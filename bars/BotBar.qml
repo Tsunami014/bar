@@ -3,6 +3,7 @@ import Quickshell
 import ".."
 import "../sides/"
 import "../modules/base/"
+import "../modules/bottom/"
 
 PanelWindow {
     id: bar
@@ -33,7 +34,11 @@ PanelWindow {
                 }
 
                 exclusiveZone: 0
-                implicitHeight: Theme.barSze*1.5 + Theme.barPadding*2
+                implicitHeight: (
+                    Theme.barBottomBubbleSze*bot.rows +
+                    Theme.barSpacing*2*(bot.rows-1) +
+                    Theme.barPadding*4
+                )
                 color: "transparent"
 
                 Corner {
@@ -86,6 +91,29 @@ PanelWindow {
                                     })
                                 }
                             })
+                        }
+                        FancyBubble {
+                            col1: Theme.colOrange
+                            col2: Theme.colPurple
+                            implicitWidth: Theme.barBottomBubbleSze
+                            implicitHeight: implicitWidth
+                            Text {
+                                anchors.centerIn: parent
+                                horizontalAlignment: Text.AlignHCenter
+                                text: ""
+                                color: "#FFF"
+                                font.family: Theme.fontFamily
+                                font.pixelSize: Theme.fontSize*1.5
+                                font.bold: true
+                            }
+
+                            MouseArea {
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                onPressed: {
+                                    marea.press()
+                                }
+                            }
                         }
                     }
 
