@@ -32,12 +32,20 @@ PanelWindow {
                     left: true
                     right: true
                 }
+                margins.left: (
+                    (
+                        Screen.desktopAvailableWidth -
+                        (Theme.barBaseSze + Theme.barRound) - // RightBar.implicitWidth
+                        (Theme.barSze*1.5) // LeftBar.implicitWidth
+                    ) - (mainR.width+Theme.barRound*2)
+                )/2
+                margins.right: margins.left
 
                 exclusiveZone: 0
                 implicitHeight: (
                     Theme.barBottomBubbleSze*bot.rows +
                     Theme.barSpacing*2*(bot.rows-1) +
-                    Theme.barPadding*4
+                    Theme.barPadding*3
                 )
                 color: "transparent"
 

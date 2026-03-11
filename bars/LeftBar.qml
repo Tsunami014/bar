@@ -11,6 +11,7 @@ PanelWindow {
         left: true
     }
 
+    // When this exclusiveZone is updated also update BotBar margins
     exclusiveZone: Theme.barSze*1.5
     implicitWidth: exclusiveZone
 
