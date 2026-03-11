@@ -28,10 +28,10 @@ GridLayout {
         cmd: ["niri", "msg", "action", "focus-column-or-monitor-left"]
     }
     Exec {
-        text: ""
-        col1: Theme.colOrange
-        col2: Theme.colIndigo
-        cmd: ["niri", "msg", "action", "focus-column-or-monitor-right"]
+        text: ""
+        col1: Theme.colPurple
+        col2: Theme.colYellow
+        cmd: ["niri", "msg", "action", "focus-window-or-workspace-down"]
     }
     Exec {
         text: ""
@@ -40,10 +40,10 @@ GridLayout {
         cmd: ["niri", "msg", "action", "focus-window-or-workspace-up"]
     }
     Exec {
-        text: ""
-        col1: Theme.colPurple
-        col2: Theme.colYellow
-        cmd: ["niri", "msg", "action", "focus-window-or-workspace-down"]
+        text: ""
+        col1: Theme.colOrange
+        col2: Theme.colIndigo
+        cmd: ["niri", "msg", "action", "focus-column-or-monitor-right"]
     }
     Exec {
         text: "󰊓"
@@ -73,10 +73,10 @@ GridLayout {
         cmd: ["niri", "msg", "action", "move-column-left-or-to-monitor-left"]
     }
     Exec {
-        text: ""
-        col2: Theme.colOrange
-        col1: Theme.colIndigo
-        cmd: ["niri", "msg", "action", "move-column-right-or-to-monitor-right"]
+        text: ""
+        col2: Theme.colPurple
+        col1: Theme.colYellow
+        cmd: ["niri", "msg", "action", "move-window-down-or-to-workspace-down"]
     }
     Exec {
         text: ""
@@ -85,10 +85,10 @@ GridLayout {
         cmd: ["niri", "msg", "action", "move-window-up-or-to-workspace-up"]
     }
     Exec {
-        text: ""
-        col2: Theme.colPurple
-        col1: Theme.colYellow
-        cmd: ["niri", "msg", "action", "move-window-down-or-to-workspace-down"]
+        text: ""
+        col2: Theme.colOrange
+        col1: Theme.colIndigo
+        cmd: ["niri", "msg", "action", "move-column-right-or-to-monitor-right"]
     }
     Exec {
         text: ""
