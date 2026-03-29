@@ -77,11 +77,23 @@ Rectangle {
             bottom: parent.bottom
         }
         spacing: Theme.barSpacing
-        KeyPress {
-            text: ""
-            col1: Theme.colYellow
-            col2: Theme.colRed
-            key: "Backspace"
+        TopExec {
+            text: "󰕍"
+            col1: Theme.colOrange
+            col2: Theme.colGreen
+            cmd: ["wtype", "-M","Ctrl", "-k","z", "-m","Ctrl"]
+        }
+        TopExec {
+            text: "󰑏"
+            col1: Theme.colGreen
+            col2: Theme.colOrange
+            cmd: ["wtype", "-M","Ctrl", "-M","Shift", "-k","z", "-m","Ctrl", "-m","Shift"]
+        }
+        TopExec {
+            text: ""
+            col1: Theme.colGreen
+            col2: Theme.colFg
+            cmd: ["wtype", "-k","Delete"]
         }
     }
 }
