@@ -1,4 +1,5 @@
 import QtQuick
+import "../.."
 
 MouseArea {
     id: marea
@@ -19,12 +20,14 @@ MouseArea {
         interval: 50
         repeat: false
         onTriggered: {
+            if (Theme.expandLock) return;
             if (marea.expandCounts <= 0) {
                 marea.doexpand = false
             }
         }
     }
     function forceShut() {
+        if (Theme.expandLock) return;
         if (allowhover) {
             expandCounts = marea.containsMouse ? 1 : 0
         } else {
@@ -36,6 +39,7 @@ MouseArea {
     }
 
     function enter() {
+        if (Theme.expandLock) return;
         if (!allowhover) return;
         expandCounts += 1
         doexpand = true
@@ -43,6 +47,7 @@ MouseArea {
     }
     onEntered: enter()
     function exit() {
+        if (Theme.expandLock) return;
         if (!allowhover) return;
         expandCounts -= 1
         if (expandCounts <= 0) {
@@ -51,6 +56,7 @@ MouseArea {
     }
     onExited: exit()
     function press() {
+        if (Theme.expandLock) return;
         forcexpand = !forcexpand
         if (!forcexpand) forceShut()
     }

@@ -35,4 +35,7 @@ QtObject {
     // Border stuff
     readonly property int borderRadius: 15
     readonly property double borderWidth: 2.5
+
+    // Misc
+    property bool expandLock: false
 }

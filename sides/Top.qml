@@ -21,7 +21,7 @@ Rectangle {
             cmd: ["sh", "-c", "pgrep wvkbd-mobintl >/dev/null || wvkbd-mobintl"]
         }
         TopExecTog {
-            text: ""
+            text: proc.run ? "󰛐" : ""
             col1: proc.run ? Theme.colOrange : Theme.colBlue
             col2: Theme.colGreen
             cmd: ["sh", "-c", "kill -STOP $(pidof swayidle)"]
@@ -47,7 +47,11 @@ Rectangle {
             cmd: ["niri", "msg", "action", "focus-column-or-monitor-left"]
         }
         Text {
-            text: niri.focusedWindow?.title ?? ""
+            property string title: niri.focusedWindow?.title ?? ""
+            property int mxlen: 50
+            text: title.length > mxlen
+                ? title.substring(0, mxlen) + "…"
+                : title
             font.family: Theme.fontFamily
             font.pixelSize: Theme.fontSize
             color: Theme.colFg
@@ -73,6 +77,11 @@ Rectangle {
             col1: Theme.colYellow
             col2: Theme.colRed
             key: "Backspace"
+        }
+        Lock {
+            text: running ? "" : ""
+            col1: running ? Theme.colBlue : Theme.colPurple
+            col2: running ? Theme.colGreen : Theme.colIndigo
         }
     }
 }
