@@ -21,6 +21,7 @@ These are extra things you can get for more features
     - TermSpawn must be set to the command to spawn a new terminal running code (e.g. with alacritty it's `alacritty -e`)
     - It just needs to be avaliable when running the quickshell instance, so set it wherever.
 - Set the environment `EXECUTE` to do something when the button is pressed (same as before)
+- To have `wtype` and be running wayland. If not, you can modify `modules/top/KeyPress.qml` and `sides/Top.qml` as required to change the commands.
 
 ## How to use
 To use, clone it into `~/.config/quickshell`:

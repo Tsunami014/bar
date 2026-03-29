@@ -33,13 +33,46 @@ Rectangle {
         anchors {
             horizontalCenter: parent.horizontalCenter
             verticalCenter: parent.verticalCenter
+            top: parent.top
+            bottom: parent.bottom
+            topMargin: 3
+            bottomMargin: 3
         }
+        spacing: Theme.barSpacing*2
 
+        TopExec {
+            text: ""
+            col1: Theme.colBlue
+            col2: Theme.colFg
+            cmd: ["niri", "msg", "action", "focus-column-or-monitor-left"]
+        }
         Text {
             text: niri.focusedWindow?.title ?? ""
             font.family: Theme.fontFamily
             font.pixelSize: Theme.fontSize
             color: Theme.colFg
+        }
+        TopExec {
+            text: ""
+            col1: Theme.colOrange
+            col2: Theme.colIndigo
+            cmd: ["niri", "msg", "action", "focus-column-or-monitor-right"]
+        }
+    }
+    // right
+    RowLayout {
+        anchors {
+            right: parent.right
+            rightMargin: Theme.barSpacing
+            top: parent.top
+            bottom: parent.bottom
+        }
+        spacing: Theme.barSpacing
+        KeyPress {
+            text: ""
+            col1: Theme.colYellow
+            col2: Theme.colRed
+            key: "Backspace"
         }
     }
 }
