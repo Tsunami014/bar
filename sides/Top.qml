@@ -19,18 +19,24 @@ Rectangle {
             col1: running ? Theme.colRed : Theme.colPurple
             col2: running ? Theme.colGreen : Theme.colIndigo
         }
-        TopExec {
-            text: "󰌌"
-            col1: Theme.colIndigo
-            col2: proc.running ? Theme.colMuted2 : Theme.colBlue
-            cmd: ["sh", "-c", "pgrep wvkbd-mobintl >/dev/null || wvkbd-mobintl"]
-        }
         TopExecTog {
             text: proc.run ? "󰛐" : ""
             col1: proc.run ? Theme.colBlue : Theme.colFg
             col2: Theme.colGreen
             cmd: ["sh", "-c", "kill -STOP $(pidof swayidle)"]
             stopcmd: ["sh", "-c", "kill -CONT $(pidof swayidle)"]
+        }
+        TopExec {
+            text: proc.running ? "󰆡" : "󰢆"
+            col1: proc.running ? Theme.colYellow : Theme.colPurple
+            col2: Theme.colOrange
+            cmd: ["sh", "-c", "touch /tmp/NOAUTOROTATE && trap 'rm /tmp/NOAUTOROTATE' EXIT && sleep infinity"]
+        }
+        TopExec {
+            text: "󰌌"
+            col1: Theme.colIndigo
+            col2: proc.running ? Theme.colMuted2 : Theme.colBlue
+            cmd: ["sh", "-c", "pgrep wvkbd-mobintl >/dev/null || wvkbd-mobintl"]
         }
     }
     // center
