@@ -20,7 +20,7 @@ QtObject {
     readonly property color colPurple: "#c099ff"
 
     // Font
-    readonly property string fontFamily: "JetBrainsMono Nerd Font"
+    readonly property string fontFamily: "Ubuntu Nerd Font"
     readonly property int fontSize: 16
 
     // Bar sizing
