@@ -30,7 +30,7 @@ Rectangle {
             text: proc.running ? "󰆡" : "󰢆"
             col1: proc.running ? Theme.colYellow : Theme.colPurple
             col2: Theme.colOrange
-            cmd: ["sh", "-c", "touch /tmp/'NOAUTOROTATE-$USER' && trap \"rm '/tmp/NOAUTOROTATE-$USER'\" EXIT && sleep infinity"]
+            cmd: ["sh", "-c", 'touch /tmp/"NOAUTOROTATE-$USER" && trap "rm \\\"/tmp/NOAUTOROTATE-$USER\\\"" EXIT && sleep infinity']
         }
         TopExec {
             text: "󰌌"
