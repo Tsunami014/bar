@@ -84,6 +84,12 @@ Rectangle {
         }
         spacing: Theme.barSpacing
         TopExec {
+            text: "󰌒"
+            col1: Theme.colFg
+            col2: Theme.colPurple
+            cmd: ["wtype", "-k","Tab"]
+        }
+        TopExec {
             text: "󰕍"
             col1: Theme.colOrange
             col2: Theme.colGreen
@@ -97,7 +103,7 @@ Rectangle {
         }
         TopExec {
             text: ""
-            col1: Theme.colGreen
+            col1: Theme.colIndigo
             col2: Theme.colFg
             cmd: ["wtype", "-k","Delete"]
         }
