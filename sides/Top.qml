@@ -30,13 +30,13 @@ Rectangle {
             text: proc.running ? "󰆡" : "󰢆"
             col1: proc.running ? Theme.colYellow : Theme.colPurple
             col2: Theme.colOrange
-            cmd: ["sh", "-c", "touch /tmp/NOAUTOROTATE && trap 'rm /tmp/NOAUTOROTATE' EXIT && sleep infinity"]
+            cmd: ["sh", "-c", "touch /tmp/'NOAUTOROTATE-$USER' && trap \"rm '/tmp/NOAUTOROTATE-$USER'\" EXIT && sleep infinity"]
         }
         TopExec {
             text: "󰌌"
             col1: Theme.colIndigo
             col2: proc.running ? Theme.colMuted2 : Theme.colBlue
-            cmd: ["sh", "-c", "pgrep wvkbd-mobintl >/dev/null || wvkbd-mobintl"]
+            cmd: ["sh", "-c", "pgrep wvkbd-mobintl >/dev/null || wvkbd-mobintl --bg 000000C0 -H 350 -L 200"]
         }
     }
     // center

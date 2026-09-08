@@ -35,7 +35,7 @@ Slider {
         border.color: Qt.darker(slider.col, 1.2)
         border.width: Theme.borderWidth
         color: Qt.lighter(slider.col, 1.2)
-        radius: Theme.barRound*2
+        radius: width * Theme.sliderRound
 
         Rectangle {
             width: bg.width
@@ -58,7 +58,7 @@ Slider {
 
     handle: Rectangle {
         width: parent.width
-        radius: Theme.barRound*2
+        radius: width * Theme.sliderRound
         height: radius*2
         anchors.bottom: parent.bottom
         anchors.bottomMargin: Math.min(Math.max(

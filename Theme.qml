@@ -25,11 +25,12 @@ QtObject {
 
     // Bar sizing
     readonly property int barPadding: 7
-    readonly property int barSze: fontSize*2 + barPadding*2
+    readonly property int barInnerPad: 6
+    readonly property int barSze: fontSize*2 + barInnerPad*2 + 1
     readonly property int barBottomBubbleSze: barSze*1.3
-    readonly property int barBaseSze: 10
+    readonly property int barBaseSze: 12
     readonly property int barSpacing: 10
-    readonly property int barRound: 10
+    readonly property int barRound: 15
     readonly property int barSliderLen: Screen.desktopAvailableHeight * (3/9)
 
     // Border stuff
@@ -38,4 +39,5 @@ QtObject {
 
     // Misc
     property bool expandLock: false
+    readonly property double sliderRound: 0.45 // Must be >0 and <=0.5
 }

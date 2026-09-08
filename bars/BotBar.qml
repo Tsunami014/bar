@@ -100,29 +100,6 @@ PanelWindow {
                                 }
                             })
                         }
-                        FancyBubble {
-                            col1: Theme.colOrange
-                            col2: Theme.colPurple
-                            implicitWidth: Theme.barBottomBubbleSze
-                            implicitHeight: implicitWidth
-                            Text {
-                                anchors.centerIn: parent
-                                horizontalAlignment: Text.AlignHCenter
-                                text: ""
-                                color: "#FFF"
-                                font.family: Theme.fontFamily
-                                font.pixelSize: Theme.fontSize*1.5
-                                font.bold: true
-                            }
-
-                            MouseArea {
-                                anchors.fill: parent
-                                cursorShape: Qt.PointingHandCursor
-                                onPressed: {
-                                    marea.press()
-                                }
-                            }
-                        }
                     }
 
                     MouseOverlay { area: marea }
