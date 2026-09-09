@@ -19,6 +19,7 @@ Rectangle {
         anchors {
             fill: parent
             margins: Theme.barPadding
+            rightMargin: 0
         }
     }
     property alias slider: fslider

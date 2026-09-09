@@ -42,7 +42,7 @@ PanelWindow {
             }
 
             exclusiveZone: 0
-            implicitWidth: Theme.barSze*1.5
+            implicitWidth: Theme.barSze*1.5 - Theme.barPadding + 1 // Sliders have no right padding
             color: Theme.colTransparent
 
             Right {
