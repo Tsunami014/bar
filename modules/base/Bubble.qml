@@ -6,7 +6,7 @@ Rectangle {
     property int padding: 5
     property int spacing: 3
 
-    border.color: Qt.lighter(col, 1.2)
+    border.color: Qt.lighter(col, 1.1)
     border.width: Theme.borderWidth
     radius: Theme.borderRadius
     color: Qt.rgba(

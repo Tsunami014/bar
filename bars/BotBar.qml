@@ -3,7 +3,6 @@ import Quickshell
 import ".."
 import "../sides/"
 import "../modules/base/"
-import "../modules/bottom/"
 
 PanelWindow {
     id: bar
