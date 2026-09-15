@@ -10,6 +10,8 @@ GridLayout {
     rowSpacing: Theme.barSpacing*2
     columnSpacing: rowSpacing
 
+    property bool full: false
+
     property int rows: 2
 
     Exec {

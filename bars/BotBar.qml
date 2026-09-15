@@ -71,6 +71,7 @@ PanelWindow {
 
                     Bottom {
                         id: bot
+                        full: marea.forcexpand
                         anchors {
                             horizontalCenter: parent.horizontalCenter
                             bottom: parent.bottom
@@ -95,7 +96,8 @@ PanelWindow {
         }
         MOBase {
             id: marea
-            allowhover: false
+            allowhover: true
+            prioritiseHover: true
         }
     }
 }

@@ -9,19 +9,22 @@ MouseArea {
 
     property int expandCounts: 0
     property int opaqueCounts: 0
-    property bool opaque: doexpand || forcexpand
+    property bool opaque: doexpand || (forcexpand && !prioritiseHover)
     property bool expand: opaque || opaqueCounts > 0
     property bool doexpand: false
     property bool forcexpand: false
     property bool allowhover: true
 
+    property bool prioritiseHover: false
+
     property Timer collapseTimer: Timer {
         id: collapseTimer
-        interval: 50
+        interval: 300
         repeat: false
         onTriggered: {
             if (Theme.expandLock) return;
             if (marea.expandCounts <= 0) {
+                forcexpand = false
                 marea.doexpand = false
             }
         }
@@ -58,7 +61,7 @@ MouseArea {
     function press() {
         if (Theme.expandLock) return;
         forcexpand = !forcexpand
-        if (!forcexpand) forceShut()
+        if (!forcexpand && !prioritiseHover) forceShut()
     }
     onPressed: press()
 }
