@@ -9,13 +9,23 @@ MouseArea {
 
     property int expandCounts: 0
     property int opaqueCounts: 0
-    property bool opaque: doexpand || (forcexpand && !prioritiseHover)
+    property bool opaque: doexpand || stuckOpen || (forcexpand && !prioritiseHover)
     property bool expand: opaque || opaqueCounts > 0
     property bool doexpand: false
     property bool forcexpand: false
     property bool allowhover: true
+    property bool stuckOpen: false
+    property bool blockExit: false
 
     property bool prioritiseHover: false
+    property bool touchdblstick: false
+
+    property Timer blockExitTimer: Timer {
+        id: blockExitTimer
+        interval: 400
+        repeat: false
+        onTriggered: marea.blockExit = false
+    }
 
     property Timer collapseTimer: Timer {
         id: collapseTimer
@@ -32,13 +42,20 @@ MouseArea {
     function forceShut() {
         if (Theme.expandLock) return;
         if (allowhover) {
-            expandCounts = marea.containsMouse ? 1 : 0
+            expandCounts = containsMouse ? 1 : 0
         } else {
             expandCounts = 0
         }
         forcexpand = false
-        marea.doexpand = false
+        doexpand = false
+        stuckOpen = false
+        blockExit = false
         if (collapseTimer.running) collapseTimer.stop()
+    }
+    function shutIfTouch(mouse) {
+        if (mouse.source !== undefined && mouse.source !== Qt.MouseEventNotSynthesized) {
+            forceShut()
+        }
     }
 
     function enter() {
@@ -56,12 +73,25 @@ MouseArea {
         if (expandCounts <= 0) {
             collapseTimer.start()
         }
+        if (!blockExit) stuckOpen = false
     }
     onExited: exit()
     function press() {
         if (Theme.expandLock) return;
+        if (stuckOpen) {
+            forceShut()
+            return
+        }
         forcexpand = !forcexpand
         if (!forcexpand && !prioritiseHover) forceShut()
     }
     onPressed: press()
+
+    onDoubleClicked: (mouse) => {
+        if (touchdblstick && mouse.source !== undefined && mouse.source !== Qt.MouseEventNotSynthesized) {
+            marea.stuckOpen = true
+            marea.blockExit = true
+            marea.blockExitTimer.restart()
+        }
+    }
 }

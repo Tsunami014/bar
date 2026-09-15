@@ -51,18 +51,9 @@ PanelWindow {
                 opacity: marea.opaque ? 1:0
                 //Behavior on opacity { NumberAnimation { duration: 40 } }
             }
-            Repeater {
-                model: rite.children
-
-                MouseOverlay {
-                    area: marea
-                    anchors.fill: parent
-
-                    width: rect.width
-                    height: modelData.implicitHeight
-                    x: modelData.x
-                    y: modelData.y
-                }
+            MouseOverlay {
+                area: marea
+                anchors.fill: rite
             }
         }}
     }

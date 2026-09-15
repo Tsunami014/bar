@@ -45,6 +45,8 @@ LeftBubble {
     }
 
     Popup {
+        prioritiseHover: true
+        touchdblstick: true
         Column {
             id: popupColumn
             width: 260
@@ -279,13 +281,5 @@ LeftBubble {
         }
     }
 
-    MouseArea {
-        anchors.fill: parent
-        cursorShape: Qt.PointingHandCursor
-        Process {
-            id: click
-            command: ["blueman-manager"]
-        }
-        onClicked: click.running = true
-    }
+    MousePressCmd { id: click; cmd: ["blueman-manager"] }
 }

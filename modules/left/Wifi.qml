@@ -27,6 +27,9 @@ LeftBubble {
 
     property string wifiText: "..."
     Popup {
+        id: pop
+        prioritiseHover: true
+        touchdblstick: true
         Column {
             spacing: 4
             Text {
@@ -45,17 +48,32 @@ LeftBubble {
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fontSize
             }
-        }
-    }
 
-    MouseArea {
-        anchors.fill: parent
-        cursorShape: Qt.PointingHandCursor
-        Process {
-            id: click
-            command: ["sh", "-c", "$($TermSpawn nmtui)"]
+            // Settings button
+            Rectangle {
+                width: parent.width
+                height: 28
+                radius: Theme.barRound
+                color: Qt.rgba(col.r, col.g, col.b, 0.15)
+
+                Text {
+                    anchors.centerIn: parent
+                    text: "Wifi Settings"
+                    color: b.col
+                    font.family: Theme.fontFamily
+                    font.pixelSize: Theme.fontSize
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: (mouse) => {
+                        click.running = true
+                        pop.shutIfTouch(mouse)
+                    }
+                }
+            }
         }
-        onClicked: click.running = true
     }
 
     // Wifi Strength
@@ -111,4 +129,6 @@ LeftBubble {
             wifiScan.running = true
         }
     }
+
+    MousePressCmd { id: click; cmd: ["sh", "-c", "$($TermSpawn nmtui)"] }
 }

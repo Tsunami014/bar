@@ -22,6 +22,7 @@ Rectangle {
         }
         Clock {}
         Wifi {}
+        BlueTth {}
     }
     ColumnLayout {
         id: bottom
@@ -32,7 +33,6 @@ Rectangle {
         spacing: Theme.barSpacing
 
         Workspaces {}
-        BlueTth {}
         Battery {}
     }
     ColumnLayout {
