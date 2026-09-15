@@ -26,18 +26,6 @@ Rectangle {
             cmd: ["sh", "-c", "kill -STOP $(pidof swayidle)"]
             stopcmd: ["sh", "-c", "kill -CONT $(pidof swayidle)"]
         }
-        TopExec {
-            text: proc.running ? "󰆡" : "󰢆"
-            col1: proc.running ? Theme.colYellow : Theme.colPurple
-            col2: Theme.colOrange
-            cmd: ["sh", "-c", 'touch /tmp/"NOAUTOROTATE-$USER" && trap "rm \\\"/tmp/NOAUTOROTATE-$USER\\\"" EXIT && sleep infinity']
-        }
-        TopExec {
-            text: "󰌌"
-            col1: Theme.colIndigo
-            col2: proc.running ? Theme.colMuted2 : Theme.colBlue
-            cmd: ["sh", "-c", "pgrep wvkbd-mobintl >/dev/null || wvkbd-mobintl --bg 000000C0 -H 350 -L 200"]
-        }
     }
     // center
     RowLayout {
@@ -59,7 +47,7 @@ Rectangle {
         }
         Text {
             property string title: niri.focusedWindow?.title ?? ""
-            property int mxlen: 50
+            property int mxlen: 55
             text: title.length > mxlen
                 ? title.substring(0, mxlen) + "…"
                 : title
@@ -84,28 +72,16 @@ Rectangle {
         }
         spacing: Theme.barSpacing
         TopExec {
-            text: "󰌒"
-            col1: Theme.colFg
-            col2: Theme.colPurple
-            cmd: ["wtype", "-k","Tab"]
-        }
-        TopExec {
-            text: "󰕍"
-            col1: Theme.colOrange
-            col2: Theme.colGreen
-            cmd: ["wtype", "-M","Ctrl", "-k","z", "-m","Ctrl"]
-        }
-        TopExec {
-            text: "󰑏"
-            col1: Theme.colGreen
+            text: proc.running ? "󰆡" : "󰢆"
+            col1: proc.running ? Theme.colYellow : Theme.colPurple
             col2: Theme.colOrange
-            cmd: ["wtype", "-M","Ctrl", "-M","Shift", "-k","z", "-m","Ctrl", "-m","Shift"]
+            cmd: ["sh", "-c", `touch /tmp/"NOAUTOROTATE-$USER" && trap "rm \\"/tmp/NOAUTOROTATE-$USER\\"" EXIT && sleep infinity`]
         }
         TopExec {
-            text: ""
+            text: "󰌌"
             col1: Theme.colIndigo
-            col2: Theme.colFg
-            cmd: ["wtype", "-k","Delete"]
+            col2: proc.running ? Theme.colMuted2 : Theme.colBlue
+            cmd: ["sh", "-c", "pgrep wvkbd-mobintl >/dev/null || wvkbd-mobintl --bg 000000C0 -H 350 -L 200"]
         }
     }
 }
