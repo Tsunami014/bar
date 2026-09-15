@@ -24,51 +24,37 @@ LeftBubble {
         Theme.colGreen
     )
 
-    item: Column {
+    item: Text {
         anchors.centerIn: parent
-        Text {
-            anchors.horizontalCenter: parent.horizontalCenter
-            horizontalAlignment: Text.AlignHCenter
+        horizontalAlignment: Text.AlignHCenter
 
-            text: b.batteryCharging ? (
-                  b.batteryLevel <= 10 ? "󰢟" :
-                  b.batteryLevel <= 20 ? "󰢜" :
-                  b.batteryLevel <= 30 ? "󰂆" :
-                  b.batteryLevel <= 40 ? "󰂇" :
-                  b.batteryLevel <= 50 ? "󰂈" :
-                  b.batteryLevel <= 60 ? "󰢝" :
-                  b.batteryLevel <= 70 ? "󰂉" :
-                  b.batteryLevel <= 80 ? "󰢞" :
-                  b.batteryLevel <= 90 ? "󰂊" :
-                  b.batteryLevel < 100 ? "󰂋" :
-                  "󰂅") : (
-                  b.batteryLevel <= 10 ? "󰂎" :
-                  b.batteryLevel <= 20 ? "󰁺" :
-                  b.batteryLevel <= 30 ? "󰁻" :
-                  b.batteryLevel <= 40 ? "󰁼" :
-                  b.batteryLevel <= 50 ? "󰁽" :
-                  b.batteryLevel <= 60 ? "󰁾" :
-                  b.batteryLevel <= 70 ? "󰁿" :
-                  b.batteryLevel <= 80 ? "󰂀" :
-                  b.batteryLevel <= 90 ? "󰂁" :
-                  b.batteryLevel < 100 ? "󰂂" :
-                  "󰁹")
+        text: b.batteryCharging ? (
+              b.batteryLevel <= 10 ? "󰢟" :
+              b.batteryLevel <= 20 ? "󰢜" :
+              b.batteryLevel <= 30 ? "󰂆" :
+              b.batteryLevel <= 40 ? "󰂇" :
+              b.batteryLevel <= 50 ? "󰂈" :
+              b.batteryLevel <= 60 ? "󰢝" :
+              b.batteryLevel <= 70 ? "󰂉" :
+              b.batteryLevel <= 80 ? "󰢞" :
+              b.batteryLevel <= 90 ? "󰂊" :
+              b.batteryLevel < 100 ? "󰂋" :
+              "󰂅") : (
+              b.batteryLevel <= 10 ? "󰂎" :
+              b.batteryLevel <= 20 ? "󰁺" :
+              b.batteryLevel <= 30 ? "󰁻" :
+              b.batteryLevel <= 40 ? "󰁼" :
+              b.batteryLevel <= 50 ? "󰁽" :
+              b.batteryLevel <= 60 ? "󰁾" :
+              b.batteryLevel <= 70 ? "󰁿" :
+              b.batteryLevel <= 80 ? "󰂀" :
+              b.batteryLevel <= 90 ? "󰂁" :
+              b.batteryLevel < 100 ? "󰂂" :
+              "󰁹")
 
-            color: b.col
-            font.family: Theme.fontFamily
-            font.pixelSize: Theme.fontSize*1.5
-        }
-        Text {
-            anchors.horizontalCenter: parent.horizontalCenter
-            horizontalAlignment: Text.AlignHCenter
-
-            text: b.batteryLevel + "%"
-
-            color: b.col
-            font.family: Theme.fontFamily
-            font.pixelSize: Theme.fontSize
-            font.bold: true
-        }
+        color: b.col
+        font.family: Theme.fontFamily
+        font.pixelSize: Theme.fontSize*1.5
     }
 
     Popup {

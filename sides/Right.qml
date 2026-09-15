@@ -8,11 +8,23 @@ Rectangle {
         id: middle
         anchors {
             left: parent.left; right: parent.right
+            top: parent.top; bottom: parent.bottom
             verticalCenter: parent.verticalCenter;
         }
-        spacing: Theme.barSpacing + Theme.barRound*2
 
+        Item {
+            Layout.fillHeight: true
+            Layout.verticalStretchFactor: 3
+        }
         Brightness{}
+        Item {
+            Layout.fillHeight: true
+            Layout.verticalStretchFactor: 2
+        }
         Volume{}
+        Item {
+            Layout.fillHeight: true
+            Layout.verticalStretchFactor: 3
+        }
     }
 }

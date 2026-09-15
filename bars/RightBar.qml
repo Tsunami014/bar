@@ -12,7 +12,6 @@ PanelWindow {
         right: true
     }
 
-    // When this exclusiveZone is updated also update BotBar margins
     exclusiveZone: Theme.barBaseSze
     implicitWidth: Theme.barBaseSze+Theme.barRound
     color: Theme.colTransparent
@@ -42,7 +41,7 @@ PanelWindow {
             }
 
             exclusiveZone: 0
-            implicitWidth: Theme.barSze*1.5 - Theme.barPadding + 1 // Sliders have no right padding
+            implicitWidth: Theme.fontSize*2 + Theme.barPadding
             color: Theme.colTransparent
 
             Right {
@@ -58,7 +57,7 @@ PanelWindow {
 
                 MouseOverlay {
                     area: marea
-                    anchors.fill: null
+                    anchors.fill: parent
 
                     width: rect.width
                     height: modelData.implicitHeight

@@ -26,8 +26,8 @@ RightSlider {
     }
 
     property string ico: muted ? "" :
-        slider.value <= 30 ? "" :
-        slider.value <= 60 ? "" :
+        slider.val == 0 ? "" :
+        slider.val <= 30 ? "" :
         ""
-    slider.text: ico + "\n" + slider.val+"%"
+    slider.text: slider.pressed? slider.val : ico
 }

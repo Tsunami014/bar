@@ -20,6 +20,8 @@ Slider {
         )
     )
 
+    property int radius: width * Theme.sliderRound
+
     from: 0
     to: 100
     Component.onCompleted: {
@@ -35,7 +37,7 @@ Slider {
         border.color: Qt.darker(slider.col, 1.2)
         border.width: Theme.borderWidth
         color: Qt.lighter(slider.col, 1.2)
-        radius: width * Theme.sliderRound
+        radius: slider.radius
 
         Rectangle {
             width: bg.width
@@ -58,7 +60,7 @@ Slider {
 
     handle: Rectangle {
         width: parent.width
-        radius: width * Theme.sliderRound
+        radius: slider.radius
         height: radius*2
         anchors.bottom: parent.bottom
         anchors.bottomMargin: Math.min(Math.max(

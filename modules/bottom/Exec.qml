@@ -5,8 +5,8 @@ import "../.."
 
 Execute {
     id: b
-    Layout.preferredHeight: Theme.barBottomBubbleSze
-    Layout.preferredWidth: Theme.barBottomBubbleSze
+    Layout.preferredHeight: Theme.fontSize*2.5 + Theme.barPadding*2
+    Layout.preferredWidth: Layout.preferredHeight
 
     property color textColour: "#FFF"
     property string text: ""

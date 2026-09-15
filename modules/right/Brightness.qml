@@ -35,5 +35,5 @@ RightSlider {
         slider.value <= 90 ? "" :
         slider.value <= 95 ? "" :
         ""
-    slider.text: ico + "\n" + slider.val+"%"
+    slider.text: slider.pressed? slider.val : ico
 }

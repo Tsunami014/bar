@@ -13,7 +13,7 @@ PanelWindow {
         right: true
     }
 
-    exclusiveZone: marea.expand ? Theme.barSze*0.8 : Theme.barBaseSze
+    exclusiveZone: marea.expand ? Theme.fontSize*1.5 + Theme.barPadding*1.5 : Theme.barBaseSze
     implicitHeight: exclusiveZone
 
     color: Theme.colTransparent

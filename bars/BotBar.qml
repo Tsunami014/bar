@@ -32,21 +32,9 @@ PanelWindow {
                     left: true
                     right: true
                 }
-                margins.left: (
-                    (
-                        Screen.desktopAvailableWidth -
-                        (Theme.barBaseSze + Theme.barRound) - // RightBar.implicitWidth
-                        (Theme.barSze*1.5) // LeftBar.implicitWidth
-                    ) - (mainR.width+Theme.barRound*2)
-                )/2
-                margins.right: margins.left
 
                 exclusiveZone: 0
-                implicitHeight: (
-                    Theme.barBottomBubbleSze*bot.rows +
-                    Theme.barSpacing*2*(bot.rows-1) +
-                    Theme.barPadding*3
-                )
+                implicitHeight: bot.height + Theme.barBaseSze
                 color: "transparent"
 
                 Corner {
@@ -85,8 +73,7 @@ PanelWindow {
                         id: bot
                         anchors {
                             horizontalCenter: parent.horizontalCenter
-                            top: parent.top; bottom: parent.bottom
-                            margins: Theme.barPadding*2
+                            bottom: parent.bottom
                         }
                         Component.onCompleted: {
                             children.forEach(child => {

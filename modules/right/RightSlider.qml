@@ -9,13 +9,15 @@ Rectangle {
     Layout.alignment: Qt.AlignHCenter
     implicitHeight: Theme.barSliderLen + Theme.barPadding*2
     color: Theme.colBg
-    topLeftRadius: Theme.barRound*2.5
-    bottomLeftRadius: Theme.barRound*2.5
+    topLeftRadius: Theme.barRound*2
+    bottomLeftRadius: Theme.barRound*2
+
     FancySlider {
         id: fslider
         col: parent.col
         fillcol: parent.fillcol
         handlecol: parent.handlecol
+        radius: (parent.width - Theme.barPadding)/2
         anchors {
             fill: parent
             margins: Theme.barPadding

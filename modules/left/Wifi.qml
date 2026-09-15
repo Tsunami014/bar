@@ -10,47 +10,41 @@ LeftBubble {
     col: Theme.colPurple
     property int wStrength: 0
 
-    item: Column {
-        id: main
+    item: Text {
         anchors.centerIn: parent
-        Text {
-            anchors.horizontalCenter: parent.horizontalCenter
-            horizontalAlignment: Text.AlignHCenter
 
-            text: (b.wifiText != "..." & b.wifiText != "-") ? (
-                b.wStrength <= 20 ? "󰤯" :
-                b.wStrength <= 40 ? "󰤟" :
-                b.wStrength <= 60 ? "󰤢" :
-                b.wStrength <= 80 ? "󰤥" :
-                "󰤨"
-            ) : "󰤮"
-            color: b.col
-            font.family: Theme.fontFamily
-            font.pixelSize: Theme.fontSize*1.5
-        }
-        Text {
-            anchors.horizontalCenter: parent.horizontalCenter
-            horizontalAlignment: Text.AlignHCenter
-
-            text: Networking.wifiEnabled ? (
-                b.wifiText != "..." ? b.wStrength + "%" : "..."
-            ) : "-"
-
-            color: b.col
-            font.family: Theme.fontFamily
-            font.pixelSize: Theme.fontSize
-            font.bold: true
-        }
+        text: (b.wifiText != "..." & b.wifiText != "-") ? (
+            b.wStrength <= 20 ? "󰤯" :
+            b.wStrength <= 40 ? "󰤟" :
+            b.wStrength <= 60 ? "󰤢" :
+            b.wStrength <= 80 ? "󰤥" :
+            "󰤨"
+        ) : "󰤮"
+        color: b.col
+        font.family: Theme.fontFamily
+        font.pixelSize: Theme.fontSize*1.5
     }
 
     property string wifiText: "..."
     Popup {
-        Text {
-            text: wifiText
-            color: b.col
-            font.family: Theme.fontFamily
-            font.pixelSize: Theme.fontSize
-            font.bold: true
+        Column {
+            spacing: 4
+            Text {
+                anchors.horizontalCenter: parent.horizontalCenter
+                text: Networking.wifiEnabled ? (
+                    b.wifiText != "..." ? b.wStrength + "% strength" : "..."
+                ) : "-"
+                color: b.col
+                font.family: Theme.fontFamily
+                font.pixelSize: Theme.fontSize
+                font.bold: true
+            }
+            Text {
+                text: wifiText
+                color: b.col
+                font.family: Theme.fontFamily
+                font.pixelSize: Theme.fontSize
+            }
         }
     }
 
