@@ -24,7 +24,7 @@ PanelWindow {
 
         MOBase {
             id: marea
-            allowhover: false
+            allowhover: 0
         }
     }
     Process {

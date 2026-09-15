@@ -5,6 +5,7 @@ import "../base/"
 
 Bubble {
     id: root
+    property string ico
     property string bottomtxt
     property Item topit
     item: ColumnLayout {
@@ -15,7 +16,7 @@ Bubble {
         id: bottxtit
         Layout.alignment: Qt.AlignHCenter
         horizontalAlignment: Text.AlignHCenter
-        text: bottomtxt
+        text: ` ${ico}  ${bottomtxt} `
         font.family: Theme.fontFamily
         font.pixelSize: Theme.fontSize
         color: root.col

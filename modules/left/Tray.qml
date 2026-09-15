@@ -23,11 +23,12 @@ ColumnLayout {
                 fillMode: Image.PreserveAspectFit
             }
             Loader {
+                id: menuLoader
                 anchors.fill: parent
                 active: modelData.hasMenu
                 sourceComponent: Popup {
                     id: pop
-                    allowhover: false
+                    allowhover: 1
                     ColumnLayout {
                         Text {
                             text: modelData.title || modelData.tooltipTitle
@@ -81,6 +82,7 @@ ColumnLayout {
             }
             MouseOverlay {
                 anchors.fill: parent
+                area: menuLoader.item
                 acceptedButtons: Qt.RightButton
                 cursorShape: Qt.PointingHandCursor
                 onPressed: modelData.activate()

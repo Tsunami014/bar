@@ -17,7 +17,8 @@ RowLayout {
             id: clock
             precision: SystemClock.Hours
         }
-        bottomtxt: Qt.formatDateTime(clock.date, "󰸘  dd/MM/yyyy")
+        ico: "󰸘"
+        bottomtxt: Qt.formatDateTime(clock.date, "dd/MM/yyyy")
         topit: Text {
             visible: top.full
             text: "Hello, world!"
@@ -34,7 +35,8 @@ RowLayout {
         property real lastCpuTotal: 0
         property real lastCpuIdle: 0
 
-        bottomtxt: `  ${cpuUsage == -1? '-' : cpuUsage}%`
+        ico: ""
+        bottomtxt: (cpuUsage == -1? '-' : cpuUsage) + "%"
         topit: Text {
             visible: top.full
             text: "Hello, world!"
@@ -79,7 +81,8 @@ RowLayout {
         col: Theme.colBlue
         property int memUsage: 0
 
-        bottomtxt: `  ${memUsage}%`
+        ico: ""
+        bottomtxt: memUsage + "%"
         topit: Text {
             visible: top.full
             text: "Hello, world!"
@@ -117,7 +120,8 @@ RowLayout {
         property string diskFree: "-"
         property int diskUsedPct: -1
 
-        bottomtxt: `  ${diskFree} (${diskUsedPct == -1 ? '-' : diskUsedPct}%)`
+        ico: ""
+        bottomtxt: `${diskFree} (${diskUsedPct == -1 ? '-' : diskUsedPct}%)`
         topit: Text {
             visible: top.full
             text: "Hello, world!"

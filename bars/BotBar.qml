@@ -95,7 +95,6 @@ PanelWindow {
         }
         MOBase {
             id: marea
-            allowhover: true
             prioritiseHover: true
         }
     }

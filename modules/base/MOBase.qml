@@ -15,7 +15,12 @@ MouseArea {
     property bool expand: opaque || opaqueCounts > 0
     property bool doexpand: false
     property bool forcexpand: false
-    property bool allowhover: true
+
+    // 0 = hover never activates
+    // 1 = hover activates only after being hovered for ~500ms
+    // 2 = hover activates immediately
+    property int allowhover: 2
+
     property bool stuckOpen: false
     property bool blockExit: false
 
@@ -41,15 +46,24 @@ MouseArea {
             }
         }
     }
+
+    property Timer hoverDelayTimer: Timer {
+        id: hoverDelayTimer
+        interval: 300
+        repeat: false
+        onTriggered: marea.doEnter()
+    }
+
     function forceShutHover() {
         if (Theme.expandLock) return;
         expandCounts = 0
         doexpand = false
         if (collapseTimer.running) collapseTimer.stop()
+        if (hoverDelayTimer.running) hoverDelayTimer.stop()
     }
     function forceShut() {
         if (Theme.expandLock) return;
-        if (allowhover) {
+        if (allowhover > 0) {
             expandCounts = containsMouse ? 1 : 0
         } else {
             expandCounts = 0
@@ -59,6 +73,7 @@ MouseArea {
         stuckOpen = false
         blockExit = false
         if (collapseTimer.running) collapseTimer.stop()
+        if (hoverDelayTimer.running) hoverDelayTimer.stop()
     }
     function shutIfTouch(mouse) {
         if (mouse.source !== undefined && mouse.source !== Qt.MouseEventNotSynthesized) {
@@ -66,24 +81,38 @@ MouseArea {
         }
     }
 
-    function enter() {
-        if (Theme.expandLock) return;
-        if (!allowhover) return;
+    function doEnter() {
         expandCounts += 1
         doexpand = true
         if (collapseTimer.running) collapseTimer.stop()
     }
+
+    function enter() {
+        if (Theme.expandLock) return;
+        if (allowhover === 0) return;
+        if (allowhover === 1 && !doexpand) {
+            hoverDelayTimer.restart()
+            return
+        }
+        doEnter()
+    }
     onEntered: enter()
+
     function exit() {
         if (Theme.expandLock) return;
-        if (!allowhover) return;
-        expandCounts -= 1
+        if (allowhover === 0) return;
+        if (hoverDelayTimer.running) {
+            hoverDelayTimer.stop()
+            return
+        }
+        expandCounts = Math.max(0, expandCounts - 1)
         if (expandCounts <= 0) {
             collapseTimer.start()
         }
         if (!blockExit) stuckOpen = false
     }
     onExited: exit()
+
     function press() {
         if (Theme.expandLock) return;
         if (stuckOpen) {
