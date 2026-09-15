@@ -32,6 +32,7 @@ Rectangle {
         spacing: Theme.barSpacing
 
         Workspaces {}
+        BlueTth {}
         Battery {}
     }
     ColumnLayout {
