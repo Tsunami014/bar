@@ -24,7 +24,7 @@ MouseArea {
         onTriggered: {
             if (Theme.expandLock) return;
             if (marea.expandCounts <= 0) {
-                forcexpand = false
+                if (prioritiseHover) forcexpand = false
                 marea.doexpand = false
             }
         }

@@ -47,7 +47,6 @@ PanelWindow {
             Right {
                 id: rite
                 anchors.fill: parent
-                color: Theme.colTransparent
 
                 opacity: marea.opaque ? 1:0
                 //Behavior on opacity { NumberAnimation { duration: 40 } }
@@ -65,6 +64,6 @@ PanelWindow {
                     y: modelData.y
                 }
             }
-        }
-    }}
+        }}
+    }
 }
