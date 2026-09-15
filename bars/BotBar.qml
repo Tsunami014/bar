@@ -33,7 +33,7 @@ PanelWindow {
                 }
 
                 exclusiveZone: 0
-                implicitHeight: bot.height + Theme.barBaseSze
+                implicitHeight: bot.height + Theme.barBaseSze + 1
                 color: "transparent"
 
                 Corner {

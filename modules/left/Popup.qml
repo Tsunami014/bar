@@ -5,6 +5,7 @@ import "../.."
 
 MOBase {
     id: marea
+    group: "left"
 
     Item {
         id: outerItems

@@ -11,10 +11,9 @@ PanelWindow {
     color: Theme.colTransparent
 
     implicitWidth: Theme.barRound
-    implicitHeight: Theme.barRound 
+    implicitHeight: Theme.barRound
 
     Corner {
-        id: corn
         anchors.fill: parent
         rx: pw.rx
         ry: pw.ry

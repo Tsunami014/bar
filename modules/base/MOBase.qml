@@ -7,6 +7,8 @@ MouseArea {
     hoverEnabled: true
     cursorShape: undefined
 
+    property string group: ""
+
     property int expandCounts: 0
     property int opaqueCounts: 0
     property bool opaque: doexpand || stuckOpen || (forcexpand && !prioritiseHover)
@@ -38,6 +40,12 @@ MouseArea {
                 marea.doexpand = false
             }
         }
+    }
+    function forceShutHover() {
+        if (Theme.expandLock) return;
+        expandCounts = 0
+        doexpand = false
+        if (collapseTimer.running) collapseTimer.stop()
     }
     function forceShut() {
         if (Theme.expandLock) return;
@@ -93,5 +101,11 @@ MouseArea {
             marea.blockExit = true
             marea.blockExitTimer.restart()
         }
+    }
+
+    onDoexpandChanged: {
+        if (!group) return
+        if (doexpand) GroupMgr.hoverOpened(group, marea)
+        else GroupMgr.hoverClosed(group, marea)
     }
 }
