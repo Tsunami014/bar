@@ -25,17 +25,6 @@ Rectangle {
         BlueTth {}
     }
     ColumnLayout {
-        id: bottom
-        anchors {
-            left: parent.left; right: parent.right
-            bottom: parent.bottom
-        }
-        spacing: Theme.barSpacing
-
-        Workspaces {}
-        Battery {}
-    }
-    ColumnLayout {
         id: middle
         anchors {
             left: parent.left; right: parent.right
@@ -46,5 +35,16 @@ Rectangle {
         spacing: Theme.barSpacing
 
         Tray {}
+    }
+    ColumnLayout {
+        id: bottom
+        anchors {
+            left: parent.left; right: parent.right
+            bottom: parent.bottom
+        }
+        spacing: Theme.barSpacing
+
+        Workspaces {}
+        Battery {}
     }
 }
