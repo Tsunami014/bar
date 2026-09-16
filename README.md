@@ -1,7 +1,7 @@
 # Bar
 A status bar made in quickshell for niri.
 
-Feel free to make your own copy of this repo to change the buttons as you need.
+Feel free to make your own copy of this repo to change stuff as you need.
 
 - `bars/` contains the code that makes the actual bars work
 - `sides/` contains the different modules that are positioned along each bar
@@ -11,7 +11,8 @@ Feel free to make your own copy of this repo to change the buttons as you need.
 ## Requirements
 - `brightnessctl` for brightness stuff
 - To be running `niri`
-    - If you are not don't worry, just almost none of the bottom bar's stuff will work.
+- [This QML plugin](https://github.com/imiric/qml-niri), at v0.3.0
+
 ## Extra stuff
 These are extra things you can get for more features
 - `acpi` for battery time estimates
@@ -21,7 +22,6 @@ These are extra things you can get for more features
     - TermSpawn must be set to the command to spawn a new terminal running code (e.g. with alacritty it's `alacritty -e`)
     - It just needs to be avaliable when running the quickshell instance, so set it wherever.
 - Set the environment `EXECUTE` to do something when the button is pressed (same as before)
-- To have `wtype` and be running wayland. If not, you can modify `sides/Top.qml` as required to change the commands.
 
 ## How to use
 To use, clone it into `~/.config/quickshell`:
