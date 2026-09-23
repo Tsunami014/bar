@@ -16,12 +16,40 @@ Rectangle {
     implicitHeight: lay.height + xtraY*2
     radius: width/2
 
-    property var palette: [
-        Theme.colRed, Theme.colOrange, Theme.colYellow,
-        Theme.colGreen, Theme.colBlue, Theme.colIndigo,
-        Theme.colPurple,
-        Theme.colFg, Theme.colMuted1
+    readonly property var palettePool: [
+        [ // Reverse Rainbow
+            Theme.colPurple, Theme.colIndigo, Theme.colBlue,
+            Theme.colGreen, Theme.colYellow, Theme.colOrange, Theme.colRed,
+        ],
+        [ // Faster Rainbow
+            Theme.colRed, Theme.colYellow, Theme.colGreen,
+            Theme.colBlue, Theme.colPurple, Theme.colFg,
+        ],
+        [ // Cool tones
+            Theme.colBlue, Theme.colIndigo, Theme.colMuted1,
+            Theme.colPurple, Theme.colFg,
+        ],
+        [ // Warm tones
+            Theme.colRed, Theme.colOrange, Theme.colYellow,
+            Theme.colGreen, Theme.colYellow, Theme.colOrange,
+        ],
+        [
+            "#8ac5e6", "#b58ae6", "#e78bc5", "#e9ebf5",
+            "#e78bc5", "#b58ae6",
+        ],
     ]
+    property int paletteIndex: Math.floor(Math.random() * palettePool.length)
+    property var palette: palettePool[paletteIndex]
+
+    Timer {
+        interval: 15 * 60 * 1000 // 15 minutes
+        running: true
+        repeat: true
+        onTriggered: {
+            // Pick a random palette from the pool
+            wrect.paletteIndex = Math.floor(Math.random() * wrect.palettePool.length);
+        }
+    }
 
     function colourForId(id, lighten) {
         return Qt.lighter(palette[id % palette.length], lighten)
@@ -45,7 +73,7 @@ Rectangle {
                 Layout.alignment: Qt.AlignHCenter
 
                 radius: Layout.preferredWidth / 2
-                color: wrect.colourForId(model.index, model.isActive ? 1.4 : 1.3)
+                color: wrect.colourForId(model.index-2, model.isActive ? 1.1 : 1.3)
 
                 Behavior on Layout.preferredWidth {
                     NumberAnimation { duration: 120; easing.type: Easing.OutCubic }
