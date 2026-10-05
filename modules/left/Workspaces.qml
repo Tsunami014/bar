@@ -9,8 +9,8 @@ Rectangle {
     property int dotSze: Theme.fontSize*1.25
     property int smlDotSze: Theme.fontSize*0.9
 
-    color: Qt.darker(Theme.colMuted2, 1.3)
-    border.color: Qt.darker(Theme.colMuted1, 1.5)
+    color: Theme.colMuted2
+    border.color: Qt.darker(Theme.colMuted1, Theme.lighten)
     border.width: Theme.borderWidth
     property int xtraY: (lay.width-dotSze)/2
     implicitHeight: lay.height + xtraY*2

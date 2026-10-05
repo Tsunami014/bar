@@ -19,8 +19,8 @@ PanelWindow {
         anchors.fill: parent
         anchors.leftMargin:  Theme.barPadding
         anchors.rightMargin: Theme.barPadding
-        anchors.topMargin:    Theme.barBaseSze*2
-        anchors.bottomMargin: Theme.barBaseSze*2
+        anchors.topMargin:    Theme.barBaseSze*1.5
+        anchors.bottomMargin: Theme.barBaseSze*1.5
         color: Theme.colBg
     }
 }

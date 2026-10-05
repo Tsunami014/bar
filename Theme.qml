@@ -3,21 +3,21 @@ import QtQuick
 import QtQuick.Window
 
 QtObject {
-    // Theme colors - Chroma Glow style (matching waybar)
+    property bool theme2: false
 
     readonly property color colTransparent: "transparent"  // Fully transparent background
-    readonly property color colFg: "#c0caf5"
-    readonly property color colMuted1: "#9aa5ce"
-    readonly property color colMuted2: "#545c7e"
-    readonly property color colBg: "#222436"
+    readonly property color colFg: theme2? "#c6d0f5" : "#c0caf5"
+    readonly property color colMuted1: theme2? "#838ba7" : "#9aa5ce"
+    readonly property color colMuted2: theme2? "#626880" : "#545c7e"
+    readonly property color colBg: theme2? "#414559" : "#222436"
 
-    readonly property color colRed: "#ff757f"
-    readonly property color colOrange: "#ff966c"
-    readonly property color colYellow: "#ffc777"
-    readonly property color colGreen: "#b8db87"
-    readonly property color colBlue: "#89ddff"
-    readonly property color colIndigo: "#7ca1f2"
-    readonly property color colPurple: "#c099ff"
+    readonly property color colRed: theme2? "#e78284" : "#ff757f"
+    readonly property color colOrange: theme2? "#ef9f76" : "#ff966c"
+    readonly property color colYellow: theme2? "#e5c890" : "#ffc777"
+    readonly property color colGreen: theme2? "#a6d189" : "#b8db87"
+    readonly property color colBlue: theme2? "#85c1dc" : "#89ddff"
+    readonly property color colIndigo: theme2? "#8caaee" : "#7ca1f2"
+    readonly property color colPurple: theme2? "#ca9ee6" : "#c099ff"
 
     // Font
     readonly property string fontFamily: "Ubuntu Nerd Font"
@@ -37,4 +37,5 @@ QtObject {
     // Misc
     property bool expandLock: false
     readonly property double sliderRound: 0.45 // Must be >0 and <=0.5
+    readonly property real lighten: theme2? 1.1 : 1.2
 }

@@ -1,7 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
 import ".."
-import "../modules/all/"
 import "../modules/left/"
 
 Rectangle {
@@ -46,5 +45,16 @@ Rectangle {
 
         Workspaces {}
         Battery {}
+        Toggle {
+            id: themeswitch
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignHCenter
+            Layout.topMargin: Theme.barSpacing
+            checked: Theme.theme2
+            accent: Theme.colPurple
+            onClicked: {
+                Theme.theme2 = !themeswitch.checked
+            }
+        }
     }
 }

@@ -34,9 +34,9 @@ Slider {
     anchors.fill: parent
     background: Rectangle {
         id: bg
-        border.color: Qt.darker(slider.col, 1.2)
+        border.color: Qt.darker(slider.col, Theme.lighten)
         border.width: Theme.borderWidth
-        color: Qt.lighter(slider.col, 1.2)
+        color: Qt.lighter(slider.col, Theme.lighten)
         radius: slider.radius
 
         Rectangle {
@@ -51,8 +51,8 @@ Slider {
                 height: bg.height
                 anchors.bottom: parent.bottom
                 radius: bg.radius
-                color: Qt.lighter(slider.fillcol, 1.2)
-                border.color: Qt.darker(slider.fillcol, 1.2)
+                color: Qt.lighter(slider.fillcol, Theme.lighten)
+                border.color: Qt.darker(slider.fillcol, Theme.lighten)
                 border.width: Theme.borderWidth
             }
         }
@@ -66,14 +66,14 @@ Slider {
         anchors.bottomMargin: Math.min(Math.max(
             parent.height * slider.position - height/2,
         0), parent.height - height)
-        color: Qt.lighter(slider.handlecol, 1.2)
-        border.color: Qt.darker(slider.handlecol, 1.2)
+        color: Qt.lighter(slider.handlecol, Theme.lighten)
+        border.color: Qt.darker(slider.handlecol, Theme.lighten)
         border.width: Theme.borderWidth
         Text {
             text: slider.text
             anchors.centerIn: parent
             horizontalAlignment: Text.AlignHCenter
-            color: Qt.darker(slider.handlecol, 1.6)
+            color: Qt.darker(slider.handlecol, Theme.lighten*1.5)
             font.family: Theme.fontFamily
             font.pixelSize: Theme.fontSize
             font.bold: true

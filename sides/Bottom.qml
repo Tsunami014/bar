@@ -3,7 +3,6 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
 import ".."
-import "../modules/all/"
 import "../modules/bottom/"
 
 RowLayout {
