@@ -67,37 +67,18 @@ LeftBubble {
                     font.bold: true
                 }
 
-                Rectangle {
+                Toggle {
                     id: btSwitchTrack
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
-                    height: Theme.fontSize*1.3
-                    width: height*1.8
-                    radius: height / 2
-                    color: b.btEnabled ? b.col : Theme.colMuted2
-
-                    Behavior on color { ColorAnimation { duration: 120 } }
-
-                    Rectangle {
-                        height: parent.height - 4
-                        width: height
-                        radius: height / 2
-                        color: Theme.colFg
-                        anchors.verticalCenter: parent.verticalCenter
-                        x: b.btEnabled ? parent.width - width - 2 : 2
-                        Behavior on x { NumberAnimation { duration: 120; easing.type: Easing.OutCubic } }
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: {
-                            if (!Bluetooth.defaultAdapter) return
-                            if (Bluetooth.defaultAdapter.enabled) {
-                                Bluetooth.defaultAdapter.enabled = false
-                            } else {
-                                rfkillUnblock.running = true
-                            }
+                    checked: b.btEnabled
+                    accent: b.col
+                    onClicked: {
+                        if (!Bluetooth.defaultAdapter) return
+                        if (Bluetooth.defaultAdapter.enabled) {
+                            Bluetooth.defaultAdapter.enabled = false
+                        } else {
+                            rfkillUnblock.running = true
                         }
                     }
                 }
@@ -118,36 +99,15 @@ LeftBubble {
                     font.bold: true
                 }
 
-                Rectangle {
+                Toggle {
                     id: scanSwitchTrack
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
-                    height: Theme.fontSize*1.3
-                    width: height*1.8
-                    radius: height / 2
-                    property bool on: b.btEnabled && Bluetooth.defaultAdapter && Bluetooth.defaultAdapter.discovering
-                    color: on ? b.col : Theme.colMuted2
-
-                    Behavior on color { ColorAnimation { duration: 120 } }
-
-                    Rectangle {
-                        height: parent.height - 4
-                        width: height
-                        radius: height / 2
-                        color: Theme.colFg
-                        anchors.verticalCenter: parent.verticalCenter
-                        x: scanSwitchTrack.on ? parent.width - width - 2 : 2
-                        Behavior on x { NumberAnimation { duration: 120; easing.type: Easing.OutCubic } }
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: {
-                            if (b.btEnabled && Bluetooth.defaultAdapter) {
-                                Bluetooth.defaultAdapter.discovering = !Bluetooth.defaultAdapter.discovering
-                            }
-                        }
+                    checked: !!(b.btEnabled && Bluetooth.defaultAdapter && Bluetooth.defaultAdapter.discovering)
+                    accent: b.col
+                    onClicked: {
+                        if (b.btEnabled && Bluetooth.defaultAdapter)
+                            Bluetooth.defaultAdapter.discovering = !Bluetooth.defaultAdapter.discovering
                     }
                 }
             }

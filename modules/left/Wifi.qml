@@ -32,15 +32,24 @@ LeftBubble {
         prioritiseHover: true
         touchdblstick: true
         Column {
+            id: popCol
             spacing: 4
+            width: Math.max(
+                wifiTitl.implicitWidth + wifiSwitch.width + 8,
+                wifiInfo.implicitWidth,
+                settingsLabel.implicitWidth + Theme.barRound * 2
+            )
+
             Item {
-                width: Math.max(parent.width, wifiTitl.width+wifiSwitch.width)
-                height: wifiTitl.height
+                width: parent.width
+                height: Math.max(wifiTitl.implicitHeight, wifiSwitch.height)
 
                 Text {
                     id: wifiTitl
                     anchors.left: parent.left
                     anchors.right: wifiSwitch.left
+                    anchors.rightMargin: 8
+                    anchors.verticalCenter: parent.verticalCenter
                     horizontalAlignment: Text.AlignHCenter
                     text: Networking.wifiEnabled ? (
                         b.wifiName + '\n' + (
@@ -53,39 +62,19 @@ LeftBubble {
                     font.bold: true
                 }
 
-                Rectangle {
+                Toggle {
                     id: wifiSwitch
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
-                    height: Theme.fontSize*1.3
-                    width: height*1.8
-                    radius: height / 2
-                    color: Networking.wifiEnabled ? b.col : Theme.colMuted2
-
-                    Behavior on color { ColorAnimation { duration: 120 } }
-
-                    Rectangle {
-                        height: parent.height - 4
-                        width: height
-                        radius: height / 2
-                        color: Theme.colFg
-                        anchors.verticalCenter: parent.verticalCenter
-                        x: Networking.wifiEnabled ? parent.width - width - 2 : 2
-                        Behavior on x { NumberAnimation { duration: 120; easing.type: Easing.OutCubic } }
-                        Behavior on color { ColorAnimation { duration: 120 } }
-                    }
-
-                    MouseArea {
-                        anchors.fill: parent
-                        cursorShape: Qt.PointingHandCursor
-                        onClicked: {
-                            Networking.wifiEnabled = !Networking.wifiEnabled
-                        }
-                    }
+                    checked: Networking.wifiEnabled
+                    accent: b.col
+                    onClicked: Networking.wifiEnabled = !Networking.wifiEnabled
                 }
             }
+
             Text {
-                text: Networking.wifiEnabled ? wifiText : ""
+                id: wifiInfo
+                text: Networking.wifiEnabled ? b.wifiText : ""
                 color: b.col
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fontSize
@@ -93,12 +82,13 @@ LeftBubble {
 
             // Settings button
             Rectangle {
-                width: Math.max(parent.width, children[0].width+Theme.barRound*2)
+                width: parent.width
                 height: 28
                 radius: Theme.barRound
-                color: Qt.rgba(col.r, col.g, col.b, 0.15)
+                color: Qt.rgba(b.col.r, b.col.g, b.col.b, 0.15)
 
                 Text {
+                    id: settingsLabel
                     anchors.centerIn: parent
                     text: "Wifi Settings"
                     color: b.col
