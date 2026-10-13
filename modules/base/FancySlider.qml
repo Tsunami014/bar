@@ -27,8 +27,21 @@ Slider {
     Component.onCompleted: {
         if (initial) initial.running = true
     }
-    onValueChanged: {
-        if (ready && change) change.running = true
+
+    property bool _dirty: false
+    onMoved: {
+        if (!ready || !change) return
+        if (change.running) _dirty = true
+        else change.running = true
+    }
+    Connections {
+        target: slider.change
+        function onRunningChanged() {
+            if (!slider.change.running && slider._dirty) {
+                slider._dirty = false
+                slider.change.running = true   // command re-evaluates with the latest slider.val
+            }
+        }
     }
 
     anchors.fill: parent

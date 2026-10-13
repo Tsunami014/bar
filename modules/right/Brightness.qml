@@ -1,4 +1,5 @@
 import "../.."
+import QtQuick
 import Quickshell.Io
 
 RightSlider {
@@ -36,4 +37,11 @@ RightSlider {
         slider.value <= 95 ? "" :
         ""
     slider.text: slider.pressed? slider.val : ico
+
+    Timer {
+        interval: 300
+        repeat: true
+        running: slider.ready && !slider.pressed
+        onTriggered: slider.initial.running = true
+    }
 }

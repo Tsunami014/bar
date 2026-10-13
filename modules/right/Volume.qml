@@ -1,4 +1,6 @@
 import "../.."
+import QtQuick
+import Quickshell.Services.Pipewire
 import Quickshell.Io
 
 RightSlider {
@@ -30,4 +32,17 @@ RightSlider {
         slider.val <= 40 ? "" :
         ""
     slider.text: slider.pressed? slider.val : ico
+
+    PwObjectTracker { objects: [Pipewire.defaultAudioSink] }  // required, or volume stays unbound
+
+    Connections {
+        target: Pipewire.defaultAudioSink?.audio ?? null
+        function onVolumeChanged() {
+            if (!slider.pressed)
+                slider.value = Pipewire.defaultAudioSink.audio.volume * 100
+        }
+        function onMutedChanged() {
+            muted = Pipewire.defaultAudioSink.audio.muted
+        }
+    }
 }
