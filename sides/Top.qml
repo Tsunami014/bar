@@ -83,5 +83,11 @@ Rectangle {
             col2: proc.running ? Theme.colMuted2 : Theme.colBlue
             cmd: ["sh", "-c", "pgrep wvkbd-mobintl >/dev/null || wvkbd-mobintl --bg 000000C0 -H 350 -L 200"]
         }
+        TopExec {
+            text: "󰓾"
+            col1: proc.running ? Theme.colGreen : Theme.colYellow
+            col2: Theme.colFg
+            cmd: ["sh", "-c", "qs -p ~/.config/quickshell/bar/touchdebug"]
+        }
     }
 }
