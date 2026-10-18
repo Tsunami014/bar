@@ -52,7 +52,7 @@ Rectangle {
     }
 
     function colourForId(id, lighten) {
-        return Qt.lighter(palette[id % palette.length], lighten)
+        return Qt.lighter(palette[(id >= 0? id : 0) % palette.length], lighten)
     }
 
     ColumnLayout {
