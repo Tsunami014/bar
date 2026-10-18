@@ -51,7 +51,7 @@ Rectangle {
             Layout.alignment: Qt.AlignHCenter
             Layout.topMargin: Theme.barSpacing
             checked: Theme.theme2
-            accent: Theme.colPurple
+            accent: Theme.colPrimary
             onClicked: {
                 Theme.theme2 = !themeswitch.checked
             }

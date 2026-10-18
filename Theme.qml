@@ -1,23 +1,71 @@
 pragma Singleton
+import Quickshell
+import Quickshell.Io
 import QtQuick
 import QtQuick.Window
 
-QtObject {
+Singleton {
+    id: root
+
     property bool theme2: false
+    onTheme2Changed: {
+        const n = theme2 ? 2 : 1
+        if (n !== pal.variant) setVariant(n)
+    }
+
+    function setVariant(n) {
+        setter.command = ["theme-set-variant", String(n)]
+        setter.running = true
+    }
+    Process { id: setter }
+
+    FileView {
+        path: Quickshell.env("HOME") + "/.local/state/theme/current/palette.json"
+        watchChanges: true
+        onFileChanged: reload()
+        adapter: JsonAdapter {
+            id: pal
+            onVariantChanged: root.theme2 = (variant === 2)
+
+            // Fallbacks
+            property int variant: 1
+            property string bg: "#1a1b26"
+            property string bg2: "#222436"
+            property string bg3: "#2f334d"
+            property string fg: "#c0caf5"
+            property string muted1: "#9aa5ce"
+            property string muted2: "#545c7e"
+            property string accent: "#7ca1f2"
+            property string primary: "#7ca1f2"
+            property string secondary: "#9aa5ce"
+            property string tertiary: "#c099ff"
+            property string red: "#ff757f"
+            property string orange: "#ff966c"
+            property string yellow: "#ffc777"
+            property string green: "#b8db87"
+            property string cyan: "#89ddff"
+            property string blue: "#7ca1f2"
+            property string purple: "#c099ff"
+        }
+    }
 
     readonly property color colTransparent: "transparent"  // Fully transparent background
-    readonly property color colFg: theme2? "#c6d0f5" : "#c0caf5"
-    readonly property color colMuted1: theme2? "#838ba7" : "#9aa5ce"
-    readonly property color colMuted2: theme2? "#626880" : "#545c7e"
-    readonly property color colBg: theme2? "#414559" : "#222436"
+    readonly property color colFg: pal.fg
+    readonly property color colMuted1: pal.muted1
+    readonly property color colMuted2: pal.muted2
+    readonly property color colBg: pal.bg2
 
-    readonly property color colRed: theme2? "#e78284" : "#ff757f"
-    readonly property color colOrange: theme2? "#ef9f76" : "#ff966c"
-    readonly property color colYellow: theme2? "#e5c890" : "#ffc777"
-    readonly property color colGreen: theme2? "#a6d189" : "#b8db87"
-    readonly property color colBlue: theme2? "#85c1dc" : "#89ddff"
-    readonly property color colIndigo: theme2? "#8caaee" : "#7ca1f2"
-    readonly property color colPurple: theme2? "#ca9ee6" : "#c099ff"
+    readonly property color colRed: pal.red
+    readonly property color colOrange: pal.orange
+    readonly property color colYellow: pal.yellow
+    readonly property color colGreen: pal.green
+    readonly property color colBlue: pal.cyan
+    readonly property color colIndigo: pal.blue
+    readonly property color colPurple: pal.purple
+
+    readonly property color colPrimary: pal.primary
+    readonly property color colSecondary: pal.secondary
+    readonly property color colTertiary: pal.tertiary
 
     // Font
     readonly property string fontFamily: "Ubuntu Nerd Font"

@@ -6,6 +6,7 @@ Feel free to make your own copy of this repo to change stuff as you need.
 - `bars/` contains the code that makes the actual bars work
 - `sides/` contains the different modules that are positioned along each bar
 - `modules/` contains each module that is used in the bars
+- `Theme.qml` has many theme related things
 
 
 ## Requirements
@@ -22,6 +23,7 @@ These are extra things you can get for more features
     - TermSpawn must be set to the command to spawn a new terminal running code (e.g. with alacritty it's `alacritty -e`)
     - It just needs to be avaliable when running the quickshell instance, so set it wherever.
 - Set the environment `EXECUTE` to do something when the button is pressed (same as before)
+- `~/.local/state/theme/current/palette.json` can contain a pallete (see `Theme.qml`) that this will use!
 
 ## How to use
 To use, clone it into `~/.config/quickshell`:
