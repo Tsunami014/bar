@@ -16,13 +16,11 @@ Rectangle {
         spacing: Theme.barSpacing
         Lock {
             text: running ? "" : ""
-            col1: running ? Theme.colRed : Theme.colPurple
-            col2: running ? Theme.colGreen : Theme.colIndigo
+            col: running ? Theme.colYellow : Theme.colPurple
         }
         TopExecTog {
             text: proc.run ? "󰛐" : ""
-            col1: proc.run ? Theme.colBlue : Theme.colFg
-            col2: Theme.colGreen
+            col: proc.run ? Theme.colGreen : Theme.colOrange
             cmd: ["sh", "-c", "kill -STOP $(pidof swayidle)"]
             stopcmd: ["sh", "-c", "kill -CONT $(pidof swayidle)"]
         }
@@ -41,8 +39,7 @@ Rectangle {
 
         TopExec {
             text: ""
-            col1: Theme.colBlue
-            col2: Theme.colFg
+            col: Theme.colIndigo
             cmd: ["niri", "msg", "action", "focus-column-or-monitor-left"]
         }
         Text {
@@ -57,8 +54,7 @@ Rectangle {
         }
         TopExec {
             text: ""
-            col1: Theme.colOrange
-            col2: Theme.colIndigo
+            col: Theme.colBlue
             cmd: ["niri", "msg", "action", "focus-column-or-monitor-right"]
         }
     }
@@ -73,20 +69,17 @@ Rectangle {
         spacing: Theme.barSpacing
         TopExec {
             text: proc.running ? "󰆡" : "󰢆"
-            col1: proc.running ? Theme.colYellow : Theme.colPurple
-            col2: Theme.colOrange
+            col: proc.running ? Theme.colYellow : Theme.colGreen
             cmd: ["sh", "-c", `touch /tmp/"NOAUTOROTATE-$USER" && trap "rm \\"/tmp/NOAUTOROTATE-$USER\\"" EXIT && sleep infinity`]
         }
         TopExec {
             text: "󰌌"
-            col1: Theme.colIndigo
-            col2: proc.running ? Theme.colMuted2 : Theme.colBlue
+            col: proc.running ? Theme.colFg : Theme.colBlue
             cmd: ["sh", "-c", "pgrep wvkbd-mobintl >/dev/null || wvkbd-mobintl --bg 000000C0 -H 350 -L 200"]
         }
         TopExec {
             text: "󰓾"
-            col1: proc.running ? Theme.colGreen : Theme.colYellow
-            col2: Theme.colFg
+            col: proc.running ? Theme.colOrange : Theme.colYellow
             cmd: ["sh", "-c", "qs -p ~/.config/quickshell/bar/touchdebug"]
         }
     }
