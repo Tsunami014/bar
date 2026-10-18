@@ -34,6 +34,10 @@ QtObject {
     readonly property int borderRadius: 15
     readonly property double borderWidth: 2.5
 
+    // Properties that need to be used in multiple places
+    readonly property real leftBarWidth:  fontSize*2.5 + barPadding*2 + 1
+    readonly property real rightBarWidth: barBaseSze
+
     // Misc
     property bool expandLock: false
     readonly property double sliderRound: 0.45 // Must be >0 and <=0.5

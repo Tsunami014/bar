@@ -59,6 +59,7 @@ PanelWindow {
                     color: Theme.colBg
                     anchors {
                         horizontalCenter: parent.horizontalCenter
+                        horizontalCenterOffset: (Theme.rightBarWidth - Theme.leftBarWidth) / 2
                         top: parent.top; bottom: parent.bottom
                     }
                     width: bot.width + Theme.barPadding*4

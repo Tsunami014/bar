@@ -12,7 +12,7 @@ PanelWindow {
         right: true
     }
 
-    exclusiveZone: Theme.barBaseSze
+    exclusiveZone: Theme.rightBarWidth
     implicitWidth: Theme.barBaseSze+Theme.barRound
     color: Theme.colTransparent
 

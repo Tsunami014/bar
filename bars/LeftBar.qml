@@ -11,7 +11,7 @@ PanelWindow {
         left: true
     }
 
-    exclusiveZone: Theme.fontSize*2.5 + Theme.barPadding*2 + 1
+    exclusiveZone: Theme.leftBarWidth
     implicitWidth: exclusiveZone
 
     color: Theme.colBg
