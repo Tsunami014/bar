@@ -1,5 +1,6 @@
 import QtQuick
 import "../.."
+
 Rectangle {
     id: root
     property color col: "#FFF"

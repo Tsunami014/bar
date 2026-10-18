@@ -7,6 +7,7 @@ Rectangle {
     property string exitproc: "kill -CONT $(pidof swayidle)"
     // left
     RowLayout {
+        id: tleft
         anchors {
             left: parent.left
             leftMargin: Theme.barSpacing
@@ -27,21 +28,11 @@ Rectangle {
     }
     // center
     RowLayout {
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-            verticalCenter: parent.verticalCenter
-            top: parent.top
-            bottom: parent.bottom
-            topMargin: 3
-            bottomMargin: 3
-        }
+        id: tcentre
+        anchors.centerIn: parent
+        height: parent.height - 6
         spacing: Theme.barSpacing*2
 
-        TopExec {
-            text: ""
-            col: Theme.colIndigo
-            cmd: ["niri", "msg", "action", "focus-column-or-monitor-left"]
-        }
         Text {
             property string title: niri.focusedWindow?.title ?? ""
             property int mxlen: 55
@@ -52,14 +43,10 @@ Rectangle {
             font.pixelSize: Theme.fontSize
             color: Theme.colFg
         }
-        TopExec {
-            text: ""
-            col: Theme.colBlue
-            cmd: ["niri", "msg", "action", "focus-column-or-monitor-right"]
-        }
     }
     // right
     RowLayout {
+        id: tright
         anchors {
             right: parent.right
             rightMargin: Theme.barSpacing
@@ -81,6 +68,26 @@ Rectangle {
             text: "󰓾"
             col: proc.running ? Theme.colOrange : Theme.colYellow
             cmd: ["sh", "-c", "qs -p ~/.config/quickshell/bar/touchdebug"]
+        }
+    }
+    // Left side
+    TopFillLay {
+        anchors.left: tleft.right
+        anchors.right: tcentre.left
+        TopFill {
+            text: ""
+            col: Theme.colIndigo
+            cmd: ["niri", "msg", "action", "focus-column-or-monitor-left"]
+        }
+    }
+    // Right side
+    TopFillLay {
+        anchors.left: tcentre.right
+        anchors.right: tright.left
+        TopFill {
+            text: ""
+            col: Theme.colIndigo
+            cmd: ["niri", "msg", "action", "focus-column-or-monitor-right"]
         }
     }
 }
