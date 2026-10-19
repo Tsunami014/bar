@@ -4,7 +4,6 @@ import "../.."
 MouseArea {
     id: marea
     anchors.fill: parent
-    hoverEnabled: true
     cursorShape: undefined
 
     property string group: ""
@@ -26,6 +25,13 @@ MouseArea {
 
     property bool prioritiseHover: false
     property bool touchdblstick: false
+
+    // set by touch, cleared by mouse press
+    property bool touching: false
+    // finger currently down
+    property bool touchHeld: false
+    // how long touch keeps a prioritiseHover bar open after release
+    property int touchDelay: 1000
 
     property Timer blockExitTimer: Timer {
         id: blockExitTimer
@@ -54,6 +60,23 @@ MouseArea {
         onTriggered: marea.doEnter()
     }
 
+    // touch fires stray enter/exit around presses, ignore hover while touched
+    property Timer touchGuardTimer: Timer {
+        id: touchGuardTimer
+        interval: 500
+        repeat: false
+    }
+
+    // touch has no hover, only real pointers count
+    HoverHandler {
+        id: hover
+        acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad | PointerDevice.Stylus
+        onHoveredChanged: {
+            if (hovered) marea.enter()
+            else marea.exit()
+        }
+    }
+
     function forceShutHover() {
         if (Theme.expandLock) return;
         expandCounts = 0
@@ -64,7 +87,7 @@ MouseArea {
     function forceShut() {
         if (Theme.expandLock) return;
         if (allowhover > 0) {
-            expandCounts = containsMouse ? 1 : 0
+            expandCounts = hover.hovered && !touching ? 1 : 0
         } else {
             expandCounts = 0
         }
@@ -81,6 +104,11 @@ MouseArea {
         }
     }
 
+    function collapse() {
+        collapseTimer.interval = touching && prioritiseHover ? touchDelay : 300
+        collapseTimer.restart()
+    }
+
     function doEnter() {
         expandCounts += 1
         doexpand = true
@@ -90,28 +118,28 @@ MouseArea {
     function enter() {
         if (Theme.expandLock) return;
         if (allowhover === 0) return;
+        if (touchHeld || touchGuardTimer.running) return;
         if (allowhover === 1 && !doexpand) {
             hoverDelayTimer.restart()
             return
         }
         doEnter()
     }
-    onEntered: enter()
 
     function exit() {
         if (Theme.expandLock) return;
         if (allowhover === 0) return;
+        if (touchHeld || touchGuardTimer.running) return;
         if (hoverDelayTimer.running) {
             hoverDelayTimer.stop()
             return
         }
         expandCounts = Math.max(0, expandCounts - 1)
         if (expandCounts <= 0) {
-            collapseTimer.start()
+            collapse()
         }
         if (!blockExit) stuckOpen = false
     }
-    onExited: exit()
 
     function press() {
         if (Theme.expandLock) return;
@@ -119,10 +147,37 @@ MouseArea {
             forceShut()
             return
         }
+        // first touch only wakes it, like a hover
+        if (touching && prioritiseHover && !doexpand) {
+            doexpand = true
+            return
+        }
         forcexpand = !forcexpand
         if (!forcexpand && !prioritiseHover) forceShut()
     }
-    onPressed: press()
+
+    function touchDown() {
+        touching = true
+        touchHeld = true
+        touchGuardTimer.restart()
+        if (collapseTimer.running) collapseTimer.stop()
+    }
+    function touchUp() {
+        touchHeld = false
+        touchGuardTimer.restart()
+        if (doexpand) collapse()
+    }
+    function touchTap() {
+        if (prioritiseHover) press()
+    }
+
+    onPressed: (mouse) => {
+        if (mouse.source !== Qt.MouseEventNotSynthesized) touchDown()
+        else touching = false
+        press()
+    }
+    onReleased: if (touchHeld) touchUp()
+    onCanceled: if (touchHeld) touchUp()
 
     onDoubleClicked: (mouse) => {
         if (touchdblstick && mouse.source !== undefined && mouse.source !== Qt.MouseEventNotSynthesized) {
