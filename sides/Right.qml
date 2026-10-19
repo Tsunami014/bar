@@ -17,7 +17,7 @@ ColumnLayout {
     Brightness{}
     Item {
         Layout.fillHeight: true
-        Layout.verticalStretchFactor: 2
+        Layout.verticalStretchFactor: 1
     }
     Volume{}
     Item {

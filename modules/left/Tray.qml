@@ -14,8 +14,8 @@ ColumnLayout {
 
         LeftBubble {
             id: b
-            col: modelData.status == Status.NeedsAttention ? Theme.colRed :
-                modelData.status == Status.Active ? Theme.colFg : Theme.colMuted2
+            col: modelData.status == Status.NeedsAttention ? Theme.colTertiary :
+                modelData.status == Status.Active ? Theme.colPrimary : Theme.colSecondary
             item: Image {
                 anchors { left: parent.left; right: parent.right }
                 source: modelData.icon
