@@ -44,6 +44,7 @@ BotBubble {
     FileView {
         path: Quickshell.env("HOME") + "/.cache/weather.json"
         watchChanges: true
+        blockLoading: true
         printErrors: false
         onFileChanged: reload()
         onLoadFailed: weatherbubble.w = null
