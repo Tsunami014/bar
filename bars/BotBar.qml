@@ -97,6 +97,7 @@ PanelWindow {
         MOBase {
             id: marea
             prioritiseHover: true
+            touchDelay: 3000
         }
     }
 }

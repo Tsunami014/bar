@@ -19,7 +19,7 @@ Bubble {
         horizontalAlignment: Text.AlignHCenter
         text: ` ${ico}  ${bottomtxt} `
         font.family: Theme.fontFamily
-        font.pixelSize: Theme.fontSize
+        font.pixelSize: Theme.fontSize*1.2
         color: root.col
     }
     Component.onCompleted: {
