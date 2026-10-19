@@ -14,7 +14,7 @@ Singleton {
     }
 
     function setVariant(n) {
-        setter.command = ["theme-set-variant", String(n)]
+        setter.command = ["upd-theme-variant", String(n)]
         setter.running = true
     }
     Process { id: setter }
