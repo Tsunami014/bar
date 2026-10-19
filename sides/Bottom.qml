@@ -10,21 +10,8 @@ RowLayout {
     property bool full: false
     spacing: Theme.barSpacing*2
 
-    BotBubble {
-        col: Theme.colYellow
-        SystemClock {
-            id: clock
-            precision: SystemClock.Hours
-        }
-        ico: "󰸘"
-        bottomtxt: Qt.formatDateTime(clock.date, "dd/MM/yyyy")
-        topit: Text {
-            visible: top.full
-            text: "Hello, world!"
-            font.family: Theme.fontFamily
-            font.pixelSize: Theme.fontSize
-            color: Theme.colYellow
-        }
+    Weather {
+        full: top.full
     }
 
     BotBubble {

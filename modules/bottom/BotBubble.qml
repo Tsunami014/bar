@@ -8,6 +8,7 @@ Bubble {
     property string ico
     property string bottomtxt
     property Item topit
+    Layout.alignment: Qt.AlignBottom
     item: ColumnLayout {
         id: cont
         spacing: Theme.barSpacing
