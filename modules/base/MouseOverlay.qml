@@ -6,18 +6,25 @@ MouseArea {
     anchors.fill: parent
     cursorShape: undefined
     property MOBase area: null
+    // last area we told about hovering, so a swapped area doesn't keep a stale entry
+    property MOBase prevArea: null
 
     onPressed: mouse => mouse.accepted = false
     onReleased: mouse => mouse.accepted = false
     onPositionChanged: mouse => mouse.accepted = false
+
+    onAreaChanged: {
+        if (prevArea) prevArea.exit(overlay)
+        prevArea = area
+    }
 
     // hoverEnabled is off, touch has no hover, only real pointers count
     HoverHandler {
         acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad | PointerDevice.Stylus
         onHoveredChanged: {
             if (!overlay.area) return
-            if (hovered) overlay.area.enter()
-            else overlay.area.exit()
+            if (hovered) overlay.area.enter(overlay)
+            else overlay.area.exit(overlay)
         }
     }
     // finger down holds it open, lifting starts the close timer
@@ -34,5 +41,8 @@ MouseArea {
         onTapped: if (overlay.area) overlay.area.touchTap()
     }
 
-    Component.onDestruction: if (area) area.touchUp()
+    Component.onDestruction: if (area) {
+        area.exit(overlay)
+        area.touchUp()
+    }
 }

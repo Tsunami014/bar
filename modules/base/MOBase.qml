@@ -33,6 +33,9 @@ MouseArea {
     // how long touch keeps a prioritiseHover bar open after release
     property int touchDelay: 1000
 
+    // hover sources currently inside (own handler + overlays), one entry each so enter/exit can't drift
+    property var hoverers: []
+
     property Timer blockExitTimer: Timer {
         id: blockExitTimer
         interval: 400
@@ -65,6 +68,9 @@ MouseArea {
         id: touchGuardTimer
         interval: 500
         repeat: false
+        onTriggered: {
+            if (hover.hovered && marea.hoverers.indexOf(marea) < 0) marea.enter(marea)
+        }
     }
 
     // touch has no hover, only real pointers count
@@ -72,8 +78,8 @@ MouseArea {
         id: hover
         acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad | PointerDevice.Stylus
         onHoveredChanged: {
-            if (hovered) marea.enter()
-            else marea.exit()
+            if (hovered) marea.enter(marea)
+            else marea.exit(marea)
         }
     }
 
@@ -87,7 +93,7 @@ MouseArea {
     function forceShut() {
         if (Theme.expandLock) return;
         if (allowhover > 0) {
-            expandCounts = hover.hovered && !touching ? 1 : 0
+            expandCounts = hoverers.length > 0 && !touching ? 1 : 0
         } else {
             expandCounts = 0
         }
@@ -115,10 +121,13 @@ MouseArea {
         if (collapseTimer.running) collapseTimer.stop()
     }
 
-    function enter() {
+    function enter(src) {
         if (Theme.expandLock) return;
         if (allowhover === 0) return;
         if (touchHeld || touchGuardTimer.running) return;
+        if (hoverers.indexOf(src) >= 0) return
+        hoverers.push(src)
+        if (hoverers.length > 1) return
         if (allowhover === 1 && !doexpand) {
             hoverDelayTimer.restart()
             return
@@ -126,10 +135,14 @@ MouseArea {
         doEnter()
     }
 
-    function exit() {
+    function exit(src) {
+        var i = hoverers.indexOf(src)
+        if (i < 0) return
+        hoverers.splice(i, 1)
+        if (hoverers.length > 0) return
+
         if (Theme.expandLock) return;
         if (allowhover === 0) return;
-        if (touchHeld || touchGuardTimer.running) return;
         if (hoverDelayTimer.running) {
             hoverDelayTimer.stop()
             return
@@ -163,6 +176,7 @@ MouseArea {
         if (collapseTimer.running) collapseTimer.stop()
     }
     function touchUp() {
+        if (!touchHeld) return
         touchHeld = false
         touchGuardTimer.restart()
         if (doexpand) collapse()
