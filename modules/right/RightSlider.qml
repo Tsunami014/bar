@@ -21,7 +21,7 @@ Rectangle {
             right: parent.right
         }
         color: Theme.colBg
-        width: Theme.barBorder+1
+        width: Theme.barBorder
     }
 
     FancySlider {
@@ -53,7 +53,7 @@ Rectangle {
         anchors {
             top: parent.bottom
             right: parent.right
-            topMargin: -Theme.barBorder-0.25
+            topMargin: -Theme.barBorder
         }
         rx: 1
     }

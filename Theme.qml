@@ -72,21 +72,36 @@ Singleton {
     readonly property string fontFamily: "Ubuntu Nerd Font"
     readonly property int fontSize: 16
 
+    // Display scale, fed in by LeftBar from its window
+    property real dpr: 1
+
+    // Smallest whole number of logical px that is also whole device px (4 at 1.25x, 2 at 1.5x, 1 at 1x/2x)
+    readonly property int pxStep: {
+        for (let s = 1; s < 25; s++)
+            if (Math.abs(s*dpr - Math.round(s*dpr)) < 0.001) return s
+        return 1
+    }
+    // Window sizes and anything shared between windows, whole logical px and whole device px
+    function align(v) { return Math.round(v / pxStep) * pxStep }
+    // Positions and sizes inside a window, whole device px
+    function snap(v) { return Math.round(v * dpr) / dpr }
+
     // Bar sizing
-    readonly property int barPadding: 7
-    readonly property int barBaseSze: 13
+    readonly property int barPadding: align(7)
+    readonly property int barBaseSze: align(12)
     readonly property int barSpacing: 8
-    readonly property int barRound: 17
-    readonly property int barSliderLen: Screen.desktopAvailableHeight * (2/9)
+    readonly property int barRound: align(17)
+    readonly property real barSliderLen: snap(Screen.desktopAvailableHeight * (2/9))
 
     // Border stuff
     readonly property int borderRadius: 15
     readonly property double borderWidth: 2.5
-    readonly property int barBorder: 4
+    readonly property int barBorder: align(4)
 
     // Properties that need to be used in multiple places
-    readonly property real leftBarWidth:  fontSize*2.5 + barPadding*2 + 1
-    readonly property real rightBarWidth: barBaseSze
+    readonly property int leftBarWidth:  align(fontSize*2.5 + barPadding*2)
+    readonly property int rightBarWidth: barBaseSze
+    readonly property int topBarOpen:    align(fontSize*1.5 + barPadding*1.5)
 
     // Misc
     property bool expandLock: false

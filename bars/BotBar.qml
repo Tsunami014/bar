@@ -39,13 +39,10 @@ PanelWindow {
             color: Theme.colBg
             border.color: Theme.colBorder
             border.width: Theme.barBorder
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-                horizontalCenterOffset: (Theme.rightBarWidth - Theme.leftBarWidth) / 2
-                bottom: parent.bottom
-            }
-            height: (content.item ? content.item.height : 0) + Theme.barBaseSze + Theme.barBorder
-            width: (content.item ? content.item.width  : 0) + Theme.barPadding*4 + Theme.barBorder*2
+            anchors.bottom: parent.bottom
+            x: Theme.snap((parent.width - width + Theme.rightBarWidth - Theme.leftBarWidth) / 2)
+            height: Theme.snap((content.item ? content.item.height : 0) + Theme.barBaseSze + Theme.barBorder)
+            width: Theme.snap((content.item ? content.item.width  : 0) + Theme.barPadding*4 + Theme.barBorder*2)
 
             topLeftRadius: 20
             topRightRadius: 20
@@ -60,7 +57,7 @@ PanelWindow {
                     left: parent.left
                     right: parent.right
                 }
-                height: Theme.barBorder+1
+                height: Theme.barBorder
                 color: Theme.colBg
             }
             Loader {
@@ -90,7 +87,7 @@ PanelWindow {
         }
         Corner {
             visible: marea.expand
-            anchors { bottom: parent.bottom; right: mainR.left; rightMargin: -Theme.barBorder-1 }
+            anchors { bottom: parent.bottom; right: mainR.left; rightMargin: -Theme.barBorder }
             rx: 1
             ry: 1
         }

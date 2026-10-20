@@ -13,7 +13,7 @@ PanelWindow {
         right: true
     }
 
-    exclusiveZone: marea.expand ? Theme.fontSize*1.5 + Theme.barPadding*1.5 : Theme.barBaseSze
+    exclusiveZone: marea.expand ? Theme.topBarOpen : Theme.barBaseSze
     implicitHeight: exclusiveZone
 
     color: Theme.colTransparent
@@ -52,8 +52,8 @@ PanelWindow {
             active: marea.expand
             sourceComponent: Top {
                 anchors.fill: parent
-                anchors.topMargin: Theme.barPadding/2
-                anchors.bottomMargin: Theme.barPadding/2
+                anchors.topMargin: Theme.snap(Theme.barPadding/2)
+                anchors.bottomMargin: Theme.snap(Theme.barPadding/2)
                 color: Theme.colBg
                 Component.onDestruction: {
                     outerproc.cmd = exitproc;

@@ -31,7 +31,7 @@ Rectangle {
         id: tcentre
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.horizontalCenterOffset: (Theme.leftBarWidth - Theme.rightBarWidth) / -2
+        anchors.horizontalCenterOffset: Theme.snap((Theme.leftBarWidth - Theme.rightBarWidth) / -2)
         height: parent.height - 6
         spacing: Theme.barSpacing*2
 
