@@ -41,9 +41,12 @@ PanelWindow {
             }
 
             exclusiveZone: 0
-            implicitWidth: Theme.fontSize*2 + Theme.barPadding
+            implicitWidth: Theme.fontSize*2 + Theme.barPadding + Theme.barBorder
             color: Theme.colTransparent
 
+            mask: Region {
+                regions: rite.maskRegions
+            }
             Right {
                 id: rite
                 anchors.fill: parent

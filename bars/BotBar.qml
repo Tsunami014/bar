@@ -33,29 +33,19 @@ PanelWindow {
 
         mask: Region { item: marea.expand ? mainR : null }
 
-        Corner {
-            visible: marea.expand
-            anchors { bottom: parent.bottom; left: mainR.right; leftMargin: -1 }
-            ry: 1
-        }
-        Corner {
-            visible: marea.expand
-            anchors { bottom: parent.bottom; right: mainR.left; rightMargin: -1 }
-            rx: 1
-            ry: 1
-        }
-
         Rectangle {
             id: mainR
             visible: marea.expand
             color: Theme.colBg
+            border.color: Theme.colBorder
+            border.width: Theme.barBorder
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 horizontalCenterOffset: (Theme.rightBarWidth - Theme.leftBarWidth) / 2
                 bottom: parent.bottom
             }
-            height: (content.item ? content.item.height : 0) + Theme.barBaseSze + 1
-            width:  (content.item ? content.item.width  : 0) + Theme.barPadding*4
+            height: (content.item ? content.item.height : 0) + Theme.barBaseSze + Theme.barBorder
+            width: (content.item ? content.item.width  : 0) + Theme.barPadding*4 + Theme.barBorder*2
 
             topLeftRadius: 20
             topRightRadius: 20
@@ -64,6 +54,15 @@ PanelWindow {
             onHeightChanged: if (height > panelWin.height)
                 console.warn("panel taller than window:", height, ">", panelWin.height)
 
+            Rectangle {
+                anchors {
+                    bottom: parent.bottom
+                    left: parent.left
+                    right: parent.right
+                }
+                height: Theme.barBorder+1
+                color: Theme.colBg
+            }
             Loader {
                 id: content
                 active: marea.expand
@@ -82,6 +81,18 @@ PanelWindow {
             }
 
             MouseOverlay { area: marea }
+        }
+
+        Corner {
+            visible: marea.expand
+            anchors { bottom: parent.bottom; left: mainR.right; leftMargin: -Theme.barBorder }
+            ry: 1
+        }
+        Corner {
+            visible: marea.expand
+            anchors { bottom: parent.bottom; right: mainR.left; rightMargin: -Theme.barBorder-1 }
+            rx: 1
+            ry: 1
         }
     }
 }

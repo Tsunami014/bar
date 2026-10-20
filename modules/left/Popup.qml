@@ -12,10 +12,10 @@ MOBase {
         property int margin: 5
         anchors {
             fill: parent
-            topMargin: margin
-            bottomMargin: margin
-            leftMargin: margin
-            rightMargin: margin
+            topMargin: margin + Theme.barBorder
+            bottomMargin: margin + Theme.barBorder
+            leftMargin: margin + Theme.barPadding
+            rightMargin: margin + Theme.barBorder
         }
         visible: false
         Item { id: innerItems }
@@ -35,49 +35,51 @@ MOBase {
                     y: marea.height/2
                 }
             }
-            implicitWidth: (innerItems.childrenRect.width || 1) + outerItems.margin*2 + Theme.barPadding
-            implicitHeight: (innerItems.childrenRect.height || 1) + outerItems.margin*2
+            mask: Region { item: popRect }
+            implicitWidth: (innerItems.childrenRect.width || 1) + outerItems.margin*2 + Theme.barPadding + Theme.barBorder
+            implicitHeight: (innerItems.childrenRect.height || 1) + outerItems.margin*2 + Theme.barRound*2
             visible: true
             color: Theme.colTransparent
 
-            PopupWindow {
-                anchor {
-                    item: popRect
-                    gravity: Edges.Right
-                    adjustment: PopupAdjustment.None
-                    rect {
-                        y: popRect.height/2 - 1
-                    }
-                }
-                color: Theme.colTransparent
-                implicitWidth: Theme.barRound
-                implicitHeight: popRect.height+Theme.barRound*2 - 1
-                visible: true
-                Corner {
-                    anchors {
-                        top: parent.top
-                        left: parent.left
-                    }
-                    ry: 1
-                }
-                Corner {
-                    anchors {
-                        bottom: parent.bottom
-                        left: parent.left
-                    }
-                }
-                MouseOverlay { area: marea }
-            }
             Rectangle {
                 id: popRect
-                anchors.fill: parent
-                anchors.leftMargin: Theme.barPadding
+                anchors {
+                    fill: parent
+                    topMargin: Theme.barRound - Theme.barBorder - 1
+                    bottomMargin: Theme.barRound - Theme.barBorder - 1
+                }
                 topRightRadius: 10
                 bottomRightRadius: 10
                 color: Theme.colBg
+                border.color: Theme.colBorder
+                border.width: Theme.barBorder
                 Component.onCompleted: {
                     outerItems.parent = popRect
                     outerItems.visible = true
+                }
+            }
+            Rectangle {
+                anchors {
+                    top: parent.top
+                    bottom: parent.bottom
+                    left: parent.left
+                }
+                width: Math.max(Theme.barBorder+1, Theme.barPadding+1)
+                color: Theme.colBg
+            }
+            Corner {
+                anchors {
+                    top: parent.top
+                    left: parent.left
+                    leftMargin: Theme.barPadding
+                }
+                ry: 1
+            }
+            Corner {
+                anchors {
+                    bottom: parent.bottom
+                    left: parent.left
+                    leftMargin: Theme.barPadding
                 }
             }
             MouseOverlay { area: marea }

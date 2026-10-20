@@ -54,6 +54,7 @@ Singleton {
     readonly property color colMuted1: pal.muted1
     readonly property color colMuted2: pal.muted2
     readonly property color colBg: pal.bg2
+    readonly property color colBorder: pal.muted2
 
     readonly property color colRed: pal.red
     readonly property color colOrange: pal.orange
@@ -73,14 +74,15 @@ Singleton {
 
     // Bar sizing
     readonly property int barPadding: 7
-    readonly property int barBaseSze: 12
+    readonly property int barBaseSze: 13
     readonly property int barSpacing: 8
-    readonly property int barRound: 15
+    readonly property int barRound: 17
     readonly property int barSliderLen: Screen.desktopAvailableHeight * (2/9)
 
     // Border stuff
     readonly property int borderRadius: 15
     readonly property double borderWidth: 2.5
+    readonly property int barBorder: 4
 
     // Properties that need to be used in multiple places
     readonly property real leftBarWidth:  fontSize*2.5 + barPadding*2 + 1

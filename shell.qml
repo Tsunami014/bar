@@ -52,4 +52,8 @@ ShellRoot{
         rx: 1
         ry: 1
     }
+    BarBorderHoriz { anchors.top: true }
+    BarBorderHoriz { anchors.bottom: true }
+    BarBorderVert { anchors.left: true }
+    BarBorderVert { anchors.right: true }
 }

@@ -7,20 +7,32 @@ import "../base/"
 Rectangle {
     Layout.fillWidth: true
     Layout.alignment: Qt.AlignHCenter
-    implicitHeight: Theme.barSliderLen + Theme.barPadding*2
+    implicitHeight: Theme.barSliderLen + Theme.barPadding*2 + Theme.barBorder*2
     color: Theme.colBg
     topLeftRadius: Theme.barRound*2
     bottomLeftRadius: Theme.barRound*2
+    border.color: Theme.colBorder
+    border.width: Theme.barBorder
+
+    Rectangle {
+        anchors {
+            top: parent.top
+            bottom: parent.bottom
+            right: parent.right
+        }
+        color: Theme.colBg
+        width: Theme.barBorder+1
+    }
 
     FancySlider {
         id: fslider
         col: parent.col
         fillcol: parent.fillcol
         handlecol: parent.handlecol
-        radius: (parent.width - Theme.barPadding)/2
+        radius: width/2
         anchors {
             fill: parent
-            margins: Theme.barPadding
+            margins: Theme.barPadding+Theme.barBorder
             rightMargin: 0
         }
     }
@@ -32,7 +44,7 @@ Rectangle {
         anchors {
             bottom: parent.top
             right: parent.right
-            bottomMargin: -1
+            bottomMargin: -Theme.barBorder
         }
         rx: 1
         ry: 1
@@ -41,7 +53,7 @@ Rectangle {
         anchors {
             top: parent.bottom
             right: parent.right
-            topMargin: -1
+            topMargin: -Theme.barBorder-0.25
         }
         rx: 1
     }
