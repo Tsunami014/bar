@@ -78,8 +78,12 @@ MouseArea {
         id: hover
         acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad | PointerDevice.Stylus
         onHoveredChanged: {
-            if (hovered) marea.enter(marea)
-            else marea.exit(marea)
+            if (hovered) {
+                marea.touching = false
+                marea.enter(marea)
+            } else {
+                marea.exit(marea)
+            }
         }
     }
 
@@ -110,8 +114,8 @@ MouseArea {
         }
     }
 
-    function collapse() {
-        collapseTimer.interval = touching && prioritiseHover ? touchDelay : 300
+    function collapse(fromTouch) {
+        collapseTimer.interval = (fromTouch && prioritiseHover) ? touchDelay : 300
         collapseTimer.restart()
     }
 
@@ -149,7 +153,7 @@ MouseArea {
         }
         expandCounts = Math.max(0, expandCounts - 1)
         if (expandCounts <= 0) {
-            collapse()
+            collapse(false)
         }
         if (!blockExit) stuckOpen = false
     }
@@ -179,7 +183,7 @@ MouseArea {
         if (!touchHeld) return
         touchHeld = false
         touchGuardTimer.restart()
-        if (doexpand) collapse()
+        if (doexpand) collapse(true)
     }
     function touchTap() {
         if (prioritiseHover) press()

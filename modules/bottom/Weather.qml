@@ -27,7 +27,7 @@ BotBubble {
     readonly property var detailFooter:
         ok && w.updated !== undefined ? [{ label: "Updated", value: String(w.updated) }] : []
 
-    ico: w && w.icon ? w.icon : "󰖐"
+    ico: w && w.icon ? w.icon : "󰼯"
     bottomtxt: ok ? (w.temp + w.tunit) : "-"
 
     topit: DetailList {
