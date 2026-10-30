@@ -90,7 +90,7 @@ Singleton {
     readonly property int barPadding: align(7)
     readonly property int barBaseSze: align(12)
     readonly property int barSpacing: 8
-    readonly property int barRound: align(17)
+    readonly property int barRound: align(24)
     readonly property real barSliderLen: snap(Screen.desktopAvailableHeight * (2/9))
 
     // Border stuff

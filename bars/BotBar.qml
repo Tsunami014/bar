@@ -31,43 +31,39 @@ PanelWindow {
         color: "transparent"
         visible: true
 
-        mask: Region { item: marea.expand ? mainR : null }
+        function colAt(i) {
+            return marea.expand && content.item && content.item.columns
+                ? content.item.columns[i] : null
+        }
+        mask: Region {
+            Region { item: panelWin.colAt(0) }
+            Region { item: panelWin.colAt(1) }
+            Region { item: panelWin.colAt(2) }
+            Region { item: panelWin.colAt(3) }
+        }
 
-        Rectangle {
+        // just sizes/positions the columns, they draw the panel themselves
+        Item {
             id: mainR
             visible: marea.expand
-            color: Theme.colBg
-            border.color: Theme.colBorder
-            border.width: Theme.barBorder
             anchors.bottom: parent.bottom
             x: Theme.snap((parent.width - width + Theme.rightBarWidth - Theme.leftBarWidth) / 2)
-            height: Theme.snap((content.item ? content.item.height : 0) + Theme.barBaseSze + Theme.barBorder)
-            width: Theme.snap((content.item ? content.item.width  : 0) + Theme.barPadding*4 + Theme.barBorder*2)
-
-            topLeftRadius: 20
-            topRightRadius: 20
+            width: content.item ? content.item.width : 0
+            height: content.item ? content.item.height : 0
             opacity: marea.opaque ? 1 : 0
 
             onHeightChanged: if (height > panelWin.height)
                 console.warn("panel taller than window:", height, ">", panelWin.height)
 
-            Rectangle {
-                anchors {
-                    bottom: parent.bottom
-                    left: parent.left
-                    right: parent.right
-                }
-                height: Theme.barBorder
-                color: Theme.colBg
-            }
             Loader {
                 id: content
                 active: marea.expand
                 anchors { horizontalCenter: parent.horizontalCenter; bottom: parent.bottom }
                 sourceComponent: Bottom {
+                    area: marea
                     full: marea.forcexpand
                     Component.onCompleted: {
-                        children.forEach(child => {
+                        modules.forEach(child => {
                             if (child.proc) {
                                 child.proc.started.connect(() => marea.opaqueCounts += 1)
                                 child.proc.exited.connect(() => marea.opaqueCounts -= 1)
@@ -76,20 +72,6 @@ PanelWindow {
                     }
                 }
             }
-
-            MouseOverlay { area: marea }
-        }
-
-        Corner {
-            visible: marea.expand
-            anchors { bottom: parent.bottom; left: mainR.right; leftMargin: -Theme.barBorder }
-            ry: 1
-        }
-        Corner {
-            visible: marea.expand
-            anchors { bottom: parent.bottom; right: mainR.left; rightMargin: -Theme.barBorder }
-            rx: 1
-            ry: 1
         }
     }
 }

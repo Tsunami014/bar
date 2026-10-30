@@ -8,8 +8,15 @@ MouseArea {
     property MOBase area: null
     // last area we told about hovering, so a swapped area doesn't keep a stale entry
     property MOBase prevArea: null
+    property bool clickable: false
 
-    onPressed: mouse => mouse.accepted = false
+    onPressed: mouse => {
+        if (clickable && area && mouse.source === Qt.MouseEventNotSynthesized) {
+            area.touching = false
+            area.press()
+        }
+        mouse.accepted = false
+    }
     onReleased: mouse => mouse.accepted = false
     onPositionChanged: mouse => mouse.accepted = false
 
