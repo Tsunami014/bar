@@ -32,8 +32,19 @@ ColumnLayout {
                 area: menuLoader.item
                 acceptedButtons: Qt.RightButton
                 cursorShape: Qt.PointingHandCursor
-                onPressed: modelData.activate()
+                onPressed: mouse => {
+                    if (mouse.source === Qt.MouseEventNotSynthesized)
+                        modelData.activate()
+                }
                 onWheel: wheel => modelData.scroll(wheel.angleDelta.y, false)
+                TapHandler {
+                    onPressedChanged: {
+                        var p = menuLoader.item
+                        if (!pressed || !p) return
+                        if (p.expand) p.forceShut()
+                        else p.forcexpand = true
+                    }
+                }
             }
         }
     }

@@ -20,6 +20,8 @@ MouseArea {
     // 2 = hover activates immediately
     property int allowhover: 2
 
+    property bool externalPress: false
+
     property bool stuckOpen: false
     property bool blockExit: false
 
@@ -190,6 +192,7 @@ MouseArea {
     }
 
     onPressed: (mouse) => {
+        if (externalPress) return
         if (mouse.source !== Qt.MouseEventNotSynthesized) touchDown()
         else touching = false
         press()

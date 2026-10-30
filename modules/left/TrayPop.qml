@@ -7,6 +7,7 @@ import "../base/"
 Popup {
     id: pop
     allowhover: 1
+    externalPress: true
     ColumnLayout {
         Text {
             text: modelData.title || modelData.tooltipTitle
