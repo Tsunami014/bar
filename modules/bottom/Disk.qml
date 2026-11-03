@@ -14,7 +14,7 @@ BotBubble {
     property var tmpMounts: []
     property var seenSources: ({})
 
-    ico: ""
+    ico: ""
     bottomtxt: `${diskFree} (${diskUsedPct == -1 ? '-' : diskUsedPct}%)`
     topit: DetailList {
         visible: diskbubble.full
