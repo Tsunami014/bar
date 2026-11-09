@@ -7,17 +7,38 @@ import QtQuick.Window
 Singleton {
     id: root
 
-    property bool theme2: false
-    onTheme2Changed: {
-        const n = theme2 ? 2 : 1
-        if (n !== pal.variant) setVariant(n)
-    }
+    readonly property string paletteName: pal.name
+    readonly property color colPalette: pal.button
+
+    property int wanted: 1
+    property int launched: 0
+    property bool pending: false
+
+    function nextPalette() { setVariant(wanted % pal.count + 1) }
+    function resetPalette() { setVariant(1) }
 
     function setVariant(n) {
-        setter.command = ["upd-theme-variant", String(n)]
+        wanted = n
+        pending = true
+        if (!setter.running) launch()
+    }
+    function launch() {
+        launched = wanted
+        setter.command = ["upd-theme-variant", String(wanted)]
         setter.running = true
     }
-    Process { id: setter }
+    Process {
+        id: setter
+        onRunningChanged: {
+            if (running) return
+            if (root.launched !== root.wanted) {
+                root.launch()  // Another click came in while it ran
+            } else {
+                root.pending = false
+                root.wanted = pal.variant  // If the script failed this drops back to what is really applied
+            }
+        }
+    }
 
     FileView {
         path: Quickshell.env("HOME") + "/.local/state/theme/current/palette.json"
@@ -25,10 +46,14 @@ Singleton {
         onFileChanged: reload()
         adapter: JsonAdapter {
             id: pal
-            onVariantChanged: root.theme2 = (variant === 2)
+            onVariantChanged: if (!root.pending) root.wanted = variant
 
             // Fallbacks
             property int variant: 1
+            property int count: 4
+            property string name: "Spacey"
+            property string button: "#aeb0b8"
+            property real lighten: 1.2
             property string bg: "#1a1b26"
             property string bg2: "#222436"
             property string bg3: "#2f334d"
@@ -106,5 +131,5 @@ Singleton {
     // Misc
     property bool expandLock: false
     readonly property double sliderRound: 0.45 // Must be >0 and <=0.5
-    readonly property real lighten: theme2? 1.1 : 1.2
+    readonly property real lighten: pal.lighten
 }

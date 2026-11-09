@@ -45,16 +45,6 @@ Rectangle {
 
         Workspaces {}
         Battery {}
-        Toggle {
-            id: themeswitch
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignHCenter
-            Layout.topMargin: Theme.barSpacing
-            checked: Theme.theme2
-            accent: Theme.colTertiary
-            onClicked: {
-                Theme.theme2 = !themeswitch.checked
-            }
-        }
+        ThemeButton {}
     }
 }
