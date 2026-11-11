@@ -16,7 +16,7 @@ RightSlider {
             onRead: data => {
                 if (!data) return
                 const spl = data.trim().split(" ")
-                slider.value = parseFloat(spl[1])*100 || 1
+                slider.value = parseFloat(spl[1])*100 || 0
                 muted = spl.includes("[MUTED]")
                 slider.ready = true
             }

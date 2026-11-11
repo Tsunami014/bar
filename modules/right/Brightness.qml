@@ -12,7 +12,8 @@ RightSlider {
         stdout: SplitParser {
             onRead: data => {
                 if (!data) return
-                slider.value = parseInt(data.trim()) || 1
+                const v = parseInt(data.trim())
+                slider.value = isNaN(v) ? 100 : v
                 slider.ready = true
             }
         }

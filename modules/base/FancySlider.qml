@@ -14,17 +14,26 @@ Slider {
 
     property string text: ""
     property int _rawval: Math.round(slider.value)
-    property int val: (
-        _rawval >= 99 ? 100 : (
-            _rawval <= 1 ? 0 : _rawval
-        )
-    )
+    property int val: Math.max(0, Math.min(100, _rawval))
 
     property int radius: width * Theme.sliderRound
 
     property bool handleHovered: false
     readonly property bool dragging: dragArea.pressed
-    readonly property bool showValue: handleHovered || dragging
+    property bool recentlyChanged: false
+    property int changeShowTime: 1000
+    readonly property bool showValue: handleHovered || dragging || recentlyChanged
+
+    onValChanged: {
+        if (!ready) return
+        recentlyChanged = true
+        changeTimer.restart()
+    }
+    Timer {
+        id: changeTimer
+        interval: slider.changeShowTime
+        onTriggered: slider.recentlyChanged = false
+    }
 
     from: 0
     to: 100
@@ -58,12 +67,13 @@ Slider {
 
         Rectangle {
             width: bg.width
-            height: bg.height * slider.position
+            // Fill reaches the handle's centre, so it lines up across the whole travel
+            height: slider.handle.height / 2 + (bg.height - slider.handle.height) * slider.position
             anchors.bottom: parent.bottom
             color: Theme.colTransparent
             clip: true
             Rectangle {
-                // filled portion
+                // Filled portion
                 width: bg.width
                 height: bg.height
                 anchors.bottom: parent.bottom
@@ -80,9 +90,8 @@ Slider {
         radius: slider.radius
         height: radius*2
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: Math.min(Math.max(
-            parent.height * slider.position - height/2,
-        0), parent.height - height)
+        // Handle travels the full track: bottom edge at 0, top edge at 100
+        anchors.bottomMargin: (parent.height - height) * slider.position
         color: Qt.lighter(slider.handlecol, Theme.lighten)
         border.color: Qt.darker(slider.handlecol, Theme.lighten)
         border.width: Theme.borderWidth
@@ -101,21 +110,26 @@ Slider {
             font.bold: true
         }
     }
+    // Custom drag handler
     MouseArea {
         id: dragArea
         anchors.fill: parent
         preventStealing: true
         property real grabOffset: 0
 
+        // handle centre sits hh/2 .. height-hh/2
+        readonly property real hh: slider.handle.height
+        readonly property real travel: Math.max(1, slider.height - hh)
+
         function apply(y) {
-            const pos = Math.max(0, Math.min(1, (slider.height - y - grabOffset) / slider.height))
+            const pos = Math.max(0, Math.min(1, (slider.height - y - grabOffset - hh / 2) / travel))
             slider.value = slider.from + pos * (slider.to - slider.from)
             slider.moved()
         }
         onPressed: mouse => {
             const h = slider.handle
             const onHandle = mouse.y >= h.y && mouse.y <= h.y + h.height
-            grabOffset = onHandle ? (slider.height - mouse.y) - slider.position * slider.height : 0
+            grabOffset = onHandle ? (slider.height - mouse.y) - (hh / 2 + slider.position * travel) : 0
             if (!onHandle) apply(mouse.y)
         }
         onPositionChanged: mouse => { if (pressed) apply(mouse.y) }
