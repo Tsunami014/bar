@@ -36,7 +36,7 @@ RightSlider {
         slider.value <= 90 ? "" :
         slider.value <= 95 ? "" :
         ""
-    slider.text: slider.pressed? slider.val : ico
+    slider.text: slider.showValue ? slider.val : ico
 
     Timer {
         interval: 300

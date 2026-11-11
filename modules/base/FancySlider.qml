@@ -22,6 +22,9 @@ Slider {
 
     property int radius: width * Theme.sliderRound
 
+    property bool handleHovered: false
+    readonly property bool showValue: handleHovered || pressed
+
     from: 0
     to: 100
     Component.onCompleted: {
@@ -82,6 +85,11 @@ Slider {
         color: Qt.lighter(slider.handlecol, Theme.lighten)
         border.color: Qt.darker(slider.handlecol, Theme.lighten)
         border.width: Theme.borderWidth
+        HoverHandler {
+            blocking: false
+            acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad | PointerDevice.Stylus
+            onHoveredChanged: slider.handleHovered = hovered
+        }
         Text {
             text: slider.text
             anchors.centerIn: parent

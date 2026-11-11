@@ -31,7 +31,7 @@ RightSlider {
         slider.val == 0 ? "" :
         slider.val <= 40 ? "" :
         ""
-    slider.text: slider.pressed? slider.val : ico
+    slider.text: slider.showValue ? slider.val : ico
 
     PwObjectTracker { objects: [Pipewire.defaultAudioSink] }  // required, or volume stays unbound
 

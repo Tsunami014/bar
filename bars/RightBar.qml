@@ -47,16 +47,16 @@ PanelWindow {
             mask: Region {
                 regions: rite.maskRegions
             }
-            Right {
-                id: rite
-                anchors.fill: parent
-
-                opacity: marea.opaque ? 1:0
-                //Behavior on opacity { NumberAnimation { duration: 40 } }
-            }
             MouseOverlay {
                 area: marea
-                anchors.fill: rite
+                anchors.fill: parent
+
+                Right {
+                    id: rite
+                    anchors.fill: parent
+                    opacity: marea.opaque ? 1:0
+                    //Behavior on opacity { NumberAnimation { duration: 40 } }
+                }
             }
         }}
     }
