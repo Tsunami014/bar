@@ -41,7 +41,7 @@ RightSlider {
     Timer {
         interval: 300
         repeat: true
-        running: slider.ready && !slider.pressed
+        running: slider.ready && !slider.dragging
         onTriggered: slider.initial.running = true
     }
 }

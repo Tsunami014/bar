@@ -38,7 +38,7 @@ RightSlider {
     Connections {
         target: Pipewire.defaultAudioSink?.audio ?? null
         function onVolumeChanged() {
-            if (!slider.pressed)
+            if (!slider.dragging)
                 slider.value = Pipewire.defaultAudioSink.audio.volume * 100
         }
         function onMutedChanged() {

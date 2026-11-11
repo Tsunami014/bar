@@ -23,7 +23,8 @@ Slider {
     property int radius: width * Theme.sliderRound
 
     property bool handleHovered: false
-    readonly property bool showValue: handleHovered || pressed
+    readonly property bool dragging: dragArea.pressed
+    readonly property bool showValue: handleHovered || dragging
 
     from: 0
     to: 100
@@ -99,5 +100,24 @@ Slider {
             font.pixelSize: Theme.fontSize
             font.bold: true
         }
+    }
+    MouseArea {
+        id: dragArea
+        anchors.fill: parent
+        preventStealing: true
+        property real grabOffset: 0
+
+        function apply(y) {
+            const pos = Math.max(0, Math.min(1, (slider.height - y - grabOffset) / slider.height))
+            slider.value = slider.from + pos * (slider.to - slider.from)
+            slider.moved()
+        }
+        onPressed: mouse => {
+            const h = slider.handle
+            const onHandle = mouse.y >= h.y && mouse.y <= h.y + h.height
+            grabOffset = onHandle ? (slider.height - mouse.y) - slider.position * slider.height : 0
+            if (!onHandle) apply(mouse.y)
+        }
+        onPositionChanged: mouse => { if (pressed) apply(mouse.y) }
     }
 }
