@@ -8,12 +8,55 @@ LeftBubble {
     id: b
 
     col: Theme.colPurple
-    property int wStrength: 0
+
+    // Live state
+    readonly property var wifiDev:
+        Networking.devices.values.find(d => d.type === DeviceType.Wifi) ?? null
+    readonly property var active:
+        wifiDev ? (wifiDev.networks.values.find(n => n.connected) ?? null) : null
+
+    readonly property bool linked: Networking.wifiEnabled && active !== null
+    readonly property int wStrength: linked ? Math.round(active.signalStrength * 100) : 0
+    readonly property string wifiName: linked ? active.name : "-"
+
+    // Extra details
+    property string wifiText: "-"
+    readonly property bool scanning: wifiRescan.running
+
+    function refreshDetails() {
+        if (!wifiScan.running && !wifiRescan.running) wifiScan.running = true
+    }
+
+    function rescan() {
+        if (!wifiRescan.running && Networking.wifiEnabled) wifiRescan.running = true
+    }
+
+    function applyScan(text) {
+        let info = "-"
+        for (let line of text.trim().split("\n")) {
+            // nmcli escapes literal colons as \:
+            line = line.replace(/\\:/g, "§COLON§")
+            const fields = line.split(":").map(f =>
+                f.replace(/§COLON§/g, ":")
+            )
+            if (fields[0] == "*") {
+                info = fields[1] + "  Ch " + fields[4] + "\nMax rate: " + fields[5] + "\nSecurity: " + fields[8]
+                break
+            }
+        }
+        b.wifiText = info
+    }
+
+    // Connection status changed
+    onActiveChanged: {
+        wifiText = "-"
+        if (active) refreshDetails()
+    }
 
     item: Text {
         anchors.centerIn: parent
 
-        text: (Networking.wifiEnabled && b.wifiText != "..." & b.wifiText != "-") ? (
+        text: b.linked ? (
             b.wStrength <= 20 ? "󰤯" :
             b.wStrength <= 40 ? "󰤟" :
             b.wStrength <= 60 ? "󰤢" :
@@ -25,18 +68,19 @@ LeftBubble {
         font.pixelSize: Theme.fontSize*1.5
     }
 
-    property string wifiText: "..."
-    property string wifiName: "-"
     Popup {
         id: pop
         prioritiseHover: true
         touchdblstick: true
+        onExpandChanged: if (pop.expand) b.refreshDetails()
+
         Column {
             id: popCol
             spacing: 4
             width: Math.max(
                 wifiTitl.implicitWidth + wifiSwitch.width + 8,
                 wifiInfo.implicitWidth,
+                rescanLabel.implicitWidth + Theme.barRound * 2,
                 settingsLabel.implicitWidth + Theme.barRound * 2
             )
 
@@ -53,7 +97,7 @@ LeftBubble {
                     horizontalAlignment: Text.AlignHCenter
                     text: Networking.wifiEnabled ? (
                         b.wifiName + '\n' + (
-                            b.wifiText != "..." ? b.wStrength + "% strength" : "..."
+                            b.linked ? b.wStrength + "% strength" : "-"
                         )
                     ) : "-\n-"
                     color: b.col
@@ -78,6 +122,29 @@ LeftBubble {
                 color: b.col
                 font.family: Theme.fontFamily
                 font.pixelSize: Theme.fontSize
+            }
+
+            // Rescan button
+            Rectangle {
+                width: parent.width
+                height: 28
+                radius: Theme.barRound
+                color: Qt.rgba(b.col.r, b.col.g, b.col.b, b.scanning ? 0.3 : 0.15)
+
+                Text {
+                    id: rescanLabel
+                    anchors.centerIn: parent
+                    text: b.scanning ? "Scanning..." : "Rescan Wifi"
+                    color: b.col
+                    font.family: Theme.fontFamily
+                    font.pixelSize: Theme.fontSize
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: b.rescan()
+                }
             }
 
             // Settings button
@@ -108,58 +175,30 @@ LeftBubble {
         }
     }
 
-    // Wifi Strength
-    Process {
-        id: wifiStrengthProc
-        running: true
-        command: ["sh", "-c", "awk 'NR == 3 {printf \"%.1f\", (substr($3, 1, length($3)-1)/70)*100; exit}' /proc/net/wireless"]
-        stdout: SplitParser {
-            onRead: data => {
-                if (!data) return
-                b.wStrength = parseInt(data.trim()) || 0
-            }
-        }
-    }
-
-    // Wifi scan
+    // Cached list
     Process {
         id: wifiScan
-        running: true
-        command: ["nmcli", "-t", "dev", "wifi"]
-
-        stdout: SplitParser {
-            splitMarker: "\0"
-            onRead: data => {
-                if (!data) return
-                const lines = data.trim().split("\n")
-
-                b.wifiText = "..."
-
-                for (let line of lines) {
-                    // nmcli escapes literal colons as \:
-                    line = line.replace(/\\:/g, "§COLON§")
-
-                    const fields = line.split(":").map(f =>
-                        f.replace(/§COLON§/g, ":")
-                    )
-
-                    if (fields[0] == "*") {
-                        b.wifiText = fields[1] + "\n" + fields[5] + "  " + fields[7] + "\nSecurity: " + fields[8]
-                        b.wifiName = fields[2]
-                        break
-                    }
-                }
-            }
+        command: ["nmcli", "-t", "dev", "wifi", "list", "--rescan", "no"]
+        stdout: StdioCollector {
+            onStreamFinished: b.applyScan(text)
         }
     }
 
-    Timer {
-        interval: 5000
-        running: true
-        repeat: true
-        onTriggered: {
-            wifiStrengthProc.running = true
-            wifiScan.running = true
+    // Forced rescan
+    Process {
+        id: wifiRescan
+        command: ["nmcli", "-t", "dev", "wifi", "list", "--rescan", "yes"]
+        stdout: StdioCollector {
+            onStreamFinished: b.applyScan(text)
+        }
+    }
+
+    // Wifi toggled
+    Connections {
+        target: Networking
+        function onWifiEnabledChanged() {
+            b.wifiText = "-"
+            if (Networking.wifiEnabled) b.refreshDetails()
         }
     }
 
