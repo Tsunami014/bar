@@ -10,6 +10,12 @@ Singleton {
     readonly property string paletteName: pal.name
     readonly property color colPalette: pal.button
 
+    readonly property var palettes: idx.palettes.length > 0
+        ? idx.palettes
+        : [{ name: pal.name, button: pal.button }]
+    readonly property int paletteIndex: wanted - 1
+    function setPalette(i) { setVariant(i + 1) }
+
     property int wanted: 1
     property int launched: 0
     property bool pending: false
@@ -37,6 +43,16 @@ Singleton {
                 root.pending = false
                 root.wanted = pal.variant  // If the script failed this drops back to what is really applied
             }
+        }
+    }
+
+    FileView {
+        path: Quickshell.env("HOME") + "/.local/state/theme/palettes.json"
+        watchChanges: true
+        onFileChanged: reload()
+        adapter: JsonAdapter {
+            id: idx
+            property var palettes: []
         }
     }
 
