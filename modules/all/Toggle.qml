@@ -6,10 +6,9 @@ Rectangle {
 
     property bool checked: false
     property color accent: Theme.colFg
-
     property int gap: 6
 
-    signal clicked()
+    signal pressed()
 
     height: Theme.fontSize * 1.4
     width: height * 1.8
@@ -31,6 +30,6 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
-        onClicked: root.clicked()
+        onPressed: root.pressed()
     }
 }

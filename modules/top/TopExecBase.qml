@@ -10,7 +10,7 @@ Bubble {
     radius: Theme.borderRadius/2
 
     property string text: ""
-    item: Text {
+    Text {
         anchors.centerIn: parent
         horizontalAlignment: Text.AlignHCenter
         text: b.text

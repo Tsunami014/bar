@@ -4,9 +4,7 @@ import Quickshell.Io
 import QtQuick
 import QtQuick.Window
 
-Singleton {
-    id: root
-
+Singleton { id: root
     readonly property string paletteName: pal.name
     readonly property color colPalette: pal.button
 

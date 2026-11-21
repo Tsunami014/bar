@@ -5,9 +5,10 @@ import Quickshell
 import "../.."
 import "../base/"
 
-LeftBubble {
+Bubble {
     id: b
     col: Theme.colPalette
+    Layout.fillWidth: true
 
     item: Text {
         anchors.centerIn: parent

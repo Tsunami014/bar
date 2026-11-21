@@ -4,7 +4,7 @@ import Quickshell
 import "../.."
 import "../base/"
 
-Popup {
+LeftPopup {
     id: pop
     allowhover: 1
     externalPress: true
