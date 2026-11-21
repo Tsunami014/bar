@@ -25,7 +25,7 @@ Rectangle {
             text: run ? "󰛐" : ""
             txtSize: 1.5
             runcol: Theme.colOrange
-            cmd: Utils.killIdleStart; stopcmd: Utils.killIdleStop
+            cmd: Cmds.killIdleStart; stopcmd: Cmds.killIdleStop
         }
     }
     // center
@@ -59,17 +59,17 @@ Rectangle {
         CmdBtn { Layout.fillHeight: true
             text: run ? "󰆡" : "󰢆"
             runcol: Theme.colYellow
-            cmd: Utils.noAutoRot
+            cmd: Cmds.noAutoRot
         }
         CmdBtn { Layout.fillHeight: true
             text: "󰌌"
             runcol: Theme.colBlue
-            cmd: Utils.popupKbd
+            cmd: Cmds.popupKbd
         }
         CmdBtn { Layout.fillHeight: true
             text: "󰓾"
             runcol: Theme.colGreen
-            cmd: Utils.touchDebug
+            cmd: Cmds.touchDebug
         }
     }
     // Left side
