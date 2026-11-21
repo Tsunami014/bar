@@ -3,9 +3,7 @@ import Quickshell.Io
 import "../base"
 import "../.."
 
-Rectangle {
-    id: b
-
+Rectangle { id: root
     property list<string> cmd: []
     MouseArea {
         anchors.fill: parent
@@ -39,7 +37,7 @@ Rectangle {
     border.color: Qt.darker(midCol, Theme.lighten)
 
     gradient: Gradient {
-        GradientStop { position: 0.0; color: b.col1 }
-        GradientStop { position: 1.0; color: b.col2 }
+        GradientStop { position: 0.0; color: root.col1 }
+        GradientStop { position: 1.0; color: root.col2 }
     }
 }

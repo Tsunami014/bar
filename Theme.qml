@@ -134,6 +134,7 @@ Singleton { id: root
 
     // Border stuff
     readonly property int borderRadius: 15
+    readonly property int smallRadius: 10
     readonly property double borderWidth: 2.5
     readonly property int barBorder: align(4)
 

@@ -1,6 +1,8 @@
 import QtQuick
 import QtQuick.Layouts
 import ".."
+import "../components/"
+import "../modules/all/"
 import "../modules/top/"
 
 Rectangle {
@@ -15,15 +17,15 @@ Rectangle {
             bottom: parent.bottom
         }
         spacing: Theme.barSpacing
-        Lock {
-            text: running ? "" : ""
-            col: running ? Theme.colYellow : Theme.colPurple
+        Lock { Layout.fillHeight: true
+            text: run ? "" : ""
+            runcol: Theme.colPurple
         }
-        TopExecTog {
-            text: proc.run ? "󰛐" : ""
-            col: proc.run ? Theme.colGreen : Theme.colOrange
-            cmd: ["sh", "-c", "kill -STOP $(pidof swayidle)"]
-            stopcmd: ["sh", "-c", "kill -CONT $(pidof swayidle)"]
+        TogglCmdBtn { Layout.fillHeight: true
+            text: run ? "󰛐" : ""
+            txtSize: 1.5
+            runcol: Theme.colOrange
+            cmd: Utils.killIdleStart; stopcmd: Utils.killIdleStop
         }
     }
     // center
@@ -35,15 +37,13 @@ Rectangle {
         height: parent.height - 6
         spacing: Theme.barSpacing*2
 
-        Text {
+        Txt {
             property string title: niri.focusedWindow?.title ?? ""
             property int mxlen: 55
             text: title.length > mxlen
                 ? title.substring(0, mxlen) + "…"
                 : title
-            font.family: Theme.fontFamily
-            font.pixelSize: Theme.fontSize
-            color: Theme.colFg
+            font.bold: false
         }
     }
     // right
@@ -56,20 +56,20 @@ Rectangle {
             bottom: parent.bottom
         }
         spacing: Theme.barSpacing
-        TopExec {
-            text: proc.running ? "󰆡" : "󰢆"
-            col: proc.running ? Theme.colYellow : Theme.colGreen
-            cmd: ["sh", "-c", `touch /tmp/"NOAUTOROTATE-$USER" && trap "rm \\"/tmp/NOAUTOROTATE-$USER\\"" EXIT && sleep infinity`]
+        CmdBtn { Layout.fillHeight: true
+            text: run ? "󰆡" : "󰢆"
+            runcol: Theme.colYellow
+            cmd: Utils.noAutoRot
         }
-        TopExec {
+        CmdBtn { Layout.fillHeight: true
             text: "󰌌"
-            col: proc.running ? Theme.colFg : Theme.colBlue
-            cmd: ["sh", "-c", "pgrep wvkbd-mobintl >/dev/null || wvkbd-mobintl --bg 000000C0 -H 350 -L 200"]
+            runcol: Theme.colBlue
+            cmd: Utils.popupKbd
         }
-        TopExec {
+        CmdBtn { Layout.fillHeight: true
             text: "󰓾"
-            col: proc.running ? Theme.colIndigo : Theme.colYellow
-            cmd: ["sh", "-c", "qs -p ~/.config/quickshell/bar/touchdebug"]
+            runcol: Theme.colGreen
+            cmd: Utils.touchDebug
         }
     }
     // Left side

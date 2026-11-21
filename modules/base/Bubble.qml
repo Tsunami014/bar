@@ -4,6 +4,7 @@ import "../.."
 Rectangle {
     id: root
     property color col: "#FFF"
+    Behavior on col { ColorAnimation { duration: 120 } }
     property int padding: 5
     property int spacing: 3
 
