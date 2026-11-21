@@ -1,24 +1,24 @@
 import QtQuick
 import Quickshell.Io
-import "../.."
+import ".."
+import "base"
 
-Button {
+CmdBtnBase {
     property list<string> cmd: []
-    property alias run: click.running
-    property color runcol: Theme.colRed
-    col: run ? runcol : Theme.colFg
-    radius: Theme.smallRadius
-    txtSize: 1.5
+    property list<string> stopcmd: []
+    run: click.run
 
     Process {
         id: click
+        property bool run: false
         running: false
-        command: cmd
+        command: run ? cmd : stopcmd
         Component.onDestruction: {
             if (running) running = false
         }
     }
     onPressed: {
+        click.run = !click.run
         click.running = !click.running
     }
 }

@@ -1,5 +1,5 @@
 import QtQuick
-import "../.."
+import ".."
 
 Text {
     property color col: Theme.colFg

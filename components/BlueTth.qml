@@ -3,7 +3,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Bluetooth
 import Quickshell.Io
-import "../modules/all"
+import "../modules"
 import ".."
 
 Singleton { id: root

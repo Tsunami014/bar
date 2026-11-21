@@ -3,8 +3,8 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Widgets
 import Quickshell.Bluetooth
-import "../.."
-import "../base/"
+import ".."
+import "base"
 
 ColumnLayout { id: root
     Layout.fillWidth: true

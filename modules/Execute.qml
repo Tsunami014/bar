@@ -1,7 +1,7 @@
 import QtQuick
 import Quickshell.Io
-import "../base"
-import "../.."
+import "base"
+import ".."
 
 Rectangle { id: root
     property list<string> cmd: []

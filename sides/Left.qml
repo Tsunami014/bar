@@ -1,9 +1,9 @@
 import QtQuick
 import QtQuick.Layouts
 import ".."
-import "../components/"
-import "../modules/left/"
-import "../modules/all/"
+import "../components"
+import "../modules"
+import "../modules/left"
 
 Rectangle {
     ColumnLayout {

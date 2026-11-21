@@ -1,6 +1,6 @@
 import QtQuick
-import "../base/"
-import "../.."
+import "base"
+import ".."
 
 Bubble { id: root
     property string text: ""

@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import ".."
 import "../components/"
-import "../modules/all/"
+import "../modules/"
 import "../modules/top/"
 
 Rectangle {
