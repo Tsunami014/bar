@@ -29,6 +29,7 @@ Rectangle {
         col: parent.col
         fillcol: parent.fillcol
         handlecol: parent.handlecol
+        orientation: Qt.Vertical
         radius: width/2
         anchors {
             fill: parent
@@ -37,9 +38,6 @@ Rectangle {
         }
     }
     property alias slider: fslider
-    Component.onCompleted: {
-        fslider.orientation = Qt.Vertical
-    }
     Corner {
         anchors {
             bottom: parent.top

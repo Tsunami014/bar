@@ -9,7 +9,6 @@ Slider {
     property color handlecol: "#FFF"
 
     property bool ready: false
-    property Process initial: null
     property Process change: null
 
     property string text: ""
@@ -24,6 +23,9 @@ Slider {
     property int changeShowTime: 1000
     readonly property bool showValue: handleHovered || dragging || recentlyChanged
 
+    signal dragged(int nval)
+    property bool overrideOnDrag: false
+
     onValChanged: {
         if (!ready) return
         recentlyChanged = true
@@ -37,25 +39,6 @@ Slider {
 
     from: 0
     to: 100
-    Component.onCompleted: {
-        if (initial) initial.running = true
-    }
-
-    property bool _dirty: false
-    onMoved: {
-        if (!ready || !change) return
-        if (change.running) _dirty = true
-        else change.running = true
-    }
-    Connections {
-        target: slider.change
-        function onRunningChanged() {
-            if (!slider.change.running && slider._dirty) {
-                slider._dirty = false
-                slider.change.running = true   // command re-evaluates with the latest slider.val
-            }
-        }
-    }
 
     anchors.fill: parent
     background: Rectangle {
@@ -123,7 +106,9 @@ Slider {
 
         function apply(y) {
             const pos = Math.max(0, Math.min(1, (slider.height - y - grabOffset - hh / 2) / travel))
-            slider.value = slider.from + pos * (slider.to - slider.from)
+            const nval = slider.from + pos * (slider.to - slider.from)
+            if (overrideOnDrag) slider.value = nval
+            slider.dragged(nval)
             slider.moved()
         }
         onPressed: mouse => {
