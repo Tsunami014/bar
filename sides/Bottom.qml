@@ -2,8 +2,9 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Shapes
 import ".."
-import "../modules/base/"
-import "../modules/bottom/"
+import "../components"
+import "../modules/base"
+import "../modules/bottom"
 
 Item {
     id: top
@@ -12,7 +13,7 @@ Item {
     property real rad: 20
 
     readonly property var columns: [weatherCol, cpuCol, memCol, diskCol]
-    readonly property var modules: [weather, cpu, memory, disk]
+    readonly property var modules: [weatherbbl, cpubbl, memorybbl, diskbbl]
 
     // collapsed columns all share the tallest height so their tops line up exactly
     readonly property real baseH: full ? 0 : Math.max(
@@ -130,26 +131,89 @@ Item {
             minH: top.baseH
             first: true
             area: top.area
-            Weather { id: weather; full: top.full }
+            BotBubble {
+                id: weatherbbl
+                col: Theme.colYellow
+                ico: Weather.ico
+
+                bottomtxt: Weather.ok ? (Weather.w.temp + Weather.w.tunit) : "-"
+                topit: DetailList {
+                    visible: top.full
+                    col: Theme.colYellow
+                    title: (Weather.ok? Weather.w.desc + (Weather.w.city ? " · " + Weather.w.city : "")
+                        : (Weather.w ? "Weather error" : "No weather data"))
+                    titleBold: true
+                    titleOpacity: 1
+                    titleSize: Theme.fontSize
+                    rows: (Weather.ok ? [
+                        { label: "Feels like", value: Weather.w.feels + Weather.w.tunit },
+                        { label: "Humidity",   value: Weather.w.humidity + "%" },
+                        { label: "High / Low", value: Weather.w.high + "° / " + Weather.w.low + "°" },
+                        { label: "Rain",       value: Weather.w.rain + "%" },
+                        { label: "Wind",       value: Weather.w.wind + " " + Weather.w.wunit }
+                    ] : (Weather.w ? [{ label: "", value: String(Weather.w.error) }] : []))
+                    footer: Weather.ok && Weather.w.updated !== undefined ? [{ label: "Updated", value: String(Weather.w.updated) }] : []
+
+                }
+            }
         }
         Col {
             id: cpuCol
             minH: top.baseH
             area: top.area
-            Cpu { id: cpu; full: top.full }
+            BotBubble {
+                id: cpubbl
+                col: Theme.colGreen
+                ico: Cpu.ico
+                bottomtxt: (Cpu.usage == -1 ? '-' : Cpu.usage) + "%"
+                topit: DetailList {
+                    visible: top.full
+                    col: cpubbl.col
+                    title: "Top processes"
+                    rows: Cpu.topProcs
+                    footer: Cpu.temp !== "" ? [{ label: "Temp", value: Cpu.temp }] : []
+                }
+            }
         }
         Col {
             id: memCol
             minH: top.baseH
             area: top.area
-            Memory { id: memory; full: top.full }
+            BotBubble {
+                id: memorybbl
+                col: Theme.colBlue
+                ico: Memory.ico
+                bottomtxt: Memory.usage + "%"
+                topit: DetailList {
+                    visible: top.full
+                    col: memorybbl.col
+                    title: "Top processes"
+                    rows: Memory.topProcs
+                    footer: [{
+                        label: "Used / Total",
+                        value: Memory.usedGb.toFixed(1) + " / " + Memory.totalGb.toFixed(1) + " GiB"
+                    }]
+                }
+            }
         }
         Col {
             id: diskCol
             minH: top.baseH
             last: true
             area: top.area
-            Disk { id: disk; full: top.full }
+            BotBubble {
+                id: diskbbl
+                col: Theme.colPurple
+                ico: Disk.ico
+                bottomtxt: `${Disk.free} (${Disk.used == -1 ? '-' : Disk.used}%)`
+                topit: DetailList {
+                    visible: top.full
+                    col: diskbbl.col
+                    title: "Used / Total"
+                    rows: Disk.mounts
+                    footer: [{ label: "Free (/)", value: Disk.diskFree }]
+                }
+            }
         }
     }
 }

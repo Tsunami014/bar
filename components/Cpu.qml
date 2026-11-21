@@ -1,14 +1,12 @@
-import QtQuick
+pragma Singleton
+import Quickshell
 import Quickshell.Io
-import "../.."
+import QtQuick
 
-BotBubble {
-    id: cpububble
-    col: Theme.colGreen
+Singleton { id: root
+    property string ico: ""
 
-    property bool full: false
-
-    property real cpuUsage: -1
+    property real usage: -1
     property real lastCpuTotal: 0
     property real lastCpuIdle: 0
     property string temp: ""
@@ -20,17 +18,7 @@ BotBubble {
     property var agg: ({})  // process name -> ticks used since previous cycle
     property real dTotal: 0  // total cpu ticks (all cores) since previous cycle
 
-    readonly property int maxProcs: 5
-
-    ico: ""
-    bottomtxt: (cpuUsage == -1 ? '-' : cpuUsage) + "%"
-    topit: DetailList {
-        visible: cpububble.full
-        col: Theme.colGreen
-        title: "Top processes"
-        rows: cpububble.topProcs
-        footer: cpububble.temp !== "" ? [{ label: "Temp", value: cpububble.temp }] : []
-    }
+    property int maxProcs: 5
 
     Process {
         id: cpuProc
@@ -56,7 +44,7 @@ BotBubble {
                 }'
             fi
             echo end
-        `, "sh", cpububble.full ? "full" : ""]
+        `, "sh", root.full ? "full" : ""]
 
         stdout: SplitParser {
             onRead: data => {
@@ -68,33 +56,33 @@ BotBubble {
                     var idle = parseInt(p[4]) + parseInt(p[5])
                     var total = p.slice(1, 8).reduce((a, b) => a + parseInt(b), 0)
 
-                    if (cpububble.lastCpuTotal > 0) {
-                        cpububble.cpuUsage = Math.round(100 * (1 - (idle - cpububble.lastCpuIdle) / (total - cpububble.lastCpuTotal)))
-                        cpububble.dTotal = total - cpububble.lastCpuTotal
+                    if (root.lastCpuTotal > 0) {
+                        root.usage = Math.round(100 * (1 - (idle - root.lastCpuIdle) / (total - root.lastCpuTotal)))
+                        root.dTotal = total - root.lastCpuTotal
                     } else {
-                        cpububble.cpuUsage = -1
-                        cpububble.dTotal = 0
+                        root.usage = -1
+                        root.dTotal = 0
                     }
-                    cpububble.lastCpuTotal = total
-                    cpububble.lastCpuIdle = idle
+                    root.lastCpuTotal = total
+                    root.lastCpuIdle = idle
 
                     // new cycle
-                    cpububble.curTicks = {}
-                    cpububble.agg = {}
+                    root.curTicks = {}
+                    root.agg = {}
                 } else if (data.startsWith("temp ")) {
-                    cpububble.temp = data.slice(5) + "°C"
+                    root.temp = data.slice(5) + "°C"
                 } else if (data === "end") {
-                    if (cpububble.full) {
-                        const a = cpububble.agg, d = cpububble.dTotal
-                        cpububble.topProcs = Object.keys(a)
+                    if (root.full) {
+                        const a = root.agg, d = root.dTotal
+                        root.topProcs = Object.keys(a)
                             .map(n => ({ label: n, pct: d > 0 ? Math.round(100 * a[n] / d) : 0 }))
                             .filter(x => x.pct > 0)
                             .sort((x, y) => y.pct - x.pct)
-                            .slice(0, cpububble.maxProcs)
+                            .slice(0, root.maxProcs)
                             .map(x => ({ label: x.label, value: x.pct + "%" }))
                     }
                     // keep the snapshot only if we actually collected one
-                    cpububble.prevTicks = cpububble.curTicks
+                    root.prevTicks = root.curTicks
                 } else if (data.charCodeAt(0) >= 48 && data.charCodeAt(0) <= 57) {
                     // "<pid> <ticks> <name>"
                     const i = data.indexOf(" ")
@@ -103,27 +91,26 @@ BotBubble {
                     const ticks = parseInt(data.slice(i + 1, j))
                     const name = data.slice(j + 1)
 
-                    cpububble.curTicks[pid] = ticks
-                    const prev = cpububble.prevTicks[pid]
-                    if (prev !== undefined && cpububble.dTotal > 0 && ticks >= prev)
-                        cpububble.agg[name] = (cpububble.agg[name] || 0) + (ticks - prev)
+                    root.curTicks[pid] = ticks
+                    const prev = root.prevTicks[pid]
+                    if (prev !== undefined && root.dTotal > 0 && ticks >= prev)
+                        root.agg[name] = (root.agg[name] || 0) + (ticks - prev)
                 }
             }
         }
     }
 
-    // quick second sample so the numbers appear immediately
     Timer {
-        interval: 400
-        running: true
-        repeat: false
-        onTriggered: cpuProc.running = true
-    }
-
-    Timer {
-        interval: 2000
+        interval: 400  // Run quickly initially
         running: true
         repeat: true
-        onTriggered: cpuProc.running = true
+        property bool init: false
+        onTriggered: {
+            if (!init) {
+                init = true
+                interval = 2000
+            }
+            cpuProc.running = true
+        }
     }
 }
