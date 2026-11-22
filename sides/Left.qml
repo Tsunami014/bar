@@ -57,6 +57,7 @@ Rectangle {
                 }
                 Button { col: wifi.col
                     Layout.fillWidth: true
+                    type: Wifi.scanning ? Theme.BublFill : Theme.BublDarkBordr
                     text: Wifi.scanning ? "Scanning..." : "Rescan Wifi"
                     onPressed: Wifi.rescan()
                 }
