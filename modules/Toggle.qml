@@ -1,30 +1,45 @@
 import QtQuick
 import ".."
+import "base"
 
-Rectangle {
+Item {
     id: root
 
     property bool checked: false
     property color accent: Theme.colFg
-    property int gap: 6
+    property var type: Theme.BublFill
+    property int gap: 2
 
     signal pressed()
 
     height: Theme.fontSize * 1.4
     width: height * 1.8
-    radius: height / 2
-    color: checked ? Qt.darker(accent, Theme.lighten) : Theme.colMuted2
 
-    Behavior on color { ColorAnimation { duration: 120 } }
+    Bubble { id: track
+        anchors.fill: parent
 
-    Rectangle {
-        height: parent.height - root.gap
-        width: height
+        type: root.type
+        padding: 0
+        shadowDrop: 2
         radius: height / 2
-        color: Theme.colFg
-        anchors.verticalCenter: parent.verticalCenter
-        x: root.checked ? parent.width - width - root.gap/2 : root.gap/2
-        Behavior on x { NumberAnimation { duration: 120; easing.type: Easing.OutCubic } }
+
+        col: root.checked ? root.accent : Theme.colMuted2
+
+        Bubble { id: knob
+            readonly property real inset: track.fullBordr + root.gap
+
+            type: Theme.BublFlat
+            padding: 0
+            col: track.fg
+
+            height: track.height - inset * 2
+            width: height
+            radius: height / 2
+            anchors.verticalCenter: parent.verticalCenter
+
+            x: root.checked ? track.width - width - inset : inset
+            Behavior on x { NumberAnimation { duration: 120; easing.type: Easing.OutCubic } }
+        }
     }
 
     MouseArea {

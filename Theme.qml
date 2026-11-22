@@ -137,6 +137,7 @@ Singleton { id: root
     readonly property int smallRadius: 10
     readonly property double borderWidth: 2.5
     readonly property int barBorder: align(4)
+    readonly property int creamWidth: 3
 
     // Properties that need to be used in multiple places
     readonly property int leftBarWidth: align(fontSize*2.5 + barPadding*2)

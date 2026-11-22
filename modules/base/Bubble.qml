@@ -20,8 +20,7 @@ Rectangle { id: root
 
     property int padding: 4
 
-    property real creamWidth: 3
-    readonly property real activeCreamWid: cream.active? creamWidth : 0
+    readonly property real activeCreamWid: cream.active? Theme.creamWidth : 0
     property real shadowDrop: 4
 
     readonly property real fullBordr: padding + Theme.borderWidth + activeCreamWid
@@ -137,7 +136,7 @@ Rectangle { id: root
             border.color:
                 root.type == Theme.BublFill? Qt.lighter(root.mid, Theme.lighten*1.3) :
                 root.fg
-            border.width: root.creamWidth
+            border.width: Theme.creamWidth
         }
     }
 
