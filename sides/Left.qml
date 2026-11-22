@@ -14,10 +14,12 @@ Rectangle {
         }
         spacing: Theme.barSpacing
 
-        Execute {
+        CmdBtn {
+            type: Theme.BublFill
             Layout.fillWidth: true
+            radius: width*0.4
             implicitHeight: parent.width
-            col1: Theme.colIndigo
+            col: Theme.colIndigo
             col2: Theme.colPurple
             cmd: ["sh", "-c", "$EXECUTE"]
         }
