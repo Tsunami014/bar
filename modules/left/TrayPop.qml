@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import ".."
 import "../.."
 import "../base/"
 
@@ -21,33 +22,32 @@ LeftPopup {
             Loader {
                 id: main
                 Layout.fillWidth: true
-                sourceComponent: modelData.isSeparator ? dividerComponent : itemComponent
+                Layout.bottomMargin: modelData.isSeparator? 0 : Theme.barBorder
+                sourceComponent: modelData.isSeparator? dividerComponent : itemComponent
 
-                property color col: modelData.enabled ? Theme.colFg : Theme.colMuted1
-                property color lightcol: Qt.rgba(col.r, col.g, col.b, 0.15)
+                property color col: modelData.enabled? Theme.colPrimary : Theme.colMuted1
 
                 Component {
                     id: dividerComponent
                     Rectangle {
-                        Layout.fillWidth: true
-                        height: 1
+                        height: 3
+                        radius: height / 2
                         color: main.col
                     }
                 }
 
                 Component {
                     id: itemComponent
-                    Rectangle {
-                        Layout.fillWidth: true
-                        implicitWidth: rowLayout2.implicitWidth + 6
-                        implicitHeight: rowLayout2.implicitHeight + 6
+                    Button {
+                        type: Theme.BublDark
+                        implicitWidth: rowLayout2.implicitWidth + Theme.barBorder * 2
+                        implicitHeight: rowLayout2.implicitHeight + Theme.barBorder * 2
                         radius: height / 2
-                        color: main.lightcol
+                        col: main.col
 
                         RowLayout {
                             id: rowLayout2
-                            anchors.fill: parent
-                            anchors.margins: 3
+                            anchors.centerIn: parent
                             spacing: 6
 
                             Rectangle {
@@ -75,15 +75,10 @@ LeftPopup {
                             }
                         }
 
-                        MouseArea {
-                            anchors.fill: parent
-                            hoverEnabled: true
-                            cursorShape: Qt.PointingHandCursor
-                            onClicked: {
-                                modelData.triggered()
-                                pop.expandCounts = 0
-                                pop.forceShut()
-                            }
+                        onPressed: {
+                            modelData.triggered()
+                            pop.expandCounts = 0
+                            pop.forceShut()
                         }
                     }
                 }
