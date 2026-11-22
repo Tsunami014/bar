@@ -31,13 +31,8 @@ Item {
         const R = rad - h
         const H = row.height
 
-        // between bubbles the outline is barSpacing from the taller bubble and barBorder from the
-        // shorter one, so from the column boundary it shifts by k towards the shorter bubble
         const k = (Theme.barBorder - Theme.barSpacing)/2
 
-        // x of each column boundary (the outer sides are placed so they come out inside the bar)
-        // y of each column top, with the bottom as a virtual column at both ends so the
-        // outer sides are just steps like any other
         const xs = [cs[0].x + h - k, ...cs.slice(1).map(c => c.x), cs[cs.length - 1].x + cs[cs.length - 1].width - h + k]
         const ys = [H, ...cs.map(c => c.y + h), H]
 
@@ -87,13 +82,13 @@ Item {
         property MOBase area: null
         property real minH: 0
 
-        // bubbles are barSpacing from the outline on the outer sides and top, and
-        // barSpacing + 2*barBorder apart, split evenly over the column boundary
         readonly property real pad: Theme.barSpacing
         readonly property real mid: pad/2 + Theme.barBorder
         readonly property real padL: first ? pad + Theme.barBorder : mid
         readonly property real padR: last ? pad + Theme.barBorder : mid
-        readonly property real ownH: Theme.snap(slot.height + Theme.barBorder + pad)
+        readonly property real padT: Theme.barBorder + pad
+        readonly property real padB: Theme.barBorder + pad
+        readonly property real ownH: Theme.snap(slot.height + padT + padB)
         default property alias content: slot.data
 
         Layout.alignment: Qt.AlignBottom
@@ -102,7 +97,10 @@ Item {
 
         Item {
             id: slot
-            anchors { bottom: parent.bottom; left: parent.left; leftMargin: col.padL }
+            anchors {
+                bottom: parent.bottom; bottomMargin: col.padB
+                left: parent.left; leftMargin: col.padL
+            }
             width: childrenRect.width
             height: childrenRect.height
         }
