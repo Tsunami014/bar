@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import Quickshell.Io
 import "../.."
+
 Slider {
     id: slider
     property color col: "#FFF"
@@ -46,11 +47,12 @@ Slider {
     to: 100
 
     anchors.fill: parent
-    background: Rectangle {
+    background: Bubble {
         id: bg
-        border.color: Qt.darker(slider.col, Theme.lighten)
-        border.width: Theme.borderWidth
-        color: Qt.lighter(slider.col, Theme.lighten)
+        type: Theme.BublDarkBordr
+        col: slider.col
+        padding: 0
+        shadowDrop: 2
         radius: slider.radius
 
         Rectangle {
@@ -60,39 +62,41 @@ Slider {
             anchors.bottom: parent.bottom
             color: Theme.colTransparent
             clip: true
-            Rectangle {
-                // Filled portion
+            // Filled portion
+            Bubble {
                 width: bg.width
                 height: bg.height
                 anchors.bottom: parent.bottom
+                type: Theme.BublFill
+                col: slider.fillcol
+                padding: 0
+                shadowDrop: 0
                 radius: bg.radius
-                color: Qt.lighter(slider.fillcol, Theme.lighten)
-                border.color: Qt.darker(slider.fillcol, Theme.lighten)
-                border.width: Theme.borderWidth
             }
         }
     }
 
-    handle: Rectangle {
+    handle: Bubble { id: hnd
         width: parent.width
         radius: slider.radius
         height: radius*2
         anchors.bottom: parent.bottom
         // Handle travels the full track: bottom edge at 0, top edge at 100
         anchors.bottomMargin: (parent.height - height) * slider.position
-        color: Qt.lighter(slider.handlecol, Theme.lighten)
-        border.color: Qt.darker(slider.handlecol, Theme.lighten)
-        border.width: Theme.borderWidth
+        type: Theme.BublFill
+        col: slider.handlecol
+        padding: 0
+        shadowDrop: 2
         HoverHandler {
             blocking: false
             acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad | PointerDevice.Stylus
             onHoveredChanged: slider.handleHovered = hovered
         }
-        Text {
+        item: Text {
             text: slider.text
             anchors.centerIn: parent
             horizontalAlignment: Text.AlignHCenter
-            color: Qt.darker(slider.handlecol, Theme.lighten*1.5)
+            color: hnd.fg
             font.family: Theme.fontFamily
             font.pixelSize: Theme.fontSize
             font.bold: true
