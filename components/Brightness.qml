@@ -24,7 +24,8 @@ Singleton { id: root
 
     Process { id: writer }
     function set(pct) {
-        writer.command = ["brightnessctl", "set", Math.round(pct) + "%"]
+        root.value = Math.round(pct)
+        writer.command = ["brightnessctl", "set", root.value + "%"]
         writer.running = true
     }
 
