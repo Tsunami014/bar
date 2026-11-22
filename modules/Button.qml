@@ -5,6 +5,7 @@ import ".."
 Bubble { id: root
     property string text: ""
     property double txtSize: 1
+    property bool bold: false
 
     item: Text {
         anchors.centerIn: parent
@@ -12,6 +13,7 @@ Bubble { id: root
         color: root.fg
         font.family: Theme.fontFamily
         font.pixelSize: Theme.fontSize*root.txtSize
+        font.bold: root.bold
     }
 
     signal pressed()

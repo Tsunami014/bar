@@ -154,7 +154,7 @@ Singleton { id: root
         BublDark, // Dark inside with colour border
         BublDarkBordr, // Dark inside with colour border
         BublBorder, // Light inside with colour border
-        BublPlain, // Just plain colour
-        BublPlainDark // Inverse of above
+        BublFlat, // Just plain colour
+        BublFlatDark // Inverse of above
     }
 }

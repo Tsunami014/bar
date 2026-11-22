@@ -17,7 +17,7 @@ Rectangle { id: root
     readonly property real fullBordr: padding + Theme.borderWidth + activeCreamWid
 
     // CHNG
-    property bool hang: type !== Theme.BublPlain && type !== Theme.BublPlainDark
+    property bool hang: type !== Theme.BublFlat && type !== Theme.BublFlatDark && type !== Theme.BublFlat
 
     implicitWidth: content.childrenRect.width + fullBordr*2
     implicitHeight: content.childrenRect.height + fullBordr*2
@@ -26,8 +26,8 @@ Rectangle { id: root
 
     // CHNG
     property color fg:
-        type === Theme.BublFill||type === Theme.BublPlain? Qt.darker(col, Theme.lighten*2.2) :
-        type === Theme.BublPlainDark? Qt.lighter(col, Theme.lighten*2) :
+        type === Theme.BublFill||type === Theme.BublFlat? Qt.darker(col, Theme.lighten*2.2) :
+        type === Theme.BublFlatDark? Qt.lighter(col, Theme.lighten*2) :
         type === Theme.BublBorder? Qt.darker(col, Theme.lighten*2) :
         type === Theme.BublDark || type === Theme.BublDarkBordr? Qt.lighter(col, Theme.lighten) :
         col
@@ -35,7 +35,7 @@ Rectangle { id: root
     // CHNG
     color:
         type === Theme.BublDarkBordr? shadowCol :
-        type === Theme.BublPlainDark? shadowCol :
+        type === Theme.BublFlatDark? shadowCol :
         type === Theme.BublDark? Qt.hsla(
             col.hslHue,
             col.hslSaturation * 0.05,
@@ -51,7 +51,7 @@ Rectangle { id: root
             0,
             (col.hslLightness + Theme.colBg.hslLightness*2)/3,
         ) :
-        type === Theme.BublFill || type === Theme.BublPlain? Qt.hsla(
+        type === Theme.BublFill || type === Theme.BublFlat? Qt.hsla(
             col.hslHue,
             col.hslSaturation*0.95,
             col.hslLightness*1.02,
@@ -60,7 +60,7 @@ Rectangle { id: root
     // CHNG
     property color shadowCol:
         type === Theme.BublOutline? col :
-        type === Theme.BublPlain? color :
+        type === Theme.BublFlat? color :
         type === Theme.BublBorder? Qt.hsla(
             col.hslHue,
             col.hslSaturation * 0.3,
@@ -96,7 +96,7 @@ Rectangle { id: root
         }
     }
     border.color: shadowCol
-    border.width: Theme.borderWidth
+    border.width: type === Theme.BublFlat? 0 : Theme.borderWidth
 
     // Thin cream border
     Loader {
