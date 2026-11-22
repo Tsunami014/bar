@@ -150,6 +150,7 @@ Singleton { id: root
     readonly property real lighten: pal.lighten
 
     enum BublTyps {
+        BublPlain, // Colour inside
         BublFill, // Colour inside with cream inside border
         BublOutline, // Slightly less dark inside with brighter colour border
         BublDark, // Dark inside with colour border

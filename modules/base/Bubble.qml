@@ -35,7 +35,7 @@ Rectangle { id: root
 
     // CHNG
     property color fg:
-        type === Theme.BublFill||type === Theme.BublFlat? Qt.darker(mid, Theme.lighten*2.2) :
+        type === Theme.BublFill || type === Theme.BublFlat || type === Theme.BublPlain? Qt.darker(mid, Theme.lighten*2.2) :
         type === Theme.BublFlatDark? Qt.lighter(mid, Theme.lighten*2) :
         type === Theme.BublBorder? Qt.darker(mid, Theme.lighten*2) :
         type === Theme.BublDark || type === Theme.BublDarkBordr? Qt.lighter(mid, Theme.lighten) :
