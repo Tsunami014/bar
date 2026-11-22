@@ -120,6 +120,6 @@ Rectangle {
                 Battery.batChargeStatus + "\n" + Battery.batteryLevel + "%\n" + Battery.batteryExtra
             }
         }
-        ThemeButton {}
+        ThemeButton { Layout.fillWidth: true }
     }
 }

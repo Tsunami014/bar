@@ -20,7 +20,8 @@ Bubble {
         text: ` ${ico}  ${bottomtxt} `
         font.family: Theme.fontFamily
         font.pixelSize: Theme.fontSize*1.2
-        color: root.col
+        color: root.fg
+        font.bold: true
     }
     Component.onCompleted: {
         if (topit) {

@@ -5,17 +5,15 @@ import Quickshell
 import ".."
 import "base"
 
-Bubble {
-    id: b
+Bubble { id: root
     col: Theme.colPalette
-    Layout.fillWidth: true
 
     item: Text {
         anchors.centerIn: parent
         horizontalAlignment: Text.AlignHCenter
 
         text: Theme.paletteName
-        color: b.col
+        color: root.fg
         font.family: Theme.fontFamily
         font.pixelSize: Math.round(Theme.fontSize * 0.6)
         font.bold: true
@@ -29,10 +27,10 @@ Bubble {
     property real popTop: 0
 
     function updatePopTop() {
-        var wy = b.mapToItem(null, 0, 0).y
-        var top = b.height / 2 - popHeight / 2
-        if (b.Window.height > 0) {
-            top = Math.min(top, b.Window.height - wy - popHeight)
+        var wy = root.mapToItem(null, 0, 0).y
+        var top = root.height / 2 - popHeight / 2
+        if (root.Window.height > 0) {
+            top = Math.min(top, root.Window.height - wy - popHeight)
             top = Math.max(top, -wy)
         }
         popTop = top
@@ -41,8 +39,8 @@ Bubble {
     // Invisible column (as mouse tracking only works on the window first clicked on, not the popup)
     Column {
         id: hits
-        x: b.width + b.popPad
-        y: b.popTop + b.popPad
+        x: root.width + root.popPad
+        y: root.popTop + root.popPad
         opacity: 0
         Repeater {
             model: Theme.palettes.length
@@ -50,7 +48,7 @@ Bubble {
                 required property int index
                 readonly property int optIndex: index
                 width: 2
-                height: b.optionHeight
+                height: root.optionHeight
             }
         }
     }
@@ -73,43 +71,43 @@ Bubble {
         readonly property bool open: armed && pressed && (pressedButtons & Qt.LeftButton)
 
         onPressed: mouse => {
-            b.updatePopTop()
+            root.updatePopTop()
             armed = (mouse.button === Qt.LeftButton)
-            b.hoverIndex = (mouse.button === Qt.LeftButton) ? b.indexAt(mouse.x, mouse.y) : -1
+            root.hoverIndex = (mouse.button === Qt.LeftButton) ? root.indexAt(mouse.x, mouse.y) : -1
         }
         onPositionChanged: mouse => {
-            if (open) b.hoverIndex = b.indexAt(mouse.x, mouse.y)
+            if (open) root.hoverIndex = root.indexAt(mouse.x, mouse.y)
         }
         onReleased: mouse => {
-            if (mouse.button === Qt.LeftButton && b.hoverIndex >= 0)
-                Theme.setPalette(b.hoverIndex)
-            b.hoverIndex = -1
+            if (mouse.button === Qt.LeftButton && root.hoverIndex >= 0)
+                Theme.setPalette(root.hoverIndex)
+            root.hoverIndex = -1
             armed = false
         }
         onClicked: mouse => {
             if (mouse.button === Qt.RightButton) Theme.resetPalette()
         }
-        onCanceled: { b.hoverIndex = -1; armed = false }
-        onOpenChanged: if (!open) b.hoverIndex = -1
+        onCanceled: { root.hoverIndex = -1; armed = false }
+        onOpenChanged: if (!open) root.hoverIndex = -1
     }
 
     Loader {
         active: ma.open
         sourceComponent: PopupWindow {
             anchor {
-                item: b
+                item: root
                 edges: Edges.Top | Edges.Left
                 gravity: Edges.Bottom | Edges.Right
                 adjustment: PopupAdjustment.None
                 rect {
-                    x: b.width
-                    y: b.popTop
+                    x: root.width
+                    y: root.popTop
                     width: 1
                     height: 1
                 }
             }
-            implicitWidth: Math.max(1, list.implicitWidth + b.popPad * 2)
-            implicitHeight: b.popHeight
+            implicitWidth: Math.max(1, list.implicitWidth + root.popPad * 2)
+            implicitHeight: root.popHeight
             visible: true
             color: Theme.colTransparent
             // Purely visual
@@ -132,22 +130,25 @@ Bubble {
                         delegate: Rectangle {
                             id: opt
                             required property int index
-                            readonly property bool hovered: b.hoverIndex === index
+                            readonly property bool hovered: root.hoverIndex === index
                             readonly property color optCol: Theme.palettes[index].button
 
                             Layout.fillWidth: true
-                            Layout.preferredHeight: b.optionHeight
+                            Layout.preferredHeight: root.optionHeight
                             implicitWidth: label.implicitWidth + 16
                             radius: Theme.borderRadius
-                            color: hovered ? Qt.rgba(optCol.r, optCol.g, optCol.b, 0.3) : "transparent"
+                            // color: hovered ? Qt.rgba(optCol.r, optCol.g, optCol.b, 0.3) : "transparent"
+                            color: hovered ? optCol : "transparent"
                             border.width: hovered ? Theme.borderWidth : 0
-                            border.color: optCol
+                            // border.color: optCol
+                            border.color: Qt.darker(optCol, Theme.lighten*2)
 
                             Text {
                                 id: label
                                 anchors.centerIn: parent
                                 text: Theme.palettes[opt.index].name
-                                color: opt.optCol
+                                // color: opt.optCol
+                                color: opt.hovered? Theme.colBg : opt.optCol
                                 font.family: Theme.fontFamily
                                 font.pixelSize: Math.round(Theme.fontSize * 0.6)
                                 font.bold: true

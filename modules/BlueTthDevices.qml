@@ -59,7 +59,7 @@ ColumnLayout { id: root
                 item: Text {
                     anchors.centerIn: parent
                     text: "󰆴"
-                    color: delbtn.col
+                    color: delbtn.fg
                     font.family: Theme.fontFamily
                     font.pixelSize: Theme.fontSize*0.75
                 }

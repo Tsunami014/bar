@@ -139,7 +139,7 @@ Item {
                 bottomtxt: Weather.ok ? (Weather.w.temp + Weather.w.tunit) : "-"
                 topit: DetailList {
                     visible: top.full
-                    col: Theme.colYellow
+                    col: weatherbbl.fg
                     title: (Weather.ok? Weather.w.desc + (Weather.w.city ? " · " + Weather.w.city : "")
                         : (Weather.w ? "Weather error" : "No weather data"))
                     titleBold: true
@@ -168,7 +168,7 @@ Item {
                 bottomtxt: (Cpu.usage == -1 ? '-' : Cpu.usage) + "%"
                 topit: DetailList {
                     visible: top.full
-                    col: cpubbl.col
+                    col: cpubbl.fg
                     title: "Top processes"
                     rows: Cpu.topProcs
                     footer: Cpu.temp !== "" ? [{ label: "Temp", value: Cpu.temp }] : []
@@ -186,7 +186,7 @@ Item {
                 bottomtxt: Memory.usage + "%"
                 topit: DetailList {
                     visible: top.full
-                    col: memorybbl.col
+                    col: memorybbl.fg
                     title: "Top processes"
                     rows: Memory.topProcs
                     footer: [{
@@ -208,7 +208,7 @@ Item {
                 bottomtxt: `${Disk.free} (${Disk.used == -1 ? '-' : Disk.used}%)`
                 topit: DetailList {
                     visible: top.full
-                    col: diskbbl.col
+                    col: diskbbl.fg
                     title: "Used / Total"
                     rows: Disk.mounts
                     footer: [{ label: "Free (/)", value: Disk.diskFree }]

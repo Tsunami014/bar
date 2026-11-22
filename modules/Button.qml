@@ -9,7 +9,7 @@ Bubble { id: root
     item: Text {
         anchors.centerIn: parent
         text: root.text
-        color: root.col
+        color: root.fg
         font.family: Theme.fontFamily
         font.pixelSize: Theme.fontSize*root.txtSize
     }

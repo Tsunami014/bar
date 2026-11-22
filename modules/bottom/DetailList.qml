@@ -35,7 +35,7 @@ ColumnLayout {
                 }
                 Item { Layout.fillWidth: true }
                 Text {
-                    text: modelData.value
+                    text: modelData.value ?? ""
                     font.family: Theme.fontFamily
                     font.pixelSize: Theme.fontSize
                     color: rowsRoot.tint

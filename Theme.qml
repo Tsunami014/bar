@@ -147,4 +147,14 @@ Singleton { id: root
     property bool expandLock: false
     readonly property double sliderRound: 0.45 // Must be >0 and <=0.5
     readonly property real lighten: pal.lighten
+
+    enum BublTyps {
+        BublFill, // Colour inside with cream inside border
+        BublOutline, // Slightly less dark inside with brighter colour border
+        BublDark, // Dark inside with colour border
+        BublDarkBordr, // Dark inside with colour border
+        BublBorder, // Light inside with colour border
+        BublPlain, // Just plain colour
+        BublPlainDark // Inverse of above
+    }
 }

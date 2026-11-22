@@ -14,7 +14,7 @@ Bubble { id: root
         horizontalAlignment: Text.AlignHCenter
 
         text: root.ico
-        color: root.col
+        color: root.fg
         font.family: Theme.fontFamily
         font.pixelSize: Theme.fontSize*root.txtSize
         font.bold: true
