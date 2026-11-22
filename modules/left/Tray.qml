@@ -4,16 +4,18 @@ import Quickshell.Services.SystemTray
 import "../.."
 import "../base/"
 
-ColumnLayout {
-    id: lay
+ColumnLayout { id: root
     Layout.fillWidth: true
     Layout.alignment: Qt.AlignHCenter
+
+    property var type: Theme.BublOutline
 
     Repeater {
         model: SystemTray.items
 
         LeftBubble {
             id: b
+            type: root.type
             col: modelData.status == Status.NeedsAttention ? Theme.colTertiary :
                 modelData.status == Status.Active ? Theme.colPrimary : Theme.colSecondary
             item: Image {

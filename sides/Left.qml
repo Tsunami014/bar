@@ -25,6 +25,7 @@ Rectangle {
         }
         LeftBubble {
             col: Theme.colOrange
+            type: Theme.BublFill
             ico: Clock.format(Clock.ico+"\nhh\nmm")
             txtSize: 1.3
             pop: Txt { col: Theme.colOrange; text:
@@ -33,6 +34,7 @@ Rectangle {
         }
         LeftBubble { id: wifi
             col: Theme.colPurple
+            type: Theme.BublFill
             ico: Wifi.ico
             pop: ColumnLayout {
                 spacing: 8
@@ -69,6 +71,7 @@ Rectangle {
         }
         LeftBubble { id: bltth
             col: Theme.colIndigo
+            type: Theme.BublFill
             ico: BlueTth.ico
             pop: ColumnLayout {
                 spacing: 8
@@ -117,11 +120,15 @@ Rectangle {
         Workspaces {}
         LeftBubble {
             col: Battery.col
+            type: Theme.BublFill
             ico: Battery.ico
             pop: Txt { col: Battery.col; text:
                 Battery.batChargeStatus + "\n" + Battery.batteryLevel + "%\n" + Battery.batteryExtra
             }
         }
-        ThemeButton { Layout.fillWidth: true }
+        ThemeButton {
+            Layout.fillWidth: true
+            type: Theme.BublFill
+        }
     }
 }

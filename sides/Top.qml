@@ -15,13 +15,16 @@ Rectangle {
             leftMargin: Theme.barSpacing
             top: parent.top
             bottom: parent.bottom
+            bottomMargin: Theme.barPadding/2
         }
         spacing: Theme.barSpacing
         Lock { Layout.fillHeight: true
+            type: Theme.BublDark
             text: run ? "" : ""
             runcol: Theme.colPurple
         }
         TogglCmdBtn { Layout.fillHeight: true
+            type: Theme.BublDark
             text: run ? "󰛐" : ""
             txtSize: 1.5
             runcol: Theme.colOrange
@@ -54,19 +57,23 @@ Rectangle {
             rightMargin: Theme.barSpacing
             top: parent.top
             bottom: parent.bottom
+            bottomMargin: Theme.barPadding/2
         }
         spacing: Theme.barSpacing
         CmdBtn { Layout.fillHeight: true
+            type: Theme.BublDark
             text: run ? "󰆡" : "󰢆"
             runcol: Theme.colYellow
             cmd: Cmds.noAutoRot
         }
         CmdBtn { Layout.fillHeight: true
+            type: Theme.BublDark
             text: "󰌌"
             runcol: Theme.colBlue
             cmd: Cmds.popupKbd
         }
         CmdBtn { Layout.fillHeight: true
+            type: Theme.BublDark
             text: "󰓾"
             runcol: Theme.colGreen
             cmd: Cmds.touchDebug

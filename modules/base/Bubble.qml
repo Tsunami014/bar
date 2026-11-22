@@ -53,8 +53,8 @@ Rectangle { id: root
         ) :
         type === Theme.BublBorder? Qt.hsla(
             c.hslHue,
-            Theme.colFg.hslSaturation * 0.3,
-            c.hslLightness + 0.1,
+            Theme.colFg.hslSaturation * 0.5,
+            c.hslLightness,
         ) :
         type === Theme.BublOutline? Qt.hsla(
             c.hslHue,

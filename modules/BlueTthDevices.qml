@@ -48,6 +48,7 @@ ColumnLayout { id: root
             }
 
             Button {
+                type: Theme.BublBorder
                 col: root.col
                 text: row.device.connected ? "Disconnect" : "Connect"
                 txtSize: 0.65
@@ -55,6 +56,7 @@ ColumnLayout { id: root
             }
 
             Bubble { id: delbtn
+                type: Theme.BublBorder
                 col: Qt.tint(root.col, Theme.colRed)
                 item: Text {
                     anchors.centerIn: parent
