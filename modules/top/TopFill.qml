@@ -6,6 +6,7 @@ import "../.."
 CmdBtn {
     type: Theme.BublFlatDark
     radius: Theme.borderRadius
+    col: Theme.colPrimary
     txtSize: 1.2
     bold: true
 

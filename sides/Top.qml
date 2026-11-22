@@ -85,7 +85,6 @@ Rectangle {
         anchors.right: tcentre.left
         TopFill {
             text: ""
-            col: Theme.colSecondary
             cmd: ["niri", "msg", "action", "focus-column-or-monitor-left"]
         }
     }
@@ -95,7 +94,6 @@ Rectangle {
         anchors.right: tright.left
         TopFill {
             text: ""
-            col: Theme.colSecondary
             cmd: ["niri", "msg", "action", "focus-column-or-monitor-right"]
         }
     }
