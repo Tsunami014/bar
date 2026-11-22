@@ -26,11 +26,16 @@ Slider {
     signal dragged(int nval)
     property bool overrideOnDrag: false
 
-    onValChanged: {
-        if (!ready) return
+    function flashValue() {
         recentlyChanged = true
         changeTimer.restart()
     }
+    onValChanged: {
+        if (!ready) return
+        flashValue()
+    }
+    onReadyChanged: if (ready) flashValue()
+    Component.onCompleted: if (ready) flashValue()
     Timer {
         id: changeTimer
         interval: slider.changeShowTime
